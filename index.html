@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marke &amp; Kommunikation für KMU | KMU Klarheit</title>
+    <meta name="description" content="Wir helfen KMU, ihre Stärken klar zu kommunizieren — damit Kunden verstehen, vertrauen und anfragen.">
+    <meta property="og:title" content="Marke &amp; Kommunikation für KMU | KMU Klarheit">
+    <meta property="og:description" content="Wir helfen KMU, ihre Stärken klar zu kommunizieren — damit Kunden verstehen, vertrauen und anfragen.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="de_CH">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ─────────────────────────────────────────
+           TOKENS & RESET
+        ───────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:      #0D1B2A;
+            --amber:     #C9933A;
+            --amber-lt:  #D4A554;
+            --bg:        #F7F5F0;
+            --card-bg:   #EFECEA;
+            --text:      #1A1A1A;
+            --text-mid:  #3D3933;
+            --muted:     #6B6560;
+            --border:    #E2DDD6;
+            --white:     #FFFFFF;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-sans:  'Inter', system-ui, -apple-system, sans-serif;
+            --max-w: 1180px;
+            --sp: clamp(72px, 9vw, 112px);
+        }
+
+        html { scroll-behavior: smooth; font-size: 16px; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ─────────────────────────────────────────
+           TYPOGRAPHY
+        ───────────────────────────────────────── */
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            line-height: 1.13;
+            letter-spacing: -0.02em;
+            color: var(--navy);
+        }
+        h1 { font-size: clamp(2.75rem, 5.5vw, 4.75rem); font-weight: 700; }
+        h2 { font-size: clamp(1.9rem,  3.8vw, 2.9rem);  font-weight: 600; }
+        h3 { font-size: clamp(1.1rem,  1.6vw, 1.35rem); font-weight: 600; }
+
+        p   { font-size: 1.0rem; line-height: 1.78; color: var(--text-mid); }
+        a   { color: inherit; }
+
+        .label {
+            display: block;
+            font-family: var(--font-sans);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.17em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 1rem;
+        }
+
+        /* ─────────────────────────────────────────
+           LAYOUT
+        ───────────────────────────────────────── */
+        .wrap {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+        }
+        section { padding: var(--sp) 0; }
+
+        /* ─────────────────────────────────────────
+           ANIMATION — fade-up on scroll
+        ───────────────────────────────────────── */
+        .fu {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .fu.in { opacity: 1; transform: translateY(0); }
+        .fu.d1 { transition-delay: 0.10s; }
+        .fu.d2 { transition-delay: 0.20s; }
+        .fu.d3 { transition-delay: 0.30s; }
+        .fu.d4 { transition-delay: 0.40s; }
+
+        /* ─────────────────────────────────────────
+           NAV
+        ───────────────────────────────────────── */
+        #nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+            padding: 1.1rem 0;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        #nav.stuck {
+            background: rgba(247,245,240,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 0 var(--border);
+        }
+        .nav-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+        }
+        .nav-brand {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--navy);
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.25rem;
+            align-items: center;
+        }
+        .nav-links a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--navy);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--amber); }
+        .nav-links .nav-btn {
+            background: var(--amber);
+            color: var(--navy);
+            padding: 0.55rem 1.2rem;
+            border-radius: 2px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .nav-links .nav-btn:hover { background: var(--amber-lt); color: var(--navy); }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--navy);
+            padding: 0.35rem;
+            min-width: 44px; min-height: 44px;
+            align-items: center; justify-content: center;
+        }
+
+        @media (max-width: 760px) {
+            .nav-toggle { display: flex; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%; left: 0; right: 0;
+                background: var(--bg);
+                border-top: 1px solid var(--border);
+                padding: 1.5rem 1.5rem 2rem;
+                gap: 1.35rem;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+            }
+            .nav-links.open { display: flex; }
+        }
+
+        /* ─────────────────────────────────────────
+           BUTTONS
+        ───────────────────────────────────────── */
+        .btn {
+            display: inline-block;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 1rem 2.1rem;
+            min-height: 52px;
+            border-radius: 2px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            line-height: 1.2;
+        }
+        .btn-amber { background: var(--amber); color: var(--navy); }
+        .btn-amber:hover {
+            background: var(--amber-lt);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(201,147,58,0.32);
+        }
+        .btn-lg { font-size: 1.05rem; padding: 1.15rem 2.5rem; }
+
+        /* ─────────────────────────────────────────
+           § 1 — HERO
+        ───────────────────────────────────────── */
+        #hero {
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg);
+        }
+
+        /* Abstract geometric mark — right side */
+        .hero-mark {
+            position: absolute;
+            right: clamp(-60px, -3vw, 0px);
+            top: 50%;
+            transform: translateY(-50%);
+            width: min(500px, 44vw);
+            opacity: 0.06;
+            pointer-events: none;
+        }
+
+        /* Decorative amber line — top left of content */
+        .hero-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.775rem;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 1.6rem;
+        }
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 30px; height: 1.5px;
+            background: var(--amber);
+            flex-shrink: 0;
+        }
+
+        .hero-body {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-h1 { margin-bottom: 1.5rem; }
+
+        .hero-sub {
+            font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+            color: var(--text-mid);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            line-height: 1.72;
+        }
+
+        .hero-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+        .hero-trust {
+            font-size: 0.8rem;
+            color: var(--muted);
+            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .hero-trust::before {
+            content: '';
+            width: 5px; height: 5px;
+            background: var(--amber);
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        /* ─────────────────────────────────────────
+           § 2 — PROBLEM
+        ───────────────────────────────────────── */
+        #problem { border-top: 1px solid var(--border); }
+
+        .problem-split {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: clamp(2.5rem, 6vw, 6rem);
+            align-items: start;
+            margin-bottom: 4rem;
+        }
+        .problem-split h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
+        .problem-right p  { margin-bottom: 1.2rem; }
+        .problem-right p:last-child { font-weight: 500; color: var(--navy); }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+        .pain-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 1.75rem 1.6rem;
+        }
+        .pain-icon {
+            width: 36px; height: 36px;
+            color: var(--amber);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .pain-card h3 {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.45rem;
+        }
+        .pain-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+
+        @media (max-width: 860px) {
+            .problem-split { grid-template-columns: 1fr; gap: 2rem; }
+            .pain-grid { grid-template-columns: 1fr; gap: 1rem; }
+        }
+
+        /* ─────────────────────────────────────────
+           § 3 — SOLUTION (dark)
+        ───────────────────────────────────────── */
+        #solution {
+            background: var(--navy);
+            --text-mid: rgba(255,255,255,0.72);
+        }
+        #solution .label   { color: var(--amber); }
+        #solution h2       { color: var(--white); max-width: 680px; margin-bottom: 3.5rem; }
+
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2.75rem;
+        }
+        .pillar {
+            border-top: 2.5px solid var(--amber);
+            background: rgba(255,255,255,0.04);
+            border-radius: 0 0 3px 3px;
+            padding: 2rem 1.75rem;
+        }
+        .pillar-num {
+            font-family: var(--font-serif);
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: rgba(201,147,58,0.22);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        .pillar h3 { color: var(--white); font-size: 1.1rem; margin-bottom: 0.875rem; }
+        .pillar p  { color: rgba(255,255,255,0.68); font-size: 0.9375rem; line-height: 1.72; }
+
+        .solution-footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--amber);
+            letter-spacing: 0.025em;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.75rem;
+        }
+
+        @media (max-width: 860px) {
+            .pillars { grid-template-columns: 1fr; gap: 1rem; }
+        }
+
+        /* ─────────────────────────────────────────
+           § 4 — PROCESS
+        ───────────────────────────────────────── */
+        .process-head { margin-bottom: 4rem; }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            position: relative;
+        }
+        /* connector line */
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 27px;
+            left: calc(16.67% + 27px);
+            right: calc(16.67% + 27px);
+            height: 1px;
+            background: var(--border);
+        }
+
+        .step { padding: 0 2rem; }
+        .step:first-child { padding-left: 0; }
+        .step:last-child  { padding-right: 0; }
+
+        .step-num {
+            width: 54px; height: 54px;
+            background: var(--navy);
+            color: var(--white);
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .step-when {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 0.45rem;
+        }
+        .step h3 { color: var(--navy); margin-bottom: 0.75rem; }
+        .step p  { font-size: 0.9375rem; color: #48453F; line-height: 1.72; }
+
+        @media (max-width: 720px) {
+            .steps { grid-template-columns: 1fr; gap: 2.5rem; }
+            .steps::before { display: none; }
+            .step {
+                padding: 0;
+                display: grid;
+                grid-template-columns: 54px 1fr;
+                column-gap: 1.25rem;
+            }
+            .step-num  { grid-row: 1 / span 4; margin-bottom: 0; }
+            .step-when { grid-column: 2; }
+            .step h3   { grid-column: 2; }
+            .step p    { grid-column: 2; }
+        }
+
+        /* ─────────────────────────────────────────
+           § 5 — WHY IT WORKS
+        ───────────────────────────────────────── */
+        #why {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: clamp(2.5rem, 6vw, 6rem);
+            align-items: start;
+        }
+        .why-text p { margin-bottom: 1.1rem; font-size: 0.9375rem; }
+        .why-refs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.75rem;
+        }
+        .why-ref {
+            font-size: 0.775rem;
+            font-weight: 500;
+            color: var(--muted);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 0.35rem 0.85rem;
+            border-radius: 100px;
+        }
+
+        blockquote.pullquote {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+            line-height: 1.42;
+            color: var(--amber);
+            border-left: 3px solid var(--amber);
+            padding: 2rem 2rem 2rem 2.25rem;
+            background: var(--bg);
+            border-radius: 0 3px 3px 0;
+        }
+
+        @media (max-width: 860px) {
+            .why-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+        }
+
+        /* ─────────────────────────────────────────
+           § 6 — FOR WHOM
+        ───────────────────────────────────────── */
+        #forwhom h2 { margin-bottom: 2.75rem; }
+
+        .fw-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .fw-yes, .fw-no {
+            border-radius: 3px;
+            padding: clamp(1.75rem, 3vw, 2.5rem);
+        }
+        .fw-yes { background: var(--navy); }
+        .fw-no  { background: var(--card-bg); border: 1px solid var(--border); }
+
+        .fw-col-title {
+            font-family: var(--font-sans);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.75rem;
+        }
+        .fw-yes .fw-col-title { color: var(--amber); }
+        .fw-no  .fw-col-title { color: var(--muted); }
+
+        .fw-list { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; }
+        .fw-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            font-size: 0.9375rem;
+            line-height: 1.62;
+        }
+        .fw-yes .fw-list li { color: rgba(255,255,255,0.83); }
+        .fw-no  .fw-list li { color: var(--muted); }
+        .fw-list li svg { flex-shrink: 0; margin-top: 0.22em; }
+
+        @media (max-width: 640px) {
+            .fw-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ─────────────────────────────────────────
+           § 7 — TESTIMONIALS
+        ───────────────────────────────────────── */
+        #testimonials { border-top: 1px solid var(--border); }
+        #testimonials h2 { margin-bottom: 2.5rem; }
+
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+        }
+        .testi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 2rem 2rem 1.75rem;
+            position: relative;
+        }
+        .testi-card::before {
+            content: '\201C';
+            font-family: var(--font-serif);
+            font-size: 5.5rem;
+            line-height: 1;
+            color: var(--amber);
+            opacity: 0.2;
+            position: absolute;
+            top: 0.5rem;
+            left: 1.4rem;
+            pointer-events: none;
+        }
+        .ph-badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: rgba(201,147,58,0.14);
+            color: var(--amber);
+            padding: 0.22rem 0.6rem;
+            border-radius: 2px;
+            margin-bottom: 0.875rem;
+        }
+        .testi-quote {
+            font-style: italic;
+            font-size: 0.9375rem;
+            line-height: 1.75;
+            color: #3A3733;
+            margin-bottom: 1.5rem;
+            padding-top: 0.75rem;
+        }
+        .testi-name { font-size: 0.825rem; font-weight: 600; color: var(--navy); }
+        .testi-role { font-size: 0.775rem; color: var(--muted); margin-top: 0.175rem; }
+
+        .trust-bar {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--muted);
+            letter-spacing: 0.04em;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 680px) {
+            .testi-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ─────────────────────────────────────────
+           § 8 — CTA / CONTACT (dark)
+        ───────────────────────────────────────── */
+        #contact { background: var(--navy); }
+        #contact .label { color: var(--amber); }
+
+        .contact-head {
+            text-align: center;
+            max-width: 660px;
+            margin: 0 auto 3.5rem;
+        }
+        .contact-head h2 { color: var(--white); margin-bottom: 1.1rem; }
+        .contact-head p  { color: rgba(255,255,255,0.68); font-size: 1.025rem; line-height: 1.72; }
+
+        .form-wrap { max-width: 580px; margin: 0 auto; }
+
+        .fg { margin-bottom: 1.2rem; }
+        .fg label {
+            display: block;
+            font-size: 0.775rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0.45rem;
+        }
+        .fg input, .fg textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.065);
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 2px;
+            padding: 0.85rem 1rem;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--white);
+            outline: none;
+            min-height: 48px;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,0.28); }
+        .fg input:focus, .fg textarea:focus {
+            border-color: var(--amber);
+            background: rgba(255,255,255,0.09);
+        }
+        .fg textarea { min-height: 128px; resize: vertical; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .ferr {
+            font-size: 0.78rem;
+            color: #E07878;
+            margin-top: 0.35rem;
+            display: none;
+        }
+        .ferr.show { display: block; }
+        .fg.err input, .fg.err textarea { border-color: #E07878; }
+
+        .form-submit {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .form-submit .btn { min-width: 280px; }
+        .form-note {
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.35);
+            margin-top: 1rem;
+        }
+
+        /* Success state */
+        .form-ok {
+            display: none;
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        .form-ok.show { display: block; }
+        .form-ok-icon {
+            width: 56px; height: 56px;
+            background: rgba(201,147,58,0.18);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--amber);
+        }
+        .form-ok h3 { color: var(--white); font-size: 1.5rem; margin-bottom: 0.625rem; }
+        .form-ok p  { color: rgba(255,255,255,0.6); }
+
+        @media (max-width: 560px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        /* ─────────────────────────────────────────
+           FOOTER
+        ───────────────────────────────────────── */
+        footer {
+            background: #080F18;
+            padding: 2.75rem 0 2rem;
+        }
+        .foot-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding-bottom: 2rem;
+            margin-bottom: 1.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .foot-brand {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+        .foot-nav {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .foot-nav a {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.45);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .foot-nav a:hover { color: var(--white); }
+
+        .foot-legal {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        .foot-legal a {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.25);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .foot-legal a:hover { color: rgba(255,255,255,0.55); }
+
+        .foot-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .foot-copy   { font-size: 0.775rem; color: rgba(255,255,255,0.18); }
+        .foot-tagline {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 0.875rem;
+            color: rgba(201,147,58,0.65);
+            text-align: center;
+            flex: 1;
+        }
+        .foot-spacer { width: 100px; }
+
+        @media (max-width: 640px) {
+            .foot-top { flex-direction: column; align-items: flex-start; }
+            .foot-bottom { flex-direction: column; align-items: center; }
+            .foot-spacer { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════════════ -->
+<nav id="nav" aria-label="Hauptnavigation">
+    <div class="nav-row">
+        <a href="#" class="nav-brand" aria-label="KMU Klarheit — zur Startseite">KMU Klarheit</a>
+
+        <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Navigation öffnen/schliessen">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                <rect y="4"  width="22" height="2" rx="1" fill="currentColor"/>
+                <rect y="10" width="22" height="2" rx="1" fill="currentColor"/>
+                <rect y="16" width="22" height="2" rx="1" fill="currentColor"/>
+            </svg>
+        </button>
+
+        <ul class="nav-links" id="nav-menu" role="list">
+            <li><a href="#solution">Leistungen</a></li>
+            <li><a href="#process">Ablauf</a></li>
+            <li><a href="#forwhom">Für wen</a></li>
+            <li><a href="#contact" class="nav-btn">Erstanalyse anfragen</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════════════
+     § 1 — HERO
+══════════════════════════════════════════════ -->
+<section id="hero" aria-labelledby="h-hero">
+
+    <!-- Abstract precision mark -->
+    <svg class="hero-mark" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg"
+         aria-hidden="true" focusable="false">
+        <circle cx="250" cy="250" r="230" stroke="#0D1B2A" stroke-width="0.75"/>
+        <circle cx="250" cy="250" r="175" stroke="#0D1B2A" stroke-width="0.75"/>
+        <circle cx="250" cy="250" r="120" stroke="#0D1B2A" stroke-width="1.5"/>
+        <circle cx="250" cy="250" r="65"  stroke="#0D1B2A" stroke-width="0.75"/>
+        <circle cx="250" cy="250" r="10"  fill="#C9933A" opacity="0.55"/>
+        <line x1="20"  y1="250" x2="480" y2="250" stroke="#0D1B2A" stroke-width="1"/>
+        <line x1="250" y1="20"  x2="250" y2="480" stroke="#0D1B2A" stroke-width="1"/>
+        <line x1="87"  y1="87"  x2="413" y2="413" stroke="#0D1B2A" stroke-width="0.6"/>
+        <line x1="413" y1="87"  x2="87"  y2="413" stroke="#0D1B2A" stroke-width="0.6"/>
+        <circle cx="250" cy="130" r="3.5" fill="#C9933A" opacity="0.35"/>
+        <circle cx="370" cy="250" r="3.5" fill="#C9933A" opacity="0.35"/>
+        <circle cx="250" cy="370" r="3.5" fill="#C9933A" opacity="0.35"/>
+        <circle cx="130" cy="250" r="3.5" fill="#C9933A" opacity="0.35"/>
+        <!-- sharp line cutting through — the "clarity from noise" motif -->
+        <line x1="0" y1="250" x2="220" y2="250" stroke="#C9933A" stroke-width="2" opacity="0.45"/>
+        <line x1="280" y1="250" x2="500" y2="250" stroke="#0D1B2A" stroke-width="0.6" opacity="0.4"/>
+    </svg>
+
+    <div class="wrap">
+        <div class="hero-body">
+            <div class="hero-eyebrow fu">Positionierung für Schweizer KMU</div>
+            <h1 id="h-hero" class="hero-h1 fu d1">
+                Ihr Unternehmen ist<br>besser als sein Ruf.
+            </h1>
+            <p class="hero-sub fu d2">
+                Wir helfen KMU, ihre Stärken so zu kommunizieren, dass Kunden sie sofort verstehen, schneller vertrauen und seltener den Preis vergleichen.
+            </p>
+            <div class="hero-cta fu d3">
+                <a href="#contact" class="btn btn-amber btn-lg">Kostenlose Erstanalyse anfragen</a>
+                <span class="hero-trust">Keine Agentur. Kein Retainer. Klare Ergebnisse.</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     § 2 — PROBLEM
+══════════════════════════════════════════════ -->
+<section id="problem" aria-labelledby="h-problem">
+    <div class="wrap">
+
+        <div class="problem-split">
+            <div class="fu">
+                <h2 id="h-problem">
+                    Austauschbar zu wirken, ist teurer als&nbsp;Sie denken.
+                </h2>
+            </div>
+            <div class="fu d1">
+                <p>Die meisten KMU sind exzellent in dem, was sie tun — aber sie kommunizieren wie alle anderen. „Qualität, Erfahrung, Zuverlässigkeit." Diese Worte stehen auf tausend Websites. Wenn potenzielle Kunden Ihre Seite besuchen, entscheiden sie in Sekunden — und wenn Ihr Auftritt sie nicht sofort überzeugt, verlassen sie ihn, ohne Sie je anzurufen.</p>
+                <p>Das ist kein Qualitätsproblem. Das ist ein Kommunikationsproblem.</p>
+            </div>
+        </div>
+
+        <div class="pain-grid" role="list">
+
+            <div class="pain-card fu" role="listitem">
+                <svg class="pain-icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                    <circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="2"/>
+                    <line x1="24" y1="24" x2="33" y2="33" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="11.5" y1="16" x2="20.5" y2="16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-dasharray="2.5 2.5"/>
+                </svg>
+                <h3>Unsichtbar in der Masse</h3>
+                <p>Interessenten finden Sie, verstehen aber nicht sofort, warum sie Sie wählen sollten.</p>
+            </div>
+
+            <div class="pain-card fu d1" role="listitem">
+                <svg class="pain-icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                    <path d="M6 10h24M6 18h16M6 26h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="29" cy="26" r="5.5" stroke="currentColor" stroke-width="2"/>
+                    <line x1="29" y1="23.5" x2="29" y2="26" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                    <circle cx="29" cy="28.25" r="0.9" fill="currentColor"/>
+                </svg>
+                <h3>Botschaft ohne Wirkung</h3>
+                <p>Ihre Texte beschreiben, was Sie tun — aber nicht, warum das für den Kunden relevant ist.</p>
+            </div>
+
+            <div class="pain-card fu d2" role="listitem">
+                <svg class="pain-icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                    <path d="M18 5v26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 11l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 25l6 6 6-6"  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="5"  y1="18" x2="11" y2="18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                    <line x1="25" y1="18" x2="31" y2="18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                </svg>
+                <h3>Preisdruck durch Austauschbarkeit</h3>
+                <p>Wer sich nicht differenziert, konkurriert über den Preis.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     § 3 — SOLUTION
+══════════════════════════════════════════════ -->
+<section id="solution" aria-labelledby="h-solution">
+    <div class="wrap">
+        <span class="label fu">Was wir tun</span>
+        <h2 id="h-solution" class="fu d1">
+            Positionierung und Kommunikation, die wirken —<br>messbar, schnell, ohne Agentur-Overhead.
+        </h2>
+
+        <div class="pillars" role="list">
+
+            <article class="pillar fu" role="listitem">
+                <div class="pillar-num" aria-hidden="true">01</div>
+                <h3>Positionierung schärfen</h3>
+                <p>Wir analysieren, wie Sie heute wahrgenommen werden — und definieren gemeinsam, wie Sie wahrgenommen werden wollen. Das Ergebnis: eine klare Positionierung, die Sie unverwechselbar macht.</p>
+            </article>
+
+            <article class="pillar fu d1" role="listitem">
+                <div class="pillar-num" aria-hidden="true">02</div>
+                <h3>Botschaft neu formulieren</h3>
+                <p>Ihre Website, Ihr Pitch, Ihre Angebote — wir schreiben sie so um, dass Ihr Wunschkunde sofort versteht: „Das ist genau das, was ich brauche." Psychologisch fundiert. Keine Floskeln.</p>
+            </article>
+
+            <article class="pillar fu d2" role="listitem">
+                <div class="pillar-num" aria-hidden="true">03</div>
+                <h3>Online-Auftritt transformieren</h3>
+                <p>Wir überarbeiten Ihren digitalen Auftritt — visuell und inhaltlich — so dass er Vertrauen auf den ersten Blick schafft und Interessenten zu Anfragen werden.</p>
+            </article>
+
+        </div>
+
+        <p class="solution-footer fu">Kein Retainer. Keine Bindung. Klares Ergebnis in wenigen Wochen.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     § 4 — PROCESS
+══════════════════════════════════════════════ -->
+<section id="process" aria-labelledby="h-process">
+    <div class="wrap">
+
+        <div class="process-head">
+            <span class="label fu">Der Ablauf</span>
+            <h2 id="h-process" class="fu d1">Einfach. Schnell. Konkret.</h2>
+        </div>
+
+        <div class="steps">
+
+            <div class="step fu">
+                <div class="step-num" aria-hidden="true">1</div>
+                <div class="step-when">Woche 1</div>
+                <h3>Analyse</h3>
+                <p>In einem strukturierten Gespräch erfassen wir Ihre aktuelle Positionierung, Ihre Zielkunden und die Lücken in Ihrer Kommunikation.</p>
+            </div>
+
+            <div class="step fu d1">
+                <div class="step-num" aria-hidden="true">2</div>
+                <div class="step-when">Woche 2–3</div>
+                <h3>Strategie &amp; Umsetzung</h3>
+                <p>Wir entwickeln Ihre geschärfte Positionierung, formulieren Ihre Kernbotschaft neu und setzen die Änderungen um — in Texten, Struktur und visuellem Auftritt.</p>
+            </div>
+
+            <div class="step fu d2">
+                <div class="step-num" aria-hidden="true">3</div>
+                <div class="step-when">Woche 4</div>
+                <h3>Ergebnis &amp; Übergabe</h3>
+                <p>Sie erhalten alles, was Sie brauchen, um sofort damit zu arbeiten: überarbeitete Texte, klare Botschaft, neu gestalteter Online-Auftritt. Fertig.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     § 5 — WHY IT WORKS
+══════════════════════════════════════════════ -->
+<section id="why" aria-labelledby="h-why">
+    <div class="wrap">
+        <div class="why-grid">
+
+            <div>
+                <span class="label fu">Warum es funktioniert</span>
+                <h2 id="h-why" class="fu d1">
+                    Vertrauen entsteht nicht durch Überzeugung —<br>sondern durch Klarheit.
+                </h2>
+                <div class="why-text fu d2">
+                    <p>Die Forschung ist eindeutig: Menschen vertrauen schneller, wenn sie schnell verstehen. Nicht weil sie überzeugt werden, sondern weil ihr Gehirn das Risiko als gering einschätzt, wenn eine Botschaft klar, konsistent und relevant ist.</p>
+                    <p>Die meisten Unternehmensauftritte tun das Gegenteil: Sie versuchen, alles zu erklären — und erzeugen damit kognitive Überlastung. Der Interessent weicht aus. Der Anruf bleibt aus.</p>
+                    <p>Unsere Methode basiert auf den Erkenntnissen der Verhaltenspsychologie: Wie Menschen Entscheidungen treffen (Kahneman), wie Vertrauen entsteht (Cialdini), wie emotionale Resonanz Kaufentscheidungen antreibt (Damasio). Kein Trend. Keine Meinung. Bewiesene Mechanismen.</p>
+                    <div class="why-refs" role="list" aria-label="Wissenschaftliche Grundlagen">
+                        <span class="why-ref" role="listitem">Kahneman — Thinking, Fast and Slow</span>
+                        <span class="why-ref" role="listitem">Cialdini — Influence</span>
+                        <span class="why-ref" role="listitem">Damasio — Descartes' Error</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fu d2">
+                <blockquote class="pullquote">
+                    „Austauschbar wirken ist eine Entscheidung. Meistens eine unbewusste."
+                </blockquote>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     § 6 — FOR WHOM
+══════════════════════════════════════════════ -->
+<section id="forwhom" aria-labelledby="h-forwhom">
+    <div class="wrap">
+        <h2 id="h-forwhom" class="fu">Das ist für Sie, wenn&nbsp;…</h2>
+
+        <div class="fw-grid">
+
+            <div class="fw-yes fu d1">
+                <div class="fw-col-title">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+                        <circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" stroke-width="1.4"/>
+                        <path d="M4.5 7.5l2.5 2.5 4-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Das passt
+                </div>
+                <ul class="fw-list">
+                    <li>
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+                            <path d="M3 8.5l3.5 3.5 7.5-7" stroke="#C9933A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Sie führen ein KMU mit echtem Angebot — und das Gefühl, dass es draußen nicht so ankommt, wie es sein sollte
+                    </li>
+                    <li>
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+                            <path d="M3 8.5l3.5 3.5 7.5-7" stroke="#C9933A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Sie haben eine Website, aber sie bringt kaum Anfragen
+                    </li>
+                    <li>
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+                            <path d="M3 8.5l3.5 3.5 7.5-7" stroke="#C9933A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Sie verlieren Aufträge an Mitbewerber, die objektiv nicht besser sind als Sie
+                    </li>
+                    <li>
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+                            <path d="M3 8.5l3.5 3.5 7.5-7" stroke="#C9933A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Sie wollen keine Agentur, die monatelang Konzepte entwickelt — sondern konkrete Ergebnisse
+                    </li>
+                </ul>
+            </div>
+
+            <div class="fw-no fu d2">
+                <div class="fw-col-title">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+                        <circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" stroke-width="1.4"/>
+                        <path d="M5 5l5 5M10 5l-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                    Das passt nicht
+                </div>
+                <ul class="fw-list">
+                    <li>
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+                            <path d="M4 4l9 9M13 4l-9 9" stroke="#6B6560" stroke-width="1.75" stroke-linecap="round"/>
+                        </svg>
+                        Sie suchen jemanden, der „mal schnell was Günstiges zusammenbaut"
+                    </li>
+                    <li>
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+                            <path d="M4 4l9 9M13 4l-9 9" stroke="#6B6560" stroke-width="1.75" stroke-linecap="round"/>
+                        </svg>
+                        Sie erwarten Wachstum ohne Bereitschaft, Ihre Kommunikation zu hinterfragen
+                    </li>
+                    <li>
+                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+                            <path d="M4 4l9 9M13 4l-9 9" stroke="#6B6560" stroke-width="1.75" stroke-linecap="round"/>
+                        </svg>
+                        Sie wollen keine Veränderung — nur Bestätigung
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     § 7 — TESTIMONIALS
+══════════════════════════════════════════════ -->
+<section id="testimonials" aria-labelledby="h-testi">
+    <div class="wrap">
+        <span class="label fu">Stimmen</span>
+        <h2 id="h-testi" class="fu d1">Was KMU über die Zusammenarbeit sagen</h2>
+
+        <div class="testi-grid">
+
+            <div class="testi-card fu d1">
+                <span class="ph-badge">Platzhalter</span>
+                <p class="testi-quote">„Wir hatten das Gefühl, dass unsere Qualität einfach nicht rüberkommt — trotz 20 Jahren Erfahrung. Nach der Zusammenarbeit hat sich das grundlegend geändert. Die ersten Anfragen kamen noch bevor wir die neue Website live gestellt hatten."</p>
+                <div class="testi-name">Inhaber</div>
+                <div class="testi-role">Elektroinstallationen, Kanton Zürich — [PLATZHALTER]</div>
+            </div>
+
+            <div class="testi-card fu d2">
+                <span class="ph-badge">Platzhalter</span>
+                <p class="testi-quote">„Ich war skeptisch. Viele versprechen viel. Aber was wir bekommen haben, war konkret, schnell und hat sofort gewirkt. Kein Strategie-Ordner, der in der Schublade landet — sondern echte Texte, echte Wirkung."</p>
+                <div class="testi-name">Geschäftsführerin</div>
+                <div class="testi-role">Steuerberatung, Kanton Bern — [PLATZHALTER]</div>
+            </div>
+
+        </div>
+
+        <p class="trust-bar fu">
+            Bereits gearbeitet mit KMU aus:&nbsp; Handwerk &nbsp;·&nbsp; Beratung &nbsp;·&nbsp; Dienstleistung &nbsp;·&nbsp; Gesundheit &nbsp;·&nbsp; Immobilien
+        </p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     § 8 — CONTACT / CTA
+══════════════════════════════════════════════ -->
+<section id="contact" aria-labelledby="h-contact">
+    <div class="wrap">
+
+        <div class="contact-head fu">
+            <span class="label">Kontakt</span>
+            <h2 id="h-contact">Bereit, aufzuhören,<br>austauschbar zu wirken?</h2>
+            <p>Buchen Sie eine kostenlose Erstanalyse. 30&nbsp;Minuten. Kein Verkaufsgespräch. Nur eine ehrliche Einschätzung, wo Ihre Kommunikation steht — und was möglich wäre.</p>
+        </div>
+
+        <div class="form-wrap fu d1">
+
+            <form id="cform" novalidate aria-label="Kontaktformular">
+
+                <div class="form-row">
+                    <div class="fg" id="fg-name">
+                        <label for="f-name">Name</label>
+                        <input type="text" id="f-name" name="name" placeholder="Ihr Name" required autocomplete="name">
+                        <span class="ferr" id="err-name" role="alert">Bitte geben Sie Ihren Namen ein.</span>
+                    </div>
+                    <div class="fg" id="fg-company">
+                        <label for="f-company">Unternehmen</label>
+                        <input type="text" id="f-company" name="company" placeholder="Ihr Unternehmen" required autocomplete="organization">
+                        <span class="ferr" id="err-company" role="alert">Bitte geben Sie Ihr Unternehmen ein.</span>
+                    </div>
+                </div>
+
+                <div class="fg" id="fg-email">
+                    <label for="f-email">E-Mail</label>
+                    <input type="email" id="f-email" name="email" placeholder="ihre@email.ch" required autocomplete="email">
+                    <span class="ferr" id="err-email" role="alert">Bitte geben Sie eine gültige E-Mail-Adresse ein.</span>
+                </div>
+
+                <div class="fg" id="fg-msg">
+                    <label for="f-msg">Kurzbeschreibung des Anliegens</label>
+                    <textarea id="f-msg" name="message" placeholder="Was beschäftigt Sie gerade in Bezug auf Ihre Kommunikation oder Ihren Online-Auftritt?" required></textarea>
+                    <span class="ferr" id="err-msg" role="alert">Bitte beschreiben Sie kurz Ihr Anliegen (mind. 10&nbsp;Zeichen).</span>
+                </div>
+
+                <div class="form-submit">
+                    <button type="submit" class="btn btn-amber btn-lg">Kostenlose Erstanalyse anfragen&nbsp;→</button>
+                </div>
+                <p class="form-note">Wir melden uns innerhalb von 24&nbsp;Stunden.</p>
+
+            </form>
+
+            <div class="form-ok" id="form-ok" role="status" aria-live="polite">
+                <div class="form-ok-icon" aria-hidden="true">
+                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                        <path d="M5 13l5.5 5.5L21 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3>Danke für Ihre Anfrage.</h3>
+                <p>Wir melden uns innerhalb von 24&nbsp;Stunden.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer>
+    <div class="wrap">
+        <div class="foot-top">
+            <a href="#" class="foot-brand">KMU Klarheit</a>
+            <ul class="foot-nav" role="list">
+                <li><a href="#solution">Leistungen</a></li>
+                <li><a href="#process">Ablauf</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            <ul class="foot-legal" role="list">
+                <li><a href="#">Datenschutz</a></li>
+                <li><a href="#">Impressum</a></li>
+            </ul>
+        </div>
+        <div class="foot-bottom">
+            <p class="foot-copy">© 2025 KMU Klarheit</p>
+            <p class="foot-tagline"><em>„Klarheit ist der stärkste Wettbewerbsvorteil."</em></p>
+            <div class="foot-spacer" aria-hidden="true"></div>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function () {
+    'use strict';
+
+    /* ─── NAV: sticky + mobile toggle ─── */
+    var nav      = document.getElementById('nav');
+    var toggle   = document.getElementById('nav-toggle');
+    var menu     = document.getElementById('nav-menu');
+
+    window.addEventListener('scroll', function () {
+        nav.classList.toggle('stuck', window.scrollY > 36);
+    }, { passive: true });
+
+    toggle.addEventListener('click', function () {
+        var open = menu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+    });
+
+    menu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+            menu.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    /* ─── FADE-UP on scroll ─── */
+    var fuEls = document.querySelectorAll('.fu');
+
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                    e.target.classList.add('in');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.10, rootMargin: '0px 0px -36px 0px' });
+
+        fuEls.forEach(function (el) {
+            // Hero elements fire immediately via timeout
+            if (el.closest('#hero')) {
+                setTimeout(function () { el.classList.add('in'); }, 80);
+            } else {
+                io.observe(el);
+            }
+        });
+    } else {
+        // Fallback: just show everything
+        fuEls.forEach(function (el) { el.classList.add('in'); });
+    }
+
+    /* ─── CONTACT FORM ─── */
+    var form   = document.getElementById('cform');
+    var formOk = document.getElementById('form-ok');
+
+    function emailOk(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+    }
+
+    function validate(fieldId, groupId, errId, testFn) {
+        var f   = document.getElementById(fieldId);
+        var g   = document.getElementById(groupId);
+        var err = document.getElementById(errId);
+        var ok  = testFn(f.value.trim());
+        g.classList.toggle('err', !ok);
+        err.classList.toggle('show', !ok);
+        return ok;
+    }
+
+    // Blur-time inline validation
+    document.getElementById('f-name').addEventListener('blur', function () {
+        validate('f-name', 'fg-name', 'err-name', function (v) { return v.length > 0; });
+    });
+    document.getElementById('f-company').addEventListener('blur', function () {
+        validate('f-company', 'fg-company', 'err-company', function (v) { return v.length > 0; });
+    });
+    document.getElementById('f-email').addEventListener('blur', function () {
+        validate('f-email', 'fg-email', 'err-email', emailOk);
+    });
+    document.getElementById('f-msg').addEventListener('blur', function () {
+        validate('f-msg', 'fg-msg', 'err-msg', function (v) { return v.length >= 10; });
+    });
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var ok1 = validate('f-name',    'fg-name',    'err-name',    function (v) { return v.length > 0; });
+        var ok2 = validate('f-company', 'fg-company', 'err-company', function (v) { return v.length > 0; });
+        var ok3 = validate('f-email',   'fg-email',   'err-email',   emailOk);
+        var ok4 = validate('f-msg',     'fg-msg',     'err-msg',     function (v) { return v.length >= 10; });
+
+        if (ok1 && ok2 && ok3 && ok4) {
+            form.style.display = 'none';
+            formOk.classList.add('show');
+            formOk.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            // Focus first error
+            var firstErr = form.querySelector('.fg.err input, .fg.err textarea');
+            if (firstErr) firstErr.focus();
+        }
+    });
+
+})();
+</script>
+
+</body>
+</html>
