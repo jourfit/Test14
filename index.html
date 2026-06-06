@@ -1,1318 +1,1827 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marke &amp; Kommunikation für KMU | KMU Klarheit</title>
-    <meta name="description" content="Wir helfen KMU, ihre Stärken klar zu kommunizieren — damit Kunden verstehen, vertrauen und anfragen.">
-    <meta property="og:title" content="Marke &amp; Kommunikation für KMU | KMU Klarheit">
-    <meta property="og:description" content="Wir helfen KMU, ihre Stärken klar zu kommunizieren — damit Kunden verstehen, vertrauen und anfragen.">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="de_CH">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPARR — The Fight Logbook for Combat Athletes</title>
+<meta name="description" content="SPARR is the fight logbook and community layer for combat athletes. Track training, build streaks, connect with your gym. Join the early waitlist.">
+<meta property="og:title" content="SPARR — The Fight Logbook for Combat Athletes">
+<meta property="og:description" content="Every round counts. Track your fight journey — boxing, MMA, BJJ, Muay Thai and more.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
 
-    <style>
-        /* ─────────────────────────────────────────
-           TOKENS & RESET
-        ───────────────────────────────────────── */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<style>
+/* ─── TOKENS ─── */
+:root {
+  --neon:       #A8FF00;
+  --lime:       #7CFF00;
+  --energy:     #39D000;
+  --neon-dark:  #0FA500;
+  --black:      #0D0D0D;
+  --dark:       #1A1A1A;
+  --card-bg:    rgba(255,255,255,0.05);
+  --card-border:rgba(168,255,0,0.18);
+  --anthracite: #2C2C2C;
+  --silver:     #C0C0C0;
+  --white:      #FFFFFF;
+  --muted:      rgba(255,255,255,0.5);
+  --font:       'Raleway', system-ui, sans-serif;
+  --max-w:      1200px;
+  --sp:         clamp(72px, 9vw, 110px);
+  --r:          20px;
+}
 
-        :root {
-            --navy:      #0D1B2A;
-            --amber:     #C9933A;
-            --amber-lt:  #D4A554;
-            --bg:        #F7F5F0;
-            --card-bg:   #EFECEA;
-            --text:      #1A1A1A;
-            --text-mid:  #3D3933;
-            --muted:     #6B6560;
-            --border:    #E2DDD6;
-            --white:     #FFFFFF;
-            --font-serif: 'Playfair Display', Georgia, serif;
-            --font-sans:  'Inter', system-ui, -apple-system, sans-serif;
-            --max-w: 1180px;
-            --sp: clamp(72px, 9vw, 112px);
-        }
+/* ─── RESET ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);background:var(--black);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font);cursor:pointer}
+ul{list-style:none}
 
-        html { scroll-behavior: smooth; font-size: 16px; }
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--anthracite);border-radius:3px}
 
-        body {
-            font-family: var(--font-sans);
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
+/* ─── LAYOUT ─── */
+.wrap{max-width:var(--max-w);margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem)}
+section{padding:var(--sp) 0}
 
-        /* ─────────────────────────────────────────
-           TYPOGRAPHY
-        ───────────────────────────────────────── */
-        h1, h2, h3 {
-            font-family: var(--font-serif);
-            line-height: 1.13;
-            letter-spacing: -0.02em;
-            color: var(--navy);
-        }
-        h1 { font-size: clamp(2.75rem, 5.5vw, 4.75rem); font-weight: 700; }
-        h2 { font-size: clamp(1.9rem,  3.8vw, 2.9rem);  font-weight: 600; }
-        h3 { font-size: clamp(1.1rem,  1.6vw, 1.35rem); font-weight: 600; }
+/* ─── BACKGROUND GLOWS ─── */
+.bg-glow{position:relative}
+.bg-glow::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle at 80% 10%, rgba(168,255,0,0.14) 0%, transparent 40%),
+    radial-gradient(circle at 10% 90%, rgba(57,208,0,0.10) 0%, transparent 40%);
+}
+.bg-glow>*{position:relative;z-index:1}
 
-        p   { font-size: 1.0rem; line-height: 1.78; color: var(--text-mid); }
-        a   { color: inherit; }
+/* ─── GRID OVERLAY ─── */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(168,255,0,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168,255,0,0.025) 1px, transparent 1px);
+  background-size:60px 60px;
+}
 
-        .label {
-            display: block;
-            font-family: var(--font-sans);
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.17em;
-            text-transform: uppercase;
-            color: var(--amber);
-            margin-bottom: 1rem;
-        }
+/* ─── ANIMATION ─── */
+.fu{opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease}
+.fu.in{opacity:1;transform:none}
+.fu.d1{transition-delay:.1s}.fu.d2{transition-delay:.2s}.fu.d3{transition-delay:.3s}.fu.d4{transition-delay:.4s}.fu.d5{transition-delay:.5s}
 
-        /* ─────────────────────────────────────────
-           LAYOUT
-        ───────────────────────────────────────── */
-        .wrap {
-            max-width: var(--max-w);
-            margin: 0 auto;
-            padding: 0 clamp(1.25rem, 4vw, 2.5rem);
-        }
-        section { padding: var(--sp) 0; }
+@media(prefers-reduced-motion:reduce){.fu{opacity:1;transform:none;transition:none}}
 
-        /* ─────────────────────────────────────────
-           ANIMATION — fade-up on scroll
-        ───────────────────────────────────────── */
-        .fu {
-            opacity: 0;
-            transform: translateY(26px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        .fu.in { opacity: 1; transform: translateY(0); }
-        .fu.d1 { transition-delay: 0.10s; }
-        .fu.d2 { transition-delay: 0.20s; }
-        .fu.d3 { transition-delay: 0.30s; }
-        .fu.d4 { transition-delay: 0.40s; }
+/* ─── GLASS CARD ─── */
+.glass{
+  background:var(--card-bg);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--card-border);
+  border-radius:var(--r);
+  box-shadow:0 0 40px rgba(168,255,0,0.06);
+  transition:border-color .25s,box-shadow .25s,transform .25s;
+}
+.glass:hover{
+  border-color:rgba(168,255,0,0.4);
+  box-shadow:0 0 60px rgba(168,255,0,0.14);
+  transform:translateY(-3px);
+}
 
-        /* ─────────────────────────────────────────
-           NAV
-        ───────────────────────────────────────── */
-        #nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-            padding: 1.1rem 0;
-            transition: background 0.3s, box-shadow 0.3s;
-        }
-        #nav.stuck {
-            background: rgba(247,245,240,0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 1px 0 var(--border);
-        }
-        .nav-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: var(--max-w);
-            margin: 0 auto;
-            padding: 0 clamp(1.25rem, 4vw, 2.5rem);
-        }
-        .nav-brand {
-            font-family: var(--font-serif);
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--navy);
-            text-decoration: none;
-        }
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2.25rem;
-            align-items: center;
-        }
-        .nav-links a {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--navy);
-            text-decoration: none;
-            letter-spacing: 0.01em;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover { color: var(--amber); }
-        .nav-links .nav-btn {
-            background: var(--amber);
-            color: var(--navy);
-            padding: 0.55rem 1.2rem;
-            border-radius: 2px;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-        .nav-links .nav-btn:hover { background: var(--amber-lt); color: var(--navy); }
+/* ─── BUTTONS ─── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  font-family:var(--font);font-weight:800;font-size:.875rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:.85rem 2rem;min-height:50px;border:none;border-radius:999px;
+  cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;
+  white-space:nowrap;
+}
+.btn-neon{background:linear-gradient(135deg,var(--neon),var(--energy));color:var(--black)}
+.btn-neon:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(168,255,0,0.5)}
+.btn-neon:focus-visible{outline:2px solid var(--neon);outline-offset:3px}
+.btn-ghost{background:transparent;color:var(--white);border:1.5px solid rgba(168,255,0,0.45)}
+.btn-ghost:hover{border-color:var(--neon);color:var(--neon);box-shadow:0 0 20px rgba(168,255,0,0.2)}
+.btn-ghost:focus-visible{outline:2px solid var(--neon);outline-offset:3px}
+.btn-lg{font-size:1rem;padding:1rem 2.5rem;min-height:56px}
 
-        .nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--navy);
-            padding: 0.35rem;
-            min-width: 44px; min-height: 44px;
-            align-items: center; justify-content: center;
-        }
+/* ─── SECTION LABELS ─── */
+.sec-label{
+  display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--neon);margin-bottom:1rem;
+}
+.sec-label::before{content:'// ';opacity:.6}
 
-        @media (max-width: 760px) {
-            .nav-toggle { display: flex; }
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%; left: 0; right: 0;
-                background: var(--bg);
-                border-top: 1px solid var(--border);
-                padding: 1.5rem 1.5rem 2rem;
-                gap: 1.35rem;
-                box-shadow: 0 8px 24px rgba(0,0,0,0.07);
-            }
-            .nav-links.open { display: flex; }
-        }
+/* ─── HEADLINES ─── */
+h1,h2,h3,h4{font-family:var(--font);line-height:1.08;letter-spacing:-.01em}
+h1{font-size:clamp(2.6rem,6vw,5.5rem);font-weight:900}
+h2{font-size:clamp(1.8rem,4vw,3.2rem);font-weight:900;text-transform:uppercase}
+h3{font-size:clamp(1rem,1.6vw,1.2rem);font-weight:700}
+.neon{color:var(--neon)}
 
-        /* ─────────────────────────────────────────
-           BUTTONS
-        ───────────────────────────────────────── */
-        .btn {
-            display: inline-block;
-            font-family: var(--font-sans);
-            font-weight: 600;
-            font-size: 1rem;
-            padding: 1rem 2.1rem;
-            min-height: 52px;
-            border-radius: 2px;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            letter-spacing: 0.01em;
-            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-            line-height: 1.2;
-        }
-        .btn-amber { background: var(--amber); color: var(--navy); }
-        .btn-amber:hover {
-            background: var(--amber-lt);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(201,147,58,0.32);
-        }
-        .btn-lg { font-size: 1.05rem; padding: 1.15rem 2.5rem; }
+/* ───────────────────────────────────────────────
+   NAV
+─────────────────────────────────────────────── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  padding:1rem 0;
+  transition:background .3s,backdrop-filter .3s,box-shadow .3s;
+}
+#nav.stuck{
+  background:rgba(13,13,13,0.88);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(168,255,0,0.12);
+  box-shadow:0 4px 30px rgba(0,0,0,0.5);
+}
+.nav-row{
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:var(--max-w);margin:0 auto;
+  padding:0 clamp(1.25rem,4vw,2.5rem);
+  gap:2rem;
+}
+.nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
+.nav-logo-icon{
+  width:36px;height:36px;
+  background:linear-gradient(135deg,#1a1a1a,#2a2a2a);
+  border:1.5px solid rgba(168,255,0,0.5);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 12px rgba(168,255,0,0.2);
+  flex-shrink:0;
+}
+.nav-logo-wordmark{font-size:1.25rem;font-weight:900;letter-spacing:-.02em}
+.nav-logo-wordmark .sp{color:var(--white)}
+.nav-logo-wordmark .arr{color:var(--neon)}
 
-        /* ─────────────────────────────────────────
-           § 1 — HERO
-        ───────────────────────────────────────── */
-        #hero {
-            min-height: 100svh;
-            display: flex;
-            align-items: center;
-            padding-top: 80px;
-            position: relative;
-            overflow: hidden;
-            background: var(--bg);
-        }
+.nav-links{
+  display:flex;align-items:center;gap:2rem;
+}
+.nav-links a{
+  font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,0.7);transition:color .2s;
+}
+.nav-links a:hover{color:var(--neon)}
+.nav-links a:focus-visible{outline:2px solid var(--neon);border-radius:3px}
 
-        /* Abstract geometric mark — right side */
-        .hero-mark {
-            position: absolute;
-            right: clamp(-60px, -3vw, 0px);
-            top: 50%;
-            transform: translateY(-50%);
-            width: min(500px, 44vw);
-            opacity: 0.06;
-            pointer-events: none;
-        }
+.nav-cta{margin-left:.5rem}
 
-        /* Decorative amber line — top left of content */
-        .hero-eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.775rem;
-            font-weight: 600;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--amber);
-            margin-bottom: 1.6rem;
-        }
-        .hero-eyebrow::before {
-            content: '';
-            display: block;
-            width: 30px; height: 1.5px;
-            background: var(--amber);
-            flex-shrink: 0;
-        }
+.nav-toggle{
+  display:none;background:none;border:1.5px solid rgba(168,255,0,0.3);border-radius:8px;
+  color:var(--white);padding:.5rem;min-width:42px;min-height:42px;
+  align-items:center;justify-content:center;transition:border-color .2s;
+}
+.nav-toggle:hover{border-color:var(--neon)}
+.nav-toggle:focus-visible{outline:2px solid var(--neon)}
 
-        .hero-body {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-        }
+@media(max-width:880px){
+  .nav-links .hide-m{display:none}
+}
+@media(max-width:680px){
+  .nav-toggle{display:flex}
+  .nav-links{
+    display:none;flex-direction:column;align-items:flex-start;
+    position:absolute;top:100%;left:0;right:0;
+    background:rgba(13,13,13,0.97);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(168,255,0,0.15);
+    padding:1.5rem 1.5rem 2rem;gap:1.25rem;
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{font-size:.95rem}
+  .nav-links .hide-m{display:flex}
+  .nav-cta{margin-left:0}
+}
 
-        .hero-h1 { margin-bottom: 1.5rem; }
+/* ───────────────────────────────────────────────
+   HERO
+─────────────────────────────────────────────── */
+#hero{
+  min-height:100svh;display:flex;align-items:center;
+  padding-top:90px;position:relative;overflow:hidden;
+  background:var(--black);
+}
+.hero-bg{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 75% 50%, rgba(168,255,0,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 80%, rgba(57,208,0,0.10) 0%, transparent 45%);
+}
+.hero-diag{
+  position:absolute;top:0;right:0;bottom:0;
+  width:55%;pointer-events:none;overflow:hidden;
+}
+.hero-diag::after{
+  content:'';position:absolute;
+  top:-20%;right:-10%;
+  width:120%;height:140%;
+  background:linear-gradient(135deg, rgba(168,255,0,0.04) 0%, transparent 50%);
+  transform:skewX(-8deg);
+}
 
-        .hero-sub {
-            font-size: clamp(1.05rem, 1.4vw, 1.2rem);
-            color: var(--text-mid);
-            max-width: 600px;
-            margin-bottom: 2.5rem;
-            line-height: 1.72;
-        }
+.hero-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(2rem,5vw,5rem);align-items:center;
+  position:relative;z-index:2;width:100%;
+}
 
-        .hero-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; }
+/* speed lines */
+.hero-speed-lines{
+  position:absolute;right:0;top:0;width:50%;height:100%;
+  pointer-events:none;overflow:hidden;opacity:.12;
+}
+.hero-speed-lines span{
+  position:absolute;height:1px;background:linear-gradient(90deg,transparent,var(--neon));
+  right:0;transform-origin:right center;
+}
 
-        .hero-trust {
-            font-size: 0.8rem;
-            color: var(--muted);
-            letter-spacing: 0.04em;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-        .hero-trust::before {
-            content: '';
-            width: 5px; height: 5px;
-            background: var(--amber);
-            border-radius: 50%;
-            display: inline-block;
-            flex-shrink: 0;
-        }
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--neon);margin-bottom:1.5rem;
+}
+.hero-eyebrow::before{content:'';width:24px;height:2px;background:var(--neon)}
 
-        /* ─────────────────────────────────────────
-           § 2 — PROBLEM
-        ───────────────────────────────────────── */
-        #problem { border-top: 1px solid var(--border); }
+h1.hero-h1{
+  font-size:clamp(3rem,6.5vw,6rem);font-weight:900;
+  text-transform:uppercase;line-height:1;
+  margin-bottom:1.5rem;letter-spacing:-.03em;
+}
+h1.hero-h1 em{font-style:normal;color:var(--neon)}
 
-        .problem-split {
-            display: grid;
-            grid-template-columns: 1fr 1.1fr;
-            gap: clamp(2.5rem, 6vw, 6rem);
-            align-items: start;
-            margin-bottom: 4rem;
-        }
-        .problem-split h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
-        .problem-right p  { margin-bottom: 1.2rem; }
-        .problem-right p:last-child { font-weight: 500; color: var(--navy); }
+.hero-sub{
+  font-size:clamp(1rem,1.4vw,1.15rem);color:rgba(255,255,255,0.75);
+  max-width:520px;margin-bottom:1.25rem;line-height:1.7;font-weight:500;
+}
+.hero-support{
+  font-size:.9rem;color:rgba(255,255,255,0.55);margin-bottom:2.25rem;
+  max-width:480px;line-height:1.65;
+}
+.hero-cta{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
+.hero-micro{
+  font-size:.75rem;color:rgba(255,255,255,0.4);letter-spacing:.04em;
+  display:flex;align-items:center;gap:.5rem;
+}
+.hero-micro::before{
+  content:'';width:5px;height:5px;background:var(--neon);
+  border-radius:50%;flex-shrink:0;box-shadow:0 0 6px var(--neon);
+}
 
-        .pain-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.25rem;
-        }
-        .pain-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 3px;
-            padding: 1.75rem 1.6rem;
-        }
-        .pain-icon {
-            width: 36px; height: 36px;
-            color: var(--amber);
-            margin-bottom: 1rem;
-            display: block;
-        }
-        .pain-card h3 {
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 0.45rem;
-        }
-        .pain-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+/* badges */
+.hero-badges{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
+.hero-badge{
+  font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:.3rem .85rem;border-radius:999px;
+  border:1px solid rgba(168,255,0,0.25);color:rgba(255,255,255,0.6);
+  background:rgba(168,255,0,0.06);
+}
 
-        @media (max-width: 860px) {
-            .problem-split { grid-template-columns: 1fr; gap: 2rem; }
-            .pain-grid { grid-template-columns: 1fr; gap: 1rem; }
-        }
+/* ─── PHONE MOCKUP ─── */
+.phone-wrap{
+  display:flex;justify-content:center;align-items:center;
+  position:relative;
+}
+.phone-glow{
+  position:absolute;inset:-40px;
+  background:radial-gradient(ellipse, rgba(168,255,0,0.22) 0%, transparent 65%);
+  pointer-events:none;border-radius:50%;
+  animation:pulseglow 4s ease-in-out infinite;
+}
+@keyframes pulseglow{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
 
-        /* ─────────────────────────────────────────
-           § 3 — SOLUTION (dark)
-        ───────────────────────────────────────── */
-        #solution {
-            background: var(--navy);
-            --text-mid: rgba(255,255,255,0.72);
-        }
-        #solution .label   { color: var(--amber); }
-        #solution h2       { color: var(--white); max-width: 680px; margin-bottom: 3.5rem; }
+.phone{
+  width:clamp(240px,28vw,320px);
+  background:linear-gradient(160deg,#1c1c1e,#0d0d0f);
+  border:2px solid rgba(255,255,255,0.12);
+  border-radius:48px;
+  padding:16px;
+  box-shadow:
+    0 40px 80px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(255,255,255,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  position:relative;
+  animation:phonefloat 6s ease-in-out infinite;
+}
+@keyframes phonefloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.phone-notch{
+  width:90px;height:26px;background:#0a0a0a;border-radius:0 0 18px 18px;
+  margin:0 auto 10px;
+}
+.phone-screen{
+  background:#0d0d0d;border-radius:36px;overflow:hidden;
+  padding:14px 12px;display:flex;flex-direction:column;gap:10px;
+  min-height:520px;
+}
 
-        .pillars {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.25rem;
-            margin-bottom: 2.75rem;
-        }
-        .pillar {
-            border-top: 2.5px solid var(--amber);
-            background: rgba(255,255,255,0.04);
-            border-radius: 0 0 3px 3px;
-            padding: 2rem 1.75rem;
-        }
-        .pillar-num {
-            font-family: var(--font-serif);
-            font-size: 2.75rem;
-            font-weight: 700;
-            color: rgba(201,147,58,0.22);
-            line-height: 1;
-            margin-bottom: 1rem;
-        }
-        .pillar h3 { color: var(--white); font-size: 1.1rem; margin-bottom: 0.875rem; }
-        .pillar p  { color: rgba(255,255,255,0.68); font-size: 0.9375rem; line-height: 1.72; }
+/* phone status bar */
+.pstatus{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
+.pstatus-time{font-size:.6rem;font-weight:800;color:var(--white)}
+.pstatus-icons{display:flex;gap:3px;align-items:center}
+.pstatus-icons span{display:block;background:var(--white);border-radius:1px}
+.pstatus-icons .sig{width:10px;height:7px;clip-path:polygon(0 100%,33% 50%,67% 20%,100% 0,100% 100%)}
+.pstatus-icons .wifi{width:9px;height:7px;clip-path:polygon(0 80%,20% 55%,50% 35%,80% 55%,100% 80%,80% 80%,50% 60%,20% 80%)}
+.pstatus-icons .bat{width:14px;height:8px;border:1.5px solid rgba(255,255,255,0.7);border-radius:2px;position:relative}
+.pstatus-icons .bat::before{content:'';position:absolute;left:1px;top:1px;bottom:1px;width:65%;background:var(--white);border-radius:1px}
+.pstatus-icons .bat::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:rgba(255,255,255,0.5);border-radius:0 2px 2px 0}
 
-        .solution-footer {
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--amber);
-            letter-spacing: 0.025em;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 1.75rem;
-        }
+/* phone app header */
+.papp-header{display:flex;justify-content:space-between;align-items:center}
+.papp-logo{font-size:.85rem;font-weight:900;letter-spacing:-.01em}
+.papp-logo .sp{color:var(--white)}.papp-logo .arr{color:var(--neon)}
+.papp-bell{width:22px;height:22px;border:1.5px solid rgba(168,255,0,0.35);border-radius:6px;display:flex;align-items:center;justify-content:center}
 
-        @media (max-width: 860px) {
-            .pillars { grid-template-columns: 1fr; gap: 1rem; }
-        }
+/* phone cards */
+.p-section-label{font-size:.5rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:4px}
 
-        /* ─────────────────────────────────────────
-           § 4 — PROCESS
-        ───────────────────────────────────────── */
-        .process-head { margin-bottom: 4rem; }
+.p-hero-card{
+  background:linear-gradient(135deg,rgba(168,255,0,0.12),rgba(57,208,0,0.06));
+  border:1px solid rgba(168,255,0,0.2);border-radius:14px;padding:12px;
+}
+.p-hero-greeting{font-size:.55rem;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:2px}
+.p-hero-msg{font-size:.8rem;font-weight:800;color:var(--white);line-height:1.2}
+.p-hero-sub{font-size:.55rem;color:rgba(255,255,255,0.5);margin-top:3px}
 
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            position: relative;
-        }
-        /* connector line */
-        .steps::before {
-            content: '';
-            position: absolute;
-            top: 27px;
-            left: calc(16.67% + 27px);
-            right: calc(16.67% + 27px);
-            height: 1px;
-            background: var(--border);
-        }
+.p-streak-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(168,255,0,0.15);
+  border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:8px;
+}
+.p-streak-icon{font-size:1.1rem;flex-shrink:0}
+.p-streak-label{font-size:.5rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.4)}
+.p-streak-val{font-size:.9rem;font-weight:900;color:var(--neon);line-height:1}
+.p-streak-best{font-size:.48rem;color:rgba(255,255,255,0.35)}
 
-        .step { padding: 0 2rem; }
-        .step:first-child { padding-left: 0; }
-        .step:last-child  { padding-right: 0; }
+.p-activity-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(168,255,0,0.1);
+  border-radius:12px;padding:10px 12px;
+}
+.p-activity-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.p-activity-type{font-size:.65rem;font-weight:800;color:var(--white)}
+.p-activity-tag{font-size:.45rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .45rem;background:rgba(168,255,0,0.15);border:1px solid rgba(168,255,0,0.25);border-radius:999px;color:var(--neon)}
+.p-activity-meta{font-size:.52rem;color:rgba(255,255,255,0.45)}
+.p-activity-note{font-size:.52rem;color:rgba(255,255,255,0.6);margin-top:4px;font-style:italic}
 
-        .step-num {
-            width: 54px; height: 54px;
-            background: var(--navy);
-            color: var(--white);
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            font-weight: 700;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-        .step-when {
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--amber);
-            margin-bottom: 0.45rem;
-        }
-        .step h3 { color: var(--navy); margin-bottom: 0.75rem; }
-        .step p  { font-size: 0.9375rem; color: #48453F; line-height: 1.72; }
+.p-gym-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(168,255,0,0.1);
+  border-radius:12px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;
+}
+.p-gym-text{font-size:.55rem;font-weight:700;color:rgba(255,255,255,0.8)}
+.p-gym-sub{font-size:.45rem;color:rgba(255,255,255,0.35)}
+.p-gym-arrow{font-size:.7rem;color:var(--neon)}
 
-        @media (max-width: 720px) {
-            .steps { grid-template-columns: 1fr; gap: 2.5rem; }
-            .steps::before { display: none; }
-            .step {
-                padding: 0;
-                display: grid;
-                grid-template-columns: 54px 1fr;
-                column-gap: 1.25rem;
-            }
-            .step-num  { grid-row: 1 / span 4; margin-bottom: 0; }
-            .step-when { grid-column: 2; }
-            .step h3   { grid-column: 2; }
-            .step p    { grid-column: 2; }
-        }
+/* phone nav */
+.p-nav{
+  display:flex;justify-content:space-around;align-items:center;
+  padding:8px 4px;border-top:1px solid rgba(255,255,255,0.06);
+  margin-top:auto;
+}
+.p-nav-item{display:flex;flex-direction:column;align-items:center;gap:2px}
+.p-nav-icon{font-size:.7rem}
+.p-nav-label{font-size:.38rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.4)}
+.p-nav-item.active .p-nav-label{color:var(--neon)}
+.p-nav-add{
+  width:28px;height:28px;background:linear-gradient(135deg,var(--neon),var(--energy));
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;font-weight:900;color:var(--black);
+}
 
-        /* ─────────────────────────────────────────
-           § 5 — WHY IT WORKS
-        ───────────────────────────────────────── */
-        #why {
-            background: var(--card-bg);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;gap:3rem}
+  .phone-wrap{order:-1}
+  .phone{width:clamp(220px,50vw,280px)}
+}
+@media(max-width:640px){
+  .hero-grid{gap:2rem}
+  h1.hero-h1{font-size:clamp(2.4rem,10vw,3.4rem)}
+  .phone{width:240px}
+  .phone-screen{min-height:460px}
+}
 
-        .why-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: clamp(2.5rem, 6vw, 6rem);
-            align-items: start;
-        }
-        .why-text p { margin-bottom: 1.1rem; font-size: 0.9375rem; }
-        .why-refs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 1.75rem;
-        }
-        .why-ref {
-            font-size: 0.775rem;
-            font-weight: 500;
-            color: var(--muted);
-            background: var(--bg);
-            border: 1px solid var(--border);
-            padding: 0.35rem 0.85rem;
-            border-radius: 100px;
-        }
+/* ───────────────────────────────────────────────
+   POSITIONING STRIP
+─────────────────────────────────────────────── */
+.strip{
+  background:rgba(168,255,0,0.04);
+  border-top:1px solid rgba(168,255,0,0.12);
+  border-bottom:1px solid rgba(168,255,0,0.12);
+  padding:1.5rem 0;overflow:hidden;
+}
+.strip-inner{
+  display:flex;align-items:center;gap:2rem;white-space:nowrap;
+  font-size:clamp(.75rem,.9vw,.85rem);font-weight:800;
+  text-transform:uppercase;letter-spacing:.15em;
+}
+.strip-inner span{color:rgba(255,255,255,0.45)}
+.strip-inner strong{color:var(--neon)}
+.strip-sep{color:rgba(168,255,0,0.3);flex-shrink:0;font-size:1.2rem}
 
-        blockquote.pullquote {
-            font-family: var(--font-serif);
-            font-style: italic;
-            font-size: clamp(1.4rem, 2.2vw, 1.9rem);
-            line-height: 1.42;
-            color: var(--amber);
-            border-left: 3px solid var(--amber);
-            padding: 2rem 2rem 2rem 2.25rem;
-            background: var(--bg);
-            border-radius: 0 3px 3px 0;
-        }
+/* ───────────────────────────────────────────────
+   PROBLEM
+─────────────────────────────────────────────── */
+#problem{background:var(--black)}
 
-        @media (max-width: 860px) {
-            .why-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-        }
+.problem-intro{
+  display:grid;grid-template-columns:1fr 1.1fr;
+  gap:clamp(2rem,5vw,5rem);align-items:start;margin-bottom:3.5rem;
+}
+.problem-intro h2{font-size:clamp(1.7rem,3.5vw,2.6rem)}
+.problem-copy{font-size:1rem;color:rgba(255,255,255,0.6);line-height:1.75}
 
-        /* ─────────────────────────────────────────
-           § 6 — FOR WHOM
-        ───────────────────────────────────────── */
-        #forwhom h2 { margin-bottom: 2.75rem; }
+.problem-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1rem;
+}
+.problem-card{
+  padding:1.5rem;
+}
+.p-card-icon{
+  width:44px;height:44px;background:rgba(168,255,0,0.08);border:1px solid rgba(168,255,0,0.2);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:1rem;font-size:1.2rem;
+}
+.problem-card h3{
+  font-size:.875rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--white);margin-bottom:.4rem;
+}
+.problem-card p{font-size:.825rem;color:rgba(255,255,255,0.5);line-height:1.65}
 
-        .fw-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-        .fw-yes, .fw-no {
-            border-radius: 3px;
-            padding: clamp(1.75rem, 3vw, 2.5rem);
-        }
-        .fw-yes { background: var(--navy); }
-        .fw-no  { background: var(--card-bg); border: 1px solid var(--border); }
+@media(max-width:760px){.problem-intro{grid-template-columns:1fr}}
 
-        .fw-col-title {
-            font-family: var(--font-sans);
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            margin-bottom: 1.75rem;
-        }
-        .fw-yes .fw-col-title { color: var(--amber); }
-        .fw-no  .fw-col-title { color: var(--muted); }
+/* ───────────────────────────────────────────────
+   SOLUTION
+─────────────────────────────────────────────── */
+#solution{background:#0a0a0a}
+#solution h2{margin-bottom:1rem}
+.solution-sub{font-size:1rem;color:rgba(255,255,255,0.6);max-width:680px;margin-bottom:3.5rem;line-height:1.75}
 
-        .fw-list { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; }
-        .fw-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.7rem;
-            font-size: 0.9375rem;
-            line-height: 1.62;
-        }
-        .fw-yes .fw-list li { color: rgba(255,255,255,0.83); }
-        .fw-no  .fw-list li { color: var(--muted); }
-        .fw-list li svg { flex-shrink: 0; margin-top: 0.22em; }
+.features-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.25rem;
+}
+.feature-card{padding:1.75rem}
+.feat-num{
+  font-size:.65rem;font-weight:900;letter-spacing:.15em;color:rgba(168,255,0,0.4);
+  margin-bottom:.75rem;
+}
+.feat-icon{font-size:1.5rem;margin-bottom:.75rem}
+.feature-card h3{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+.feature-card p{font-size:.825rem;color:rgba(255,255,255,0.55);line-height:1.65}
 
-        @media (max-width: 640px) {
-            .fw-grid { grid-template-columns: 1fr; }
-        }
+@media(max-width:860px){.features-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.features-grid{grid-template-columns:1fr}}
 
-        /* ─────────────────────────────────────────
-           § 7 — TESTIMONIALS
-        ───────────────────────────────────────── */
-        #testimonials { border-top: 1px solid var(--border); }
-        #testimonials h2 { margin-bottom: 2.5rem; }
+/* ───────────────────────────────────────────────
+   HOW IT WORKS
+─────────────────────────────────────────────── */
+#howitworks{background:var(--black)}
+#howitworks h2{margin-bottom:3.5rem;text-align:center}
 
-        .testi-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.25rem;
-            margin-bottom: 3rem;
-        }
-        .testi-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 3px;
-            padding: 2rem 2rem 1.75rem;
-            position: relative;
-        }
-        .testi-card::before {
-            content: '\201C';
-            font-family: var(--font-serif);
-            font-size: 5.5rem;
-            line-height: 1;
-            color: var(--amber);
-            opacity: 0.2;
-            position: absolute;
-            top: 0.5rem;
-            left: 1.4rem;
-            pointer-events: none;
-        }
-        .ph-badge {
-            display: inline-block;
-            font-size: 0.68rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            background: rgba(201,147,58,0.14);
-            color: var(--amber);
-            padding: 0.22rem 0.6rem;
-            border-radius: 2px;
-            margin-bottom: 0.875rem;
-        }
-        .testi-quote {
-            font-style: italic;
-            font-size: 0.9375rem;
-            line-height: 1.75;
-            color: #3A3733;
-            margin-bottom: 1.5rem;
-            padding-top: 0.75rem;
-        }
-        .testi-name { font-size: 0.825rem; font-weight: 600; color: var(--navy); }
-        .testi-role { font-size: 0.775rem; color: var(--muted); margin-top: 0.175rem; }
+.steps-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;position:relative;
+}
+.steps-row::before{
+  content:'';position:absolute;top:44px;left:calc(16.67% + 44px);right:calc(16.67% + 44px);
+  height:2px;background:linear-gradient(90deg,rgba(168,255,0,0.0),rgba(168,255,0,0.35),rgba(168,255,0,0.0));
+}
+.step-card{padding:2rem 1.75rem;text-align:center}
+.step-num{
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,var(--neon),var(--energy));color:var(--black);
+  font-size:1.25rem;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.5rem;
+  box-shadow:0 0 20px rgba(168,255,0,0.35);
+  position:relative;z-index:1;
+}
+.step-card h3{font-size:1rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--neon);margin-bottom:.75rem}
+.step-card p{font-size:.875rem;color:rgba(255,255,255,0.6);line-height:1.7}
 
-        .trust-bar {
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--muted);
-            letter-spacing: 0.04em;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-        }
+@media(max-width:760px){
+  .steps-row{grid-template-columns:1fr;gap:1rem}
+  .steps-row::before{display:none}
+}
 
-        @media (max-width: 680px) {
-            .testi-grid { grid-template-columns: 1fr; }
-        }
+/* ───────────────────────────────────────────────
+   FOR ATHLETES
+─────────────────────────────────────────────── */
+#athletes{background:#0a0a0a}
+.athletes-grid{
+  display:grid;grid-template-columns:1.1fr 0.9fr;
+  gap:clamp(2rem,5vw,5rem);align-items:center;
+}
+#athletes h2{margin-bottom:1rem}
+.athletes-copy{font-size:1rem;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:2rem}
 
-        /* ─────────────────────────────────────────
-           § 8 — CTA / CONTACT (dark)
-        ───────────────────────────────────────── */
-        #contact { background: var(--navy); }
-        #contact .label { color: var(--amber); }
+.use-cases{display:flex;flex-direction:column;gap:.65rem;margin-bottom:2.5rem}
+.use-case{
+  display:flex;align-items:center;gap:.75rem;
+  font-size:.875rem;color:rgba(255,255,255,0.7);
+}
+.use-case::before{
+  content:'';width:8px;height:8px;background:var(--neon);
+  border-radius:50%;flex-shrink:0;box-shadow:0 0 8px var(--neon);
+}
 
-        .contact-head {
-            text-align: center;
-            max-width: 660px;
-            margin: 0 auto 3.5rem;
-        }
-        .contact-head h2 { color: var(--white); margin-bottom: 1.1rem; }
-        .contact-head p  { color: rgba(255,255,255,0.68); font-size: 1.025rem; line-height: 1.72; }
+.athlete-cards{display:flex;flex-direction:column;gap:.875rem}
+.a-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(168,255,0,0.1);
+  border-radius:14px;padding:1rem 1.25rem;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:border-color .2s,background .2s;
+}
+.a-card:hover{border-color:rgba(168,255,0,0.3);background:rgba(168,255,0,0.04)}
+.a-card-left{}
+.a-card-label{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.35);margin-bottom:.2rem}
+.a-card-title{font-size:.875rem;font-weight:700;color:var(--white)}
+.a-card-meta{font-size:.7rem;color:rgba(255,255,255,0.45)}
+.a-card-badge{font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .7rem;border-radius:999px;background:rgba(168,255,0,0.1);border:1px solid rgba(168,255,0,0.25);color:var(--neon)}
 
-        .form-wrap { max-width: 580px; margin: 0 auto; }
+@media(max-width:860px){.athletes-grid{grid-template-columns:1fr}}
 
-        .fg { margin-bottom: 1.2rem; }
-        .fg label {
-            display: block;
-            font-size: 0.775rem;
-            font-weight: 500;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.55);
-            margin-bottom: 0.45rem;
-        }
-        .fg input, .fg textarea {
-            width: 100%;
-            background: rgba(255,255,255,0.065);
-            border: 1px solid rgba(255,255,255,0.14);
-            border-radius: 2px;
-            padding: 0.85rem 1rem;
-            font-family: var(--font-sans);
-            font-size: 1rem;
-            color: var(--white);
-            outline: none;
-            min-height: 48px;
-            transition: border-color 0.2s, background 0.2s;
-        }
-        .fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,0.28); }
-        .fg input:focus, .fg textarea:focus {
-            border-color: var(--amber);
-            background: rgba(255,255,255,0.09);
-        }
-        .fg textarea { min-height: 128px; resize: vertical; }
+/* ───────────────────────────────────────────────
+   GYMS & COACHES
+─────────────────────────────────────────────── */
+#gyms{background:var(--black)}
+.gyms-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(2rem,5vw,5rem);align-items:start;
+}
+#gyms h2{margin-bottom:1rem}
+.gyms-copy{font-size:1rem;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:2rem}
+.gym-features{display:flex;flex-direction:column;gap:.6rem;margin-bottom:2.5rem}
+.gym-feat{
+  display:flex;align-items:center;gap:.75rem;
+  font-size:.875rem;color:rgba(255,255,255,0.65);
+}
+.gym-feat-dot{width:6px;height:6px;border-radius:50%;background:var(--neon);flex-shrink:0;box-shadow:0 0 6px var(--neon)}
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-        }
+.gym-card-big{padding:2rem}
+.gym-card-big h3{font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--neon);margin-bottom:.875rem}
+.gym-stat-row{display:flex;gap:2rem;margin-bottom:1.5rem}
+.gym-stat{text-align:center}
+.gym-stat-val{font-size:1.8rem;font-weight:900;color:var(--white);line-height:1}
+.gym-stat-label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.4);margin-top:.25rem}
+.gym-coming{
+  font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;
+  padding:.4rem 1rem;border-radius:999px;border:1px solid rgba(168,255,0,0.3);color:rgba(168,255,0,0.7);
+  background:rgba(168,255,0,0.06);display:inline-block;margin-top:.5rem;
+}
 
-        .ferr {
-            font-size: 0.78rem;
-            color: #E07878;
-            margin-top: 0.35rem;
-            display: none;
-        }
-        .ferr.show { display: block; }
-        .fg.err input, .fg.err textarea { border-color: #E07878; }
+@media(max-width:760px){.gyms-grid{grid-template-columns:1fr}}
 
-        .form-submit {
-            text-align: center;
-            margin-top: 2rem;
-        }
-        .form-submit .btn { min-width: 280px; }
-        .form-note {
-            text-align: center;
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.35);
-            margin-top: 1rem;
-        }
+/* ───────────────────────────────────────────────
+   CHALLENGES
+─────────────────────────────────────────────── */
+#challenges{background:#0a0a0a}
+#challenges h2{margin-bottom:3.5rem}
 
-        /* Success state */
-        .form-ok {
-            display: none;
-            text-align: center;
-            padding: 3rem 1rem;
-        }
-        .form-ok.show { display: block; }
-        .form-ok-icon {
-            width: 56px; height: 56px;
-            background: rgba(201,147,58,0.18);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: var(--amber);
-        }
-        .form-ok h3 { color: var(--white); font-size: 1.5rem; margin-bottom: 0.625rem; }
-        .form-ok p  { color: rgba(255,255,255,0.6); }
+.challenges-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.25rem;
+}
+.challenge-card{
+  padding:1.5rem;position:relative;overflow:hidden;
+}
+.challenge-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--neon),var(--energy));
+}
+.challenge-diff{
+  font-size:.58rem;font-weight:900;text-transform:uppercase;letter-spacing:.15em;
+  padding:.2rem .6rem;border-radius:999px;margin-bottom:1rem;display:inline-block;
+}
+.diff-medium{background:rgba(168,255,0,0.1);color:var(--neon);border:1px solid rgba(168,255,0,0.25)}
+.diff-hard{background:rgba(255,80,80,0.1);color:#ff7070;border:1px solid rgba(255,80,80,0.25)}
+.diff-beginner{background:rgba(57,208,0,0.1);color:#7CFF00;border:1px solid rgba(57,208,0,0.25)}
 
-        @media (max-width: 560px) {
-            .form-row { grid-template-columns: 1fr; }
-        }
+.challenge-card h3{font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem}
+.challenge-focus{font-size:.72rem;color:rgba(255,255,255,0.5);margin-bottom:.875rem}
+.challenge-meta{
+  display:flex;gap:1rem;
+  font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,0.35);
+  border-top:1px solid rgba(255,255,255,0.06);padding-top:.875rem;margin-top:.875rem;
+}
+.challenge-meta span{display:flex;align-items:center;gap:.3rem}
 
-        /* ─────────────────────────────────────────
-           FOOTER
-        ───────────────────────────────────────── */
-        footer {
-            background: #080F18;
-            padding: 2.75rem 0 2rem;
-        }
-        .foot-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            padding-bottom: 2rem;
-            margin-bottom: 1.75rem;
-            border-bottom: 1px solid rgba(255,255,255,0.07);
-        }
-        .foot-brand {
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--white);
-            text-decoration: none;
-        }
-        .foot-nav {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-        .foot-nav a {
-            font-size: 0.875rem;
-            color: rgba(255,255,255,0.45);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .foot-nav a:hover { color: var(--white); }
+@media(max-width:860px){.challenges-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.challenges-grid{grid-template-columns:1fr}}
 
-        .foot-legal {
-            display: flex;
-            list-style: none;
-            gap: 1.5rem;
-        }
-        .foot-legal a {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.25);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .foot-legal a:hover { color: rgba(255,255,255,0.55); }
+/* ───────────────────────────────────────────────
+   ZURICH / LOCAL
+─────────────────────────────────────────────── */
+#local{background:var(--black)}
+.local-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(2rem,5vw,5rem);align-items:start;
+}
+#local h2{margin-bottom:1rem}
+.local-copy{font-size:1rem;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:2rem}
 
-        .foot-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .foot-copy   { font-size: 0.775rem; color: rgba(255,255,255,0.18); }
-        .foot-tagline {
-            font-family: var(--font-serif);
-            font-style: italic;
-            font-size: 0.875rem;
-            color: rgba(201,147,58,0.65);
-            text-align: center;
-            flex: 1;
-        }
-        .foot-spacer { width: 100px; }
+.local-blocks{
+  display:grid;grid-template-columns:1fr 1fr;gap:.875rem;
+}
+.local-block{
+  background:rgba(168,255,0,0.04);border:1px solid rgba(168,255,0,0.12);
+  border-radius:14px;padding:1rem 1.1rem;
+  display:flex;align-items:center;gap:.75rem;
+}
+.local-block-dot{width:8px;height:8px;background:var(--neon);border-radius:50%;flex-shrink:0;box-shadow:0 0 8px var(--neon)}
+.local-block span{font-size:.8rem;font-weight:700;color:rgba(255,255,255,0.75)}
 
-        @media (max-width: 640px) {
-            .foot-top { flex-direction: column; align-items: flex-start; }
-            .foot-bottom { flex-direction: column; align-items: center; }
-            .foot-spacer { display: none; }
-        }
-    </style>
+.local-visual{padding:2rem}
+.local-city{
+  font-size:clamp(2.5rem,5vw,4rem);font-weight:900;text-transform:uppercase;
+  letter-spacing:-.03em;color:rgba(168,255,0,0.12);line-height:1;margin-bottom:1rem;
+}
+.local-tagline{font-size:1rem;font-weight:700;color:var(--neon);margin-bottom:.5rem}
+.local-desc{font-size:.875rem;color:rgba(255,255,255,0.5);line-height:1.7}
+
+@media(max-width:760px){.local-grid{grid-template-columns:1fr}.local-blocks{grid-template-columns:1fr}}
+
+/* ───────────────────────────────────────────────
+   APP PREVIEW
+─────────────────────────────────────────────── */
+#apppreview{background:#0a0a0a}
+#apppreview h2{margin-bottom:.75rem}
+.apppreview-sub{font-size:1rem;color:rgba(255,255,255,0.5);margin-bottom:3.5rem}
+
+.preview-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;
+}
+
+.ui-card{padding:1.25rem}
+.ui-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem}
+.ui-card-title{font-size:.85rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--white)}
+.ui-card-icon{font-size:1rem}
+
+.streak-display{display:flex;align-items:baseline;gap:.35rem;margin-bottom:.3rem}
+.streak-big{font-size:2.5rem;font-weight:900;color:var(--neon);line-height:1}
+.streak-unit{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.4)}
+.streak-best{font-size:.72rem;color:rgba(255,255,255,0.35)}
+
+.activity-sport{
+  font-size:1.1rem;font-weight:900;color:var(--white);margin-bottom:.3rem;
+}
+.activity-stats{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:.5rem}
+.activity-stat{font-size:.7rem;color:rgba(255,255,255,0.5);display:flex;align-items:center;gap:.25rem}
+.intensity-bar{
+  height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;margin-top:.5rem;
+}
+.intensity-fill{height:100%;background:linear-gradient(90deg,var(--neon),var(--energy));border-radius:3px;width:70%}
+.activity-note{font-size:.7rem;color:rgba(255,255,255,0.45);font-style:italic;margin-top:.5rem}
+
+.progress-bar-wrap{margin:.75rem 0}
+.progress-label{display:flex;justify-content:space-between;font-size:.65rem;color:rgba(255,255,255,0.4);margin-bottom:.35rem}
+.progress-bar{height:8px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--neon),var(--energy));border-radius:4px}
+
+.fight-camp-week{font-size:1.5rem;font-weight:900;color:var(--neon);margin-bottom:.25rem}
+.fight-camp-focus{font-size:.72rem;color:rgba(255,255,255,0.5)}
+
+.gym-connect-prompt{
+  font-size:.8rem;color:rgba(255,255,255,0.6);margin-bottom:.875rem;line-height:1.5;
+}
+.gym-connect-btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--neon);padding:.4rem .875rem;border-radius:999px;
+  border:1px solid rgba(168,255,0,0.3);background:rgba(168,255,0,0.06);
+  cursor:pointer;transition:background .2s,border-color .2s;
+}
+.gym-connect-btn:hover{background:rgba(168,255,0,0.12);border-color:rgba(168,255,0,0.5)}
+
+@media(max-width:860px){.preview-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.preview-grid{grid-template-columns:1fr}}
+
+/* ───────────────────────────────────────────────
+   WAITLIST
+─────────────────────────────────────────────── */
+#waitlist{background:var(--black)}
+.waitlist-inner{
+  max-width:680px;margin:0 auto;text-align:center;
+}
+#waitlist h2{margin-bottom:1rem}
+.waitlist-copy{font-size:1rem;color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:2.5rem}
+
+.wform{text-align:left}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{margin-bottom:1rem}
+.fg label{
+  display:block;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.45);margin-bottom:.45rem;
+}
+.fg input,.fg select{
+  width:100%;background:rgba(255,255,255,0.05);
+  border:1px solid rgba(168,255,0,0.15);border-radius:12px;
+  padding:.875rem 1rem;font-family:var(--font);font-size:.925rem;
+  color:var(--white);outline:none;min-height:50px;
+  transition:border-color .2s,background .2s;
+  -webkit-appearance:none;appearance:none;
+}
+.fg input::placeholder{color:rgba(255,255,255,0.25)}
+.fg input:focus,.fg select:focus{
+  border-color:rgba(168,255,0,0.5);
+  background:rgba(168,255,0,0.04);
+  box-shadow:0 0 0 3px rgba(168,255,0,0.08);
+}
+.fg select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A8FF00' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem}
+.fg select option{background:#1a1a1a;color:var(--white)}
+
+.ferr{font-size:.72rem;color:#ff7070;margin-top:.35rem;display:none}
+.ferr.show{display:block}
+.fg.err input,.fg.err select{border-color:rgba(255,112,112,0.5)}
+
+.form-submit{text-align:center;margin-top:1.5rem}
+.form-submit .btn{min-width:260px}
+.form-note{font-size:.72rem;color:rgba(255,255,255,0.3);margin-top:.875rem;text-align:center}
+
+.form-success{
+  display:none;text-align:center;padding:3rem 1rem;
+}
+.form-success.show{display:block}
+.success-icon{
+  width:64px;height:64px;border-radius:50%;
+  background:rgba(168,255,0,0.1);border:2px solid rgba(168,255,0,0.3);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.5rem;font-size:1.75rem;
+  box-shadow:0 0 30px rgba(168,255,0,0.2);
+}
+.form-success h3{font-size:1.5rem;font-weight:900;text-transform:uppercase;color:var(--white);margin-bottom:.875rem}
+.form-success p{font-size:1rem;color:rgba(255,255,255,0.6);line-height:1.7}
+.form-success strong{color:var(--neon)}
+
+@media(max-width:560px){.form-row-2{grid-template-columns:1fr}}
+
+/* ───────────────────────────────────────────────
+   FAQ
+─────────────────────────────────────────────── */
+#faq{background:#0a0a0a}
+#faq h2{margin-bottom:3rem}
+
+.faq-list{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:.75rem}
+.faq-item{
+  border:1px solid rgba(168,255,0,0.12);border-radius:14px;overflow:hidden;
+  transition:border-color .2s;
+}
+.faq-item.open{border-color:rgba(168,255,0,0.3)}
+.faq-q{
+  width:100%;background:none;border:none;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.25rem 1.5rem;gap:1rem;
+  font-family:var(--font);font-size:.95rem;font-weight:700;
+  color:var(--white);text-align:left;cursor:pointer;
+  transition:color .2s;
+}
+.faq-q:hover{color:var(--neon)}
+.faq-q:focus-visible{outline:2px solid var(--neon);outline-offset:-2px}
+.faq-icon{
+  width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(168,255,0,0.3);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:1rem;font-weight:700;color:var(--neon);
+  transition:transform .3s,background .2s;
+}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:rgba(168,255,0,0.1)}
+.faq-a{
+  display:none;padding:0 1.5rem 1.25rem;
+  font-size:.9rem;color:rgba(255,255,255,0.6);line-height:1.75;
+}
+.faq-item.open .faq-a{display:block}
+
+/* ───────────────────────────────────────────────
+   FINAL CTA
+─────────────────────────────────────────────── */
+#finalcta{
+  background:var(--black);
+  position:relative;overflow:hidden;
+  text-align:center;
+}
+#finalcta::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(168,255,0,0.2) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(57,208,0,0.12) 0%, transparent 50%);
+  pointer-events:none;
+}
+.finalcta-inner{position:relative;z-index:1;max-width:800px;margin:0 auto}
+#finalcta h2{
+  font-size:clamp(2.5rem,6vw,5.5rem);
+  letter-spacing:-.03em;margin-bottom:1.5rem;
+  line-height:1.05;
+}
+.finalcta-sub{font-size:1.05rem;color:rgba(255,255,255,0.6);margin-bottom:2.5rem;line-height:1.7;max-width:520px;margin-left:auto;margin-right:auto}
+.finalcta-btns{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem}
+
+/* ───────────────────────────────────────────────
+   FOOTER
+─────────────────────────────────────────────── */
+footer{
+  background:#080808;
+  border-top:1px solid rgba(168,255,0,0.08);
+  padding:3rem 0 2rem;
+}
+.foot-top{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  flex-wrap:wrap;gap:2rem;
+  padding-bottom:2.5rem;margin-bottom:2rem;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.foot-brand-block{}
+.foot-logo{display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem}
+.foot-logo-icon{
+  width:32px;height:32px;background:#1a1a1a;border:1.5px solid rgba(168,255,0,0.35);
+  border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:900;color:var(--neon);
+  box-shadow:0 0 8px rgba(168,255,0,0.15);
+}
+.foot-wordmark{font-size:1.1rem;font-weight:900;letter-spacing:-.02em}
+.foot-wordmark .sp{color:var(--white)}.foot-wordmark .arr{color:var(--neon)}
+.foot-tagline{font-size:.78rem;color:rgba(255,255,255,0.35);letter-spacing:.04em}
+
+.foot-links{}
+.foot-links h4{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,0.3);margin-bottom:.875rem}
+.foot-links ul{display:flex;flex-direction:column;gap:.5rem}
+.foot-links ul a{font-size:.825rem;color:rgba(255,255,255,0.5);transition:color .2s}
+.foot-links ul a:hover{color:var(--neon)}
+
+.foot-social{display:flex;gap:.75rem;margin-top:.875rem}
+.foot-soc-link{
+  width:36px;height:36px;border-radius:9px;border:1px solid rgba(168,255,0,0.2);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,0.5);font-size:.8rem;
+  transition:border-color .2s,color .2s,background .2s;
+}
+.foot-soc-link:hover{border-color:var(--neon);color:var(--neon);background:rgba(168,255,0,0.06)}
+
+.foot-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.foot-copy{font-size:.72rem;color:rgba(255,255,255,0.2)}
+.foot-built{font-size:.72rem;color:rgba(168,255,0,0.35);font-style:italic}
+
+@media(max-width:640px){
+  .foot-top{flex-direction:column}
+  .foot-bottom{flex-direction:column;text-align:center}
+}
+</style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════
-     NAVIGATION
-══════════════════════════════════════════════ -->
-<nav id="nav" aria-label="Hauptnavigation">
-    <div class="nav-row">
-        <a href="#" class="nav-brand" aria-label="KMU Klarheit — zur Startseite">KMU Klarheit</a>
+<!-- ═══ NAV ═══ -->
+<nav id="nav" aria-label="Main navigation">
+  <div class="nav-row">
+    <a href="#" class="nav-logo" aria-label="SPARR — Home">
+      <div class="nav-logo-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M3 14L7 4h3L7 10h4l-4 8H3z" fill="#A8FF00"/>
+          <path d="M9 10L13 4h2l-4 8" fill="rgba(168,255,0,0.5)"/>
+        </svg>
+      </div>
+      <div class="nav-logo-wordmark" aria-hidden="true"><span class="sp">SP</span><span class="arr">ARR</span></div>
+    </a>
 
-        <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Navigation öffnen/schliessen">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-                <rect y="4"  width="22" height="2" rx="1" fill="currentColor"/>
-                <rect y="10" width="22" height="2" rx="1" fill="currentColor"/>
-                <rect y="16" width="22" height="2" rx="1" fill="currentColor"/>
-            </svg>
-        </button>
+    <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true">
+        <rect y="0" width="20" height="2" rx="1" fill="currentColor"/>
+        <rect y="6" width="20" height="2" rx="1" fill="currentColor"/>
+        <rect y="12" width="20" height="2" rx="1" fill="currentColor"/>
+      </svg>
+    </button>
 
-        <ul class="nav-links" id="nav-menu" role="list">
-            <li><a href="#solution">Leistungen</a></li>
-            <li><a href="#process">Ablauf</a></li>
-            <li><a href="#forwhom">Für wen</a></li>
-            <li><a href="#contact" class="nav-btn">Erstanalyse anfragen</a></li>
-        </ul>
-    </div>
+    <ul class="nav-links" id="nav-menu" role="list">
+      <li><a href="#solution" class="hide-m">Features</a></li>
+      <li><a href="#athletes" class="hide-m">Athletes</a></li>
+      <li><a href="#gyms" class="hide-m">Gyms</a></li>
+      <li><a href="#challenges" class="hide-m">Challenges</a></li>
+      <li class="nav-cta"><a href="#waitlist" class="btn btn-neon">Join Waitlist</a></li>
+    </ul>
+  </div>
 </nav>
 
 <main>
 
-<!-- ═══════════════════════════════════════════
-     § 1 — HERO
-══════════════════════════════════════════════ -->
-<section id="hero" aria-labelledby="h-hero">
+<!-- ═══ HERO ═══ -->
+<section id="hero" class="bg-glow" aria-labelledby="h-hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-diag" aria-hidden="true"></div>
 
-    <!-- Abstract precision mark -->
-    <svg class="hero-mark" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg"
-         aria-hidden="true" focusable="false">
-        <circle cx="250" cy="250" r="230" stroke="#0D1B2A" stroke-width="0.75"/>
-        <circle cx="250" cy="250" r="175" stroke="#0D1B2A" stroke-width="0.75"/>
-        <circle cx="250" cy="250" r="120" stroke="#0D1B2A" stroke-width="1.5"/>
-        <circle cx="250" cy="250" r="65"  stroke="#0D1B2A" stroke-width="0.75"/>
-        <circle cx="250" cy="250" r="10"  fill="#C9933A" opacity="0.55"/>
-        <line x1="20"  y1="250" x2="480" y2="250" stroke="#0D1B2A" stroke-width="1"/>
-        <line x1="250" y1="20"  x2="250" y2="480" stroke="#0D1B2A" stroke-width="1"/>
-        <line x1="87"  y1="87"  x2="413" y2="413" stroke="#0D1B2A" stroke-width="0.6"/>
-        <line x1="413" y1="87"  x2="87"  y2="413" stroke="#0D1B2A" stroke-width="0.6"/>
-        <circle cx="250" cy="130" r="3.5" fill="#C9933A" opacity="0.35"/>
-        <circle cx="370" cy="250" r="3.5" fill="#C9933A" opacity="0.35"/>
-        <circle cx="250" cy="370" r="3.5" fill="#C9933A" opacity="0.35"/>
-        <circle cx="130" cy="250" r="3.5" fill="#C9933A" opacity="0.35"/>
-        <!-- sharp line cutting through — the "clarity from noise" motif -->
-        <line x1="0" y1="250" x2="220" y2="250" stroke="#C9933A" stroke-width="2" opacity="0.45"/>
-        <line x1="280" y1="250" x2="500" y2="250" stroke="#0D1B2A" stroke-width="0.6" opacity="0.4"/>
-    </svg>
+  <div class="wrap">
+    <div class="hero-grid">
 
-    <div class="wrap">
-        <div class="hero-body">
-            <div class="hero-eyebrow fu">Positionierung für Schweizer KMU</div>
-            <h1 id="h-hero" class="hero-h1 fu d1">
-                Ihr Unternehmen ist<br>besser als sein Ruf.
-            </h1>
-            <p class="hero-sub fu d2">
-                Wir helfen KMU, ihre Stärken so zu kommunizieren, dass Kunden sie sofort verstehen, schneller vertrauen und seltener den Preis vergleichen.
-            </p>
-            <div class="hero-cta fu d3">
-                <a href="#contact" class="btn btn-amber btn-lg">Kostenlose Erstanalyse anfragen</a>
-                <span class="hero-trust">Keine Agentur. Kein Retainer. Klare Ergebnisse.</span>
-            </div>
+      <div class="hero-text">
+        <div class="hero-eyebrow fu">Combat Sports · Fight Logbook · Community</div>
+        <h1 id="h-hero" class="hero-h1 fu d1">
+          EVERY<br>
+          <em>ROUND</em><br>
+          COUNTS.
+        </h1>
+        <p class="hero-sub fu d2">The fight logbook and community layer for combat athletes.</p>
+        <p class="hero-support fu d3">Track your training, build your streak, connect with your gym and turn every session into visible progress.</p>
+        <div class="hero-cta fu d3">
+          <a href="#waitlist" class="btn btn-neon btn-lg">Join the Waitlist</a>
+          <a href="#solution" class="btn btn-ghost btn-lg">Explore the Concept</a>
         </div>
-    </div>
+        <p class="hero-micro fu d4">Early community access for athletes, coaches and gyms.</p>
+        <div class="hero-badges fu d4">
+          <span class="hero-badge">Boxing</span>
+          <span class="hero-badge">MMA</span>
+          <span class="hero-badge">BJJ</span>
+          <span class="hero-badge">Muay Thai</span>
+          <span class="hero-badge">Kickboxing</span>
+          <span class="hero-badge">Wrestling</span>
+        </div>
+      </div>
+
+      <!-- CSS Phone Mockup -->
+      <div class="phone-wrap fu d2">
+        <div class="phone-glow" aria-hidden="true"></div>
+        <div class="phone" role="img" aria-label="SPARR app preview showing training log and streak">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+
+            <div class="pstatus">
+              <span class="pstatus-time">9:41</span>
+              <div class="pstatus-icons" aria-hidden="true">
+                <span class="sig"></span>
+                <span class="wifi"></span>
+                <span class="bat"></span>
+              </div>
+            </div>
+
+            <div class="papp-header">
+              <div class="papp-logo"><span class="sp">SP</span><span class="arr">ARR</span></div>
+              <div class="papp-bell" aria-hidden="true">
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                  <path d="M5.5 1a3 3 0 013 3v2l1 1.5H1.5L2.5 6V4a3 3 0 013-3z" stroke="#A8FF00" stroke-width="1" fill="none"/>
+                  <path d="M4.5 9.5a1 1 0 002 0" stroke="#A8FF00" stroke-width="1"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="p-hero-card">
+              <div class="p-hero-greeting">Good morning, fighter</div>
+              <div class="p-hero-msg">Time to start again.</div>
+              <div class="p-hero-sub">Your next session awaits</div>
+            </div>
+
+            <div class="p-streak-card">
+              <div class="p-streak-icon" aria-hidden="true">🔥</div>
+              <div>
+                <div class="p-streak-label">Your Streak</div>
+                <div class="p-streak-val">4 days</div>
+                <div class="p-streak-best">Best: 12 days</div>
+              </div>
+            </div>
+
+            <div class="p-activity-card">
+              <div class="p-activity-header">
+                <span class="p-activity-type">Boxing</span>
+                <span class="p-activity-tag">Today</span>
+              </div>
+              <div class="p-activity-meta">45 min · Intensity 7/10 · 8 rounds</div>
+              <div class="p-activity-note">"Clean rounds. Better footwork."</div>
+            </div>
+
+            <div class="p-gym-card">
+              <div>
+                <div class="p-gym-text">Connect with your gym</div>
+                <div class="p-gym-sub">Find team, challenges, events</div>
+              </div>
+              <div class="p-gym-arrow">→</div>
+            </div>
+
+            <div class="p-nav" role="navigation" aria-label="App navigation">
+              <div class="p-nav-item active">
+                <div class="p-nav-icon">🏠</div>
+                <div class="p-nav-label" style="color:var(--neon)">Home</div>
+              </div>
+              <div class="p-nav-item">
+                <div class="p-nav-icon">📊</div>
+                <div class="p-nav-label">Activity</div>
+              </div>
+              <div class="p-nav-add" aria-label="Log session">+</div>
+              <div class="p-nav-item">
+                <div class="p-nav-icon">💬</div>
+                <div class="p-nav-label">Chat</div>
+              </div>
+              <div class="p-nav-item">
+                <div class="p-nav-icon">👤</div>
+                <div class="p-nav-label">Me</div>
+              </div>
+            </div>
+
+          </div><!-- /phone-screen -->
+        </div><!-- /phone -->
+      </div><!-- /phone-wrap -->
+
+    </div><!-- /hero-grid -->
+  </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     § 2 — PROBLEM
-══════════════════════════════════════════════ -->
+<!-- ═══ STRIP ═══ -->
+<div class="strip" aria-hidden="true">
+  <div class="wrap">
+    <div class="strip-inner">
+      <strong>FOR FIGHTERS</strong>
+      <span class="strip-sep">·</span>
+      <strong>COACHES</strong>
+      <span class="strip-sep">·</span>
+      <strong>GYMS</strong>
+      <span class="strip-sep">·</span>
+      <strong>COMBAT COMMUNITIES</strong>
+      <span class="strip-sep">·</span>
+      <span>TRAIN HARD.</span>
+      <span class="strip-sep">·</span>
+      <span>STAY FOCUSED.</span>
+      <span class="strip-sep">·</span>
+      <strong>BE SPARR.</strong>
+      <span class="strip-sep">·</span>
+      <strong>FOR FIGHTERS</strong>
+      <span class="strip-sep">·</span>
+      <strong>COACHES</strong>
+      <span class="strip-sep">·</span>
+      <strong>GYMS</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROBLEM ═══ -->
 <section id="problem" aria-labelledby="h-problem">
-    <div class="wrap">
-
-        <div class="problem-split">
-            <div class="fu">
-                <h2 id="h-problem">
-                    Austauschbar zu wirken, ist teurer als&nbsp;Sie denken.
-                </h2>
-            </div>
-            <div class="fu d1">
-                <p>Die meisten KMU sind exzellent in dem, was sie tun — aber sie kommunizieren wie alle anderen. „Qualität, Erfahrung, Zuverlässigkeit." Diese Worte stehen auf tausend Websites. Wenn potenzielle Kunden Ihre Seite besuchen, entscheiden sie in Sekunden — und wenn Ihr Auftritt sie nicht sofort überzeugt, verlassen sie ihn, ohne Sie je anzurufen.</p>
-                <p>Das ist kein Qualitätsproblem. Das ist ein Kommunikationsproblem.</p>
-            </div>
-        </div>
-
-        <div class="pain-grid" role="list">
-
-            <div class="pain-card fu" role="listitem">
-                <svg class="pain-icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-                    <circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="2"/>
-                    <line x1="24" y1="24" x2="33" y2="33" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                    <line x1="11.5" y1="16" x2="20.5" y2="16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-dasharray="2.5 2.5"/>
-                </svg>
-                <h3>Unsichtbar in der Masse</h3>
-                <p>Interessenten finden Sie, verstehen aber nicht sofort, warum sie Sie wählen sollten.</p>
-            </div>
-
-            <div class="pain-card fu d1" role="listitem">
-                <svg class="pain-icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-                    <path d="M6 10h24M6 18h16M6 26h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <circle cx="29" cy="26" r="5.5" stroke="currentColor" stroke-width="2"/>
-                    <line x1="29" y1="23.5" x2="29" y2="26" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
-                    <circle cx="29" cy="28.25" r="0.9" fill="currentColor"/>
-                </svg>
-                <h3>Botschaft ohne Wirkung</h3>
-                <p>Ihre Texte beschreiben, was Sie tun — aber nicht, warum das für den Kunden relevant ist.</p>
-            </div>
-
-            <div class="pain-card fu d2" role="listitem">
-                <svg class="pain-icon" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-                    <path d="M18 5v26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M12 11l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 25l6 6 6-6"  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <line x1="5"  y1="18" x2="11" y2="18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
-                    <line x1="25" y1="18" x2="31" y2="18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
-                </svg>
-                <h3>Preisdruck durch Austauschbarkeit</h3>
-                <p>Wer sich nicht differenziert, konkurriert über den Preis.</p>
-            </div>
-
-        </div>
+  <div class="wrap">
+    <div class="problem-intro">
+      <div class="fu">
+        <span class="sec-label">The Problem</span>
+        <h2 id="h-problem">COMBAT ATHLETES TRAIN HARD — BUT THEIR <em class="neon">PROGRESS DISAPPEARS.</em></h2>
+      </div>
+      <div class="fu d1">
+        <p class="problem-copy">Most fighters train across gyms, roadwork, sparring, strength sessions and fight camps. But progress is scattered across notes, chats, memories and random social posts. SPARR brings it together.</p>
+      </div>
     </div>
+
+    <div class="problem-grid">
+      <div class="glass problem-card fu">
+        <div class="p-card-icon" aria-hidden="true">📝</div>
+        <h3>Training gets forgotten</h3>
+        <p>Sessions disappear into memory. No log, no pattern, no visible progress.</p>
+      </div>
+      <div class="glass problem-card fu d1">
+        <div class="p-card-icon" aria-hidden="true">🥊</div>
+        <h3>Sparring has no structure</h3>
+        <p>Great rounds happen. Nobody tracks the rounds, the intensity, the learning.</p>
+      </div>
+      <div class="glass problem-card fu d2">
+        <div class="p-card-icon" aria-hidden="true">🏕️</div>
+        <h3>Fight camps are hard to track</h3>
+        <p>Weeks of work go unlogged. The journey exists but leaves no trail.</p>
+      </div>
+      <div class="glass problem-card fu d3">
+        <div class="p-card-icon" aria-hidden="true">💬</div>
+        <h3>Gym communities live in messy chats</h3>
+        <p>WhatsApp groups, loose Instagram posts. No central community layer.</p>
+      </div>
+      <div class="glass problem-card fu d4">
+        <div class="p-card-icon" aria-hidden="true">📱</div>
+        <h3>Athletes post highlights, not progress</h3>
+        <p>Instagram shows the knockout. Not the 200 rounds that led to it.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     § 3 — SOLUTION
-══════════════════════════════════════════════ -->
+<!-- ═══ SOLUTION ═══ -->
 <section id="solution" aria-labelledby="h-solution">
-    <div class="wrap">
-        <span class="label fu">Was wir tun</span>
-        <h2 id="h-solution" class="fu d1">
-            Positionierung und Kommunikation, die wirken —<br>messbar, schnell, ohne Agentur-Overhead.
-        </h2>
+  <div class="wrap">
+    <span class="sec-label fu">What SPARR Does</span>
+    <h2 id="h-solution" class="fu d1">YOUR FIGHT JOURNEY.<br><span class="neon">LOGGED. CONNECTED. VISIBLE.</span></h2>
+    <p class="solution-sub fu d2">SPARR turns every session into part of your combat athlete identity — from boxing rounds to roadwork, sparring, strength, mobility and recovery.</p>
 
-        <div class="pillars" role="list">
-
-            <article class="pillar fu" role="listitem">
-                <div class="pillar-num" aria-hidden="true">01</div>
-                <h3>Positionierung schärfen</h3>
-                <p>Wir analysieren, wie Sie heute wahrgenommen werden — und definieren gemeinsam, wie Sie wahrgenommen werden wollen. Das Ergebnis: eine klare Positionierung, die Sie unverwechselbar macht.</p>
-            </article>
-
-            <article class="pillar fu d1" role="listitem">
-                <div class="pillar-num" aria-hidden="true">02</div>
-                <h3>Botschaft neu formulieren</h3>
-                <p>Ihre Website, Ihr Pitch, Ihre Angebote — wir schreiben sie so um, dass Ihr Wunschkunde sofort versteht: „Das ist genau das, was ich brauche." Psychologisch fundiert. Keine Floskeln.</p>
-            </article>
-
-            <article class="pillar fu d2" role="listitem">
-                <div class="pillar-num" aria-hidden="true">03</div>
-                <h3>Online-Auftritt transformieren</h3>
-                <p>Wir überarbeiten Ihren digitalen Auftritt — visuell und inhaltlich — so dass er Vertrauen auf den ersten Blick schafft und Interessenten zu Anfragen werden.</p>
-            </article>
-
-        </div>
-
-        <p class="solution-footer fu">Kein Retainer. Keine Bindung. Klares Ergebnis in wenigen Wochen.</p>
+    <div class="features-grid">
+      <div class="glass feature-card fu">
+        <div class="feat-num">01</div>
+        <div class="feat-icon" aria-hidden="true">📋</div>
+        <h3>Log Sessions</h3>
+        <p>Track boxing, kickboxing, MMA, BJJ, Muay Thai, Sanda, wrestling, roadwork and strength.</p>
+      </div>
+      <div class="glass feature-card fu d1">
+        <div class="feat-num">02</div>
+        <div class="feat-icon" aria-hidden="true">🔥</div>
+        <h3>Build Streaks</h3>
+        <p>Stay consistent and see your training rhythm compound over time.</p>
+      </div>
+      <div class="glass feature-card fu d2">
+        <div class="feat-num">03</div>
+        <div class="feat-icon" aria-hidden="true">⚡</div>
+        <h3>Track Intensity</h3>
+        <p>Record rounds, duration, focus and intensity. See the real picture.</p>
+      </div>
+      <div class="glass feature-card fu d1">
+        <div class="feat-num">04</div>
+        <div class="feat-icon" aria-hidden="true">🏟️</div>
+        <h3>Connect with Gyms</h3>
+        <p>Bring athletes, coaches and communities into one connected layer.</p>
+      </div>
+      <div class="glass feature-card fu d2">
+        <div class="feat-num">05</div>
+        <div class="feat-icon" aria-hidden="true">🏆</div>
+        <h3>Join Challenges</h3>
+        <p>Compete in roadwork, bag rounds, mobility and fight-camp challenges.</p>
+      </div>
+      <div class="glass feature-card fu d3">
+        <div class="feat-num">06</div>
+        <div class="feat-icon" aria-hidden="true">📈</div>
+        <h3>Share Progress</h3>
+        <p>Show the work behind the highlight reel. Your journey, visible.</p>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     § 4 — PROCESS
-══════════════════════════════════════════════ -->
-<section id="process" aria-labelledby="h-process">
-    <div class="wrap">
+<!-- ═══ HOW IT WORKS ═══ -->
+<section id="howitworks" aria-labelledby="h-hiw">
+  <div class="wrap">
+    <span class="sec-label fu" style="display:block;text-align:center">How It Works</span>
+    <h2 id="h-hiw" class="fu d1">SIMPLE ENOUGH FOR EVERY SESSION.<br><span class="neon">POWERFUL ENOUGH FOR FIGHT CAMP.</span></h2>
 
-        <div class="process-head">
-            <span class="label fu">Der Ablauf</span>
-            <h2 id="h-process" class="fu d1">Einfach. Schnell. Konkret.</h2>
-        </div>
-
-        <div class="steps">
-
-            <div class="step fu">
-                <div class="step-num" aria-hidden="true">1</div>
-                <div class="step-when">Woche 1</div>
-                <h3>Analyse</h3>
-                <p>In einem strukturierten Gespräch erfassen wir Ihre aktuelle Positionierung, Ihre Zielkunden und die Lücken in Ihrer Kommunikation.</p>
-            </div>
-
-            <div class="step fu d1">
-                <div class="step-num" aria-hidden="true">2</div>
-                <div class="step-when">Woche 2–3</div>
-                <h3>Strategie &amp; Umsetzung</h3>
-                <p>Wir entwickeln Ihre geschärfte Positionierung, formulieren Ihre Kernbotschaft neu und setzen die Änderungen um — in Texten, Struktur und visuellem Auftritt.</p>
-            </div>
-
-            <div class="step fu d2">
-                <div class="step-num" aria-hidden="true">3</div>
-                <div class="step-when">Woche 4</div>
-                <h3>Ergebnis &amp; Übergabe</h3>
-                <p>Sie erhalten alles, was Sie brauchen, um sofort damit zu arbeiten: überarbeitete Texte, klare Botschaft, neu gestalteter Online-Auftritt. Fertig.</p>
-            </div>
-
-        </div>
+    <div class="steps-row">
+      <div class="glass step-card fu d1">
+        <div class="step-num" aria-hidden="true">1</div>
+        <h3>Train</h3>
+        <p>Complete your combat, strength, conditioning or recovery session. Every session counts.</p>
+      </div>
+      <div class="glass step-card fu d2">
+        <div class="step-num" aria-hidden="true">2</div>
+        <h3>Log</h3>
+        <p>Add duration, rounds, intensity, notes and focus area. Fast, clean, no friction.</p>
+      </div>
+      <div class="glass step-card fu d3">
+        <div class="step-num" aria-hidden="true">3</div>
+        <h3>Connect</h3>
+        <p>Share progress with your gym, coach, team or local SPARR community.</p>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     § 5 — WHY IT WORKS
-══════════════════════════════════════════════ -->
-<section id="why" aria-labelledby="h-why">
-    <div class="wrap">
-        <div class="why-grid">
-
-            <div>
-                <span class="label fu">Warum es funktioniert</span>
-                <h2 id="h-why" class="fu d1">
-                    Vertrauen entsteht nicht durch Überzeugung —<br>sondern durch Klarheit.
-                </h2>
-                <div class="why-text fu d2">
-                    <p>Die Forschung ist eindeutig: Menschen vertrauen schneller, wenn sie schnell verstehen. Nicht weil sie überzeugt werden, sondern weil ihr Gehirn das Risiko als gering einschätzt, wenn eine Botschaft klar, konsistent und relevant ist.</p>
-                    <p>Die meisten Unternehmensauftritte tun das Gegenteil: Sie versuchen, alles zu erklären — und erzeugen damit kognitive Überlastung. Der Interessent weicht aus. Der Anruf bleibt aus.</p>
-                    <p>Unsere Methode basiert auf den Erkenntnissen der Verhaltenspsychologie: Wie Menschen Entscheidungen treffen (Kahneman), wie Vertrauen entsteht (Cialdini), wie emotionale Resonanz Kaufentscheidungen antreibt (Damasio). Kein Trend. Keine Meinung. Bewiesene Mechanismen.</p>
-                    <div class="why-refs" role="list" aria-label="Wissenschaftliche Grundlagen">
-                        <span class="why-ref" role="listitem">Kahneman — Thinking, Fast and Slow</span>
-                        <span class="why-ref" role="listitem">Cialdini — Influence</span>
-                        <span class="why-ref" role="listitem">Damasio — Descartes' Error</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fu d2">
-                <blockquote class="pullquote">
-                    „Austauschbar wirken ist eine Entscheidung. Meistens eine unbewusste."
-                </blockquote>
-            </div>
-
+<!-- ═══ FOR ATHLETES ═══ -->
+<section id="athletes" aria-labelledby="h-athletes">
+  <div class="wrap">
+    <div class="athletes-grid">
+      <div>
+        <span class="sec-label fu">For Athletes</span>
+        <h2 id="h-athletes" class="fu d1">BUILT FOR ATHLETES WHO TRAIN<br><span class="neon">BEYOND THE GYM.</span></h2>
+        <p class="athletes-copy fu d2">SPARR is for fighters, beginners, competitors and comeback athletes who want to see their work compound.</p>
+        <div class="use-cases fu d2">
+          <div class="use-case">Beginner building consistency</div>
+          <div class="use-case">Fighter preparing for competition</div>
+          <div class="use-case">Athlete coming back from injury</div>
+          <div class="use-case">Hybrid athlete tracking conditioning</div>
+          <div class="use-case">Martial artist looking for community</div>
+          <div class="use-case">Coachable athlete who wants structure</div>
         </div>
+        <div class="fu d3">
+          <a href="#waitlist" class="btn btn-neon">Start your fight log</a>
+        </div>
+      </div>
+
+      <div class="athlete-cards fu d2">
+        <div class="a-card">
+          <div class="a-card-left">
+            <div class="a-card-label">Sunday</div>
+            <div class="a-card-title">Roadwork</div>
+            <div class="a-card-meta">5.2 km · 28 min</div>
+          </div>
+          <span class="a-card-badge">Done</span>
+        </div>
+        <div class="a-card">
+          <div class="a-card-left">
+            <div class="a-card-label">Session</div>
+            <div class="a-card-title">Bag Rounds</div>
+            <div class="a-card-meta">10 rounds · Intensity 8/10</div>
+          </div>
+          <span class="a-card-badge">Logged</span>
+        </div>
+        <div class="a-card">
+          <div class="a-card-left">
+            <div class="a-card-label">Sparring Notes</div>
+            <div class="a-card-title">Technical Sparring</div>
+            <div class="a-card-meta">6 rounds · Focus: footwork</div>
+          </div>
+          <span class="a-card-badge">Notes</span>
+        </div>
+        <div class="a-card">
+          <div class="a-card-left">
+            <div class="a-card-label">Recovery</div>
+            <div class="a-card-title">Mobility Session</div>
+            <div class="a-card-meta">30 min · Hip flexibility</div>
+          </div>
+          <span class="a-card-badge">Done</span>
+        </div>
+        <div class="a-card">
+          <div class="a-card-left">
+            <div class="a-card-label">Fight Prep</div>
+            <div class="a-card-title">Fight Camp Week 3</div>
+            <div class="a-card-meta">Volume & Conditioning</div>
+          </div>
+          <span class="a-card-badge" style="color:var(--neon)">Active</span>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     § 6 — FOR WHOM
-══════════════════════════════════════════════ -->
-<section id="forwhom" aria-labelledby="h-forwhom">
-    <div class="wrap">
-        <h2 id="h-forwhom" class="fu">Das ist für Sie, wenn&nbsp;…</h2>
-
-        <div class="fw-grid">
-
-            <div class="fw-yes fu d1">
-                <div class="fw-col-title">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-                        <circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" stroke-width="1.4"/>
-                        <path d="M4.5 7.5l2.5 2.5 4-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    Das passt
-                </div>
-                <ul class="fw-list">
-                    <li>
-                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-                            <path d="M3 8.5l3.5 3.5 7.5-7" stroke="#C9933A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Sie führen ein KMU mit echtem Angebot — und das Gefühl, dass es draußen nicht so ankommt, wie es sein sollte
-                    </li>
-                    <li>
-                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-                            <path d="M3 8.5l3.5 3.5 7.5-7" stroke="#C9933A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Sie haben eine Website, aber sie bringt kaum Anfragen
-                    </li>
-                    <li>
-                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-                            <path d="M3 8.5l3.5 3.5 7.5-7" stroke="#C9933A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Sie verlieren Aufträge an Mitbewerber, die objektiv nicht besser sind als Sie
-                    </li>
-                    <li>
-                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-                            <path d="M3 8.5l3.5 3.5 7.5-7" stroke="#C9933A" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Sie wollen keine Agentur, die monatelang Konzepte entwickelt — sondern konkrete Ergebnisse
-                    </li>
-                </ul>
-            </div>
-
-            <div class="fw-no fu d2">
-                <div class="fw-col-title">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-                        <circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" stroke-width="1.4"/>
-                        <path d="M5 5l5 5M10 5l-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                    </svg>
-                    Das passt nicht
-                </div>
-                <ul class="fw-list">
-                    <li>
-                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-                            <path d="M4 4l9 9M13 4l-9 9" stroke="#6B6560" stroke-width="1.75" stroke-linecap="round"/>
-                        </svg>
-                        Sie suchen jemanden, der „mal schnell was Günstiges zusammenbaut"
-                    </li>
-                    <li>
-                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-                            <path d="M4 4l9 9M13 4l-9 9" stroke="#6B6560" stroke-width="1.75" stroke-linecap="round"/>
-                        </svg>
-                        Sie erwarten Wachstum ohne Bereitschaft, Ihre Kommunikation zu hinterfragen
-                    </li>
-                    <li>
-                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-                            <path d="M4 4l9 9M13 4l-9 9" stroke="#6B6560" stroke-width="1.75" stroke-linecap="round"/>
-                        </svg>
-                        Sie wollen keine Veränderung — nur Bestätigung
-                    </li>
-                </ul>
-            </div>
-
+<!-- ═══ GYMS & COACHES ═══ -->
+<section id="gyms" aria-labelledby="h-gyms">
+  <div class="wrap">
+    <div class="gyms-grid">
+      <div>
+        <span class="sec-label fu">For Gyms & Coaches</span>
+        <h2 id="h-gyms" class="fu d1">TURN YOUR GYM INTO A<br><span class="neon">CONNECTED COMBAT COMMUNITY.</span></h2>
+        <p class="gyms-copy fu d2">SPARR helps gyms keep athletes engaged beyond class time — with challenges, activity logs, streaks, events and community visibility.</p>
+        <div class="gym-features fu d2">
+          <div class="gym-feat"><div class="gym-feat-dot"></div>Gym profiles & pages</div>
+          <div class="gym-feat"><div class="gym-feat-dot"></div>Member activity overview</div>
+          <div class="gym-feat"><div class="gym-feat-dot"></div>Class & gym challenges</div>
+          <div class="gym-feat"><div class="gym-feat-dot"></div>Event promotion</div>
+          <div class="gym-feat"><div class="gym-feat-dot"></div>Coach visibility</div>
+          <div class="gym-feat"><div class="gym-feat-dot"></div>Sparring day coordination</div>
+          <div class="gym-feat"><div class="gym-feat-dot"></div>Community retention layer</div>
         </div>
+        <div class="fu d3">
+          <a href="#waitlist" class="btn btn-neon">Register gym interest</a>
+        </div>
+      </div>
+
+      <div class="fu d2">
+        <div class="glass gym-card-big">
+          <h3>Planned Gym Features</h3>
+          <div class="gym-stat-row">
+            <div class="gym-stat">
+              <div class="gym-stat-val">∞</div>
+              <div class="gym-stat-label">Members</div>
+            </div>
+            <div class="gym-stat">
+              <div class="gym-stat-val">24/7</div>
+              <div class="gym-stat-label">Visibility</div>
+            </div>
+            <div class="gym-stat">
+              <div class="gym-stat-val">0€</div>
+              <div class="gym-stat-label">Early Access</div>
+            </div>
+          </div>
+          <p style="font-size:.8rem;color:rgba(255,255,255,0.5);line-height:1.65;margin-bottom:.875rem">Join the early access program and shape what SPARR becomes for gyms and combat communities.</p>
+          <span class="gym-coming">Early Access · Planned</span>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     § 7 — TESTIMONIALS
-══════════════════════════════════════════════ -->
-<section id="testimonials" aria-labelledby="h-testi">
-    <div class="wrap">
-        <span class="label fu">Stimmen</span>
-        <h2 id="h-testi" class="fu d1">Was KMU über die Zusammenarbeit sagen</h2>
+<!-- ═══ CHALLENGES ═══ -->
+<section id="challenges" aria-labelledby="h-challenges">
+  <div class="wrap">
+    <span class="sec-label fu">Challenges</span>
+    <h2 id="h-challenges" class="fu d1">WEEKLY CHALLENGES FOR<br><span class="neon">COMBAT ATHLETES.</span></h2>
 
-        <div class="testi-grid">
+    <div class="challenges-grid">
 
-            <div class="testi-card fu d1">
-                <span class="ph-badge">Platzhalter</span>
-                <p class="testi-quote">„Wir hatten das Gefühl, dass unsere Qualität einfach nicht rüberkommt — trotz 20 Jahren Erfahrung. Nach der Zusammenarbeit hat sich das grundlegend geändert. Die ersten Anfragen kamen noch bevor wir die neue Website live gestellt hatten."</p>
-                <div class="testi-name">Inhaber</div>
-                <div class="testi-role">Elektroinstallationen, Kanton Zürich — [PLATZHALTER]</div>
-            </div>
-
-            <div class="testi-card fu d2">
-                <span class="ph-badge">Platzhalter</span>
-                <p class="testi-quote">„Ich war skeptisch. Viele versprechen viel. Aber was wir bekommen haben, war konkret, schnell und hat sofort gewirkt. Kein Strategie-Ordner, der in der Schublade landet — sondern echte Texte, echte Wirkung."</p>
-                <div class="testi-name">Geschäftsführerin</div>
-                <div class="testi-role">Steuerberatung, Kanton Bern — [PLATZHALTER]</div>
-            </div>
-
+      <div class="glass challenge-card fu">
+        <span class="challenge-diff diff-medium">Medium</span>
+        <h3>5K Fighter Run</h3>
+        <p class="challenge-focus">Focus: Roadwork &amp; Conditioning</p>
+        <div class="challenge-meta">
+          <span>⏱ 1 Week</span>
+          <span>🏃 Roadwork</span>
         </div>
+      </div>
 
-        <p class="trust-bar fu">
-            Bereits gearbeitet mit KMU aus:&nbsp; Handwerk &nbsp;·&nbsp; Beratung &nbsp;·&nbsp; Dienstleistung &nbsp;·&nbsp; Gesundheit &nbsp;·&nbsp; Immobilien
-        </p>
+      <div class="glass challenge-card fu d1">
+        <span class="challenge-diff diff-hard">Hard</span>
+        <h3>100 Round Bag Challenge</h3>
+        <p class="challenge-focus">Focus: Striking Volume</p>
+        <div class="challenge-meta">
+          <span>⏱ 30 Days</span>
+          <span>🥊 Striking</span>
+        </div>
+      </div>
+
+      <div class="glass challenge-card fu d2">
+        <span class="challenge-diff diff-medium">Medium</span>
+        <h3>Fight Camp Consistency Week</h3>
+        <p class="challenge-focus">Focus: Discipline &amp; Routine</p>
+        <div class="challenge-meta">
+          <span>⏱ 7 Days</span>
+          <span>🏕️ Camp</span>
+        </div>
+      </div>
+
+      <div class="glass challenge-card fu d1">
+        <span class="challenge-diff diff-beginner">Beginner</span>
+        <h3>Roadwork Sunday</h3>
+        <p class="challenge-focus">Focus: Weekly Conditioning</p>
+        <div class="challenge-meta">
+          <span>⏱ Weekly</span>
+          <span>🌅 Outdoor</span>
+        </div>
+      </div>
+
+      <div class="glass challenge-card fu d2">
+        <span class="challenge-diff diff-beginner">Beginner</span>
+        <h3>Mobility for Fighters</h3>
+        <p class="challenge-focus">Focus: Recovery &amp; Flexibility</p>
+        <div class="challenge-meta">
+          <span>⏱ 14 Days</span>
+          <span>🧘 Recovery</span>
+        </div>
+      </div>
+
+      <div class="glass challenge-card fu d3">
+        <span class="challenge-diff diff-medium">Medium</span>
+        <h3>30-Day Combat Base</h3>
+        <p class="challenge-focus">Focus: Foundation Building</p>
+        <div class="challenge-meta">
+          <span>⏱ 30 Days</span>
+          <span>💪 Foundation</span>
+        </div>
+      </div>
+
     </div>
+
+    <div style="text-align:center;margin-top:2.5rem" class="fu">
+      <a href="#waitlist" class="btn btn-ghost">Join early access to unlock challenges</a>
+    </div>
+  </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     § 8 — CONTACT / CTA
-══════════════════════════════════════════════ -->
-<section id="contact" aria-labelledby="h-contact">
-    <div class="wrap">
+<!-- ═══ LOCAL / ZURICH ═══ -->
+<section id="local" aria-labelledby="h-local">
+  <div class="wrap">
+    <div class="local-grid">
+      <div>
+        <span class="sec-label fu">Starting Local</span>
+        <h2 id="h-local" class="fu d1">STARTING LOCAL.<br><span class="neon">BUILT TO SCALE.</span></h2>
+        <p class="local-copy fu d2">SPARR starts with real combat athletes, coaches and gyms in Zurich — through local challenges, outdoor conditioning, sparring days and community-first testing.</p>
 
-        <div class="contact-head fu">
-            <span class="label">Kontakt</span>
-            <h2 id="h-contact">Bereit, aufzuhören,<br>austauschbar zu wirken?</h2>
-            <p>Buchen Sie eine kostenlose Erstanalyse. 30&nbsp;Minuten. Kein Verkaufsgespräch. Nur eine ehrliche Einschätzung, wo Ihre Kommunikation steht — und was möglich wäre.</p>
+        <div class="local-blocks fu d2">
+          <div class="local-block"><div class="local-block-dot"></div><span>Zurich Combat Club</span></div>
+          <div class="local-block"><div class="local-block-dot"></div><span>Outdoor Conditioning</span></div>
+          <div class="local-block"><div class="local-block-dot"></div><span>Gym Collaborations</span></div>
+          <div class="local-block"><div class="local-block-dot"></div><span>Local SPARR Challenges</span></div>
+          <div class="local-block"><div class="local-block-dot"></div><span>Sparring Days</span></div>
+          <div class="local-block"><div class="local-block-dot"></div><span>Community-First Launch</span></div>
         </div>
 
-        <div class="form-wrap fu d1">
-
-            <form id="cform" novalidate aria-label="Kontaktformular">
-
-                <div class="form-row">
-                    <div class="fg" id="fg-name">
-                        <label for="f-name">Name</label>
-                        <input type="text" id="f-name" name="name" placeholder="Ihr Name" required autocomplete="name">
-                        <span class="ferr" id="err-name" role="alert">Bitte geben Sie Ihren Namen ein.</span>
-                    </div>
-                    <div class="fg" id="fg-company">
-                        <label for="f-company">Unternehmen</label>
-                        <input type="text" id="f-company" name="company" placeholder="Ihr Unternehmen" required autocomplete="organization">
-                        <span class="ferr" id="err-company" role="alert">Bitte geben Sie Ihr Unternehmen ein.</span>
-                    </div>
-                </div>
-
-                <div class="fg" id="fg-email">
-                    <label for="f-email">E-Mail</label>
-                    <input type="email" id="f-email" name="email" placeholder="ihre@email.ch" required autocomplete="email">
-                    <span class="ferr" id="err-email" role="alert">Bitte geben Sie eine gültige E-Mail-Adresse ein.</span>
-                </div>
-
-                <div class="fg" id="fg-msg">
-                    <label for="f-msg">Kurzbeschreibung des Anliegens</label>
-                    <textarea id="f-msg" name="message" placeholder="Was beschäftigt Sie gerade in Bezug auf Ihre Kommunikation oder Ihren Online-Auftritt?" required></textarea>
-                    <span class="ferr" id="err-msg" role="alert">Bitte beschreiben Sie kurz Ihr Anliegen (mind. 10&nbsp;Zeichen).</span>
-                </div>
-
-                <div class="form-submit">
-                    <button type="submit" class="btn btn-amber btn-lg">Kostenlose Erstanalyse anfragen&nbsp;→</button>
-                </div>
-                <p class="form-note">Wir melden uns innerhalb von 24&nbsp;Stunden.</p>
-
-            </form>
-
-            <div class="form-ok" id="form-ok" role="status" aria-live="polite">
-                <div class="form-ok-icon" aria-hidden="true">
-                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-                        <path d="M5 13l5.5 5.5L21 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <h3>Danke für Ihre Anfrage.</h3>
-                <p>Wir melden uns innerhalb von 24&nbsp;Stunden.</p>
-            </div>
-
+        <div style="margin-top:2rem" class="fu d3">
+          <a href="#waitlist" class="btn btn-neon">Join the Zurich Waitlist</a>
         </div>
+      </div>
+
+      <div class="fu d2">
+        <div class="glass local-visual">
+          <div class="local-city" aria-hidden="true">ZRH</div>
+          <div class="local-tagline">Where SPARR begins.</div>
+          <p class="local-desc">Not launched in a vacuum. Built in real gyms, with real fighters, in real fight camps. Zurich is the starting point — the community, the challenge, the proof.</p>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- ═══ APP PREVIEW ═══ -->
+<section id="apppreview" aria-labelledby="h-preview">
+  <div class="wrap">
+    <span class="sec-label fu">App Preview</span>
+    <h2 id="h-preview" class="fu d1">A HOME SCREEN <span class="neon">MADE FOR FIGHTERS.</span></h2>
+    <p class="apppreview-sub fu d2">A look at the SPARR interface — built around the combat athlete's daily session flow.</p>
+
+    <div class="preview-grid">
+
+      <div class="glass ui-card fu">
+        <div class="ui-card-header">
+          <div class="ui-card-title">Your Streak</div>
+          <div class="ui-card-icon" aria-hidden="true">🔥</div>
+        </div>
+        <div class="streak-display">
+          <div class="streak-big">4</div>
+          <div class="streak-unit">Days</div>
+        </div>
+        <div class="streak-best">Personal best: 12 days</div>
+      </div>
+
+      <div class="glass ui-card fu d1">
+        <div class="ui-card-header">
+          <div class="ui-card-title">Last Session</div>
+          <div class="ui-card-icon" aria-hidden="true">🥊</div>
+        </div>
+        <div class="activity-sport">Boxing</div>
+        <div class="activity-stats">
+          <span class="activity-stat">⏱ 45 min</span>
+          <span class="activity-stat">🔄 8 rounds</span>
+        </div>
+        <div class="intensity-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" aria-label="Intensity: 7/10">
+          <div class="intensity-fill"></div>
+        </div>
+        <div class="activity-note">"Clean rounds. Better footwork today."</div>
+      </div>
+
+      <div class="glass ui-card fu d2">
+        <div class="ui-card-header">
+          <div class="ui-card-title">Active Challenge</div>
+          <div class="ui-card-icon" aria-hidden="true">🏆</div>
+        </div>
+        <div style="font-size:.8rem;font-weight:800;color:var(--neon);margin-bottom:.5rem">5K Fighter Run</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-label"><span>Progress</span><span>2 / 5</span></div>
+          <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" aria-label="Challenge progress: 2 of 5">
+            <div class="progress-fill" style="width:40%"></div>
+          </div>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,0.4)">3 sessions remaining · 5 days left</div>
+      </div>
+
+      <div class="glass ui-card fu d1">
+        <div class="ui-card-header">
+          <div class="ui-card-title">Fight Camp</div>
+          <div class="ui-card-icon" aria-hidden="true">🏕️</div>
+        </div>
+        <div class="fight-camp-week">Week 3</div>
+        <div class="fight-camp-focus">Volume &amp; Conditioning</div>
+        <div class="progress-bar-wrap" style="margin-top:1rem">
+          <div class="progress-label"><span>Camp Progress</span><span>3 / 8 weeks</span></div>
+          <div class="progress-bar" role="progressbar" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100" aria-label="Fight camp: 3 of 8 weeks">
+            <div class="progress-fill" style="width:37%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass ui-card fu d2">
+        <div class="ui-card-header">
+          <div class="ui-card-title">Gym Connection</div>
+          <div class="ui-card-icon" aria-hidden="true">🏟️</div>
+        </div>
+        <p class="gym-connect-prompt">Connect with your gym to access challenges, events, sparring days and your team.</p>
+        <button class="gym-connect-btn" type="button">Find your gym →</button>
+      </div>
+
+      <div class="glass ui-card fu d3">
+        <div class="ui-card-header">
+          <div class="ui-card-title">Weekly Volume</div>
+          <div class="ui-card-icon" aria-hidden="true">📈</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.25rem">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.65rem;color:rgba(255,255,255,0.4);margin-bottom:.25rem"><span>Boxing</span><span>3 sessions</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.65rem;color:rgba(255,255,255,0.4);margin-bottom:.25rem"><span>Roadwork</span><span>2 sessions</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.65rem;color:rgba(255,255,255,0.4);margin-bottom:.25rem"><span>Strength</span><span>1 session</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WAITLIST ═══ -->
+<section id="waitlist" aria-labelledby="h-waitlist">
+  <div class="wrap">
+    <div class="waitlist-inner">
+      <span class="sec-label fu">Early Access</span>
+      <h2 id="h-waitlist" class="fu d1">BE PART OF THE FIRST<br><span class="neon">SPARR COMMUNITY.</span></h2>
+      <p class="waitlist-copy fu d2">Join the early waitlist for athletes, coaches and gyms. Get first access to SPARR updates, local challenges and early community invites.</p>
+
+      <!-- TODO: Connect to backend API endpoint e.g. POST /api/waitlist -->
+      <!-- Currently stores locally and shows success state only -->
+      <form id="wform" class="wform fu d2" novalidate aria-label="Waitlist signup form">
+
+        <div class="form-row-2">
+          <div class="fg" id="fg-wname">
+            <label for="w-name">Name</label>
+            <input type="text" id="w-name" name="name" placeholder="Your name" required autocomplete="name">
+            <span class="ferr" id="err-wname" role="alert">Please enter your name.</span>
+          </div>
+          <div class="fg" id="fg-wemail">
+            <label for="w-email">Email</label>
+            <input type="email" id="w-email" name="email" placeholder="your@email.com" required autocomplete="email">
+            <span class="ferr" id="err-wemail" role="alert">Please enter a valid email.</span>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="fg" id="fg-wrole">
+            <label for="w-role">Your Role</label>
+            <select id="w-role" name="role" required>
+              <option value="" disabled selected>Select your role</option>
+              <option value="athlete">Athlete</option>
+              <option value="coach">Coach</option>
+              <option value="gym">Gym Owner</option>
+              <option value="fan">Fan / Supporter</option>
+            </select>
+            <span class="ferr" id="err-wrole" role="alert">Please select your role.</span>
+          </div>
+          <div class="fg" id="fg-wsport">
+            <label for="w-sport">Combat Sport</label>
+            <select id="w-sport" name="sport">
+              <option value="" selected>Select sport (optional)</option>
+              <option value="boxing">Boxing</option>
+              <option value="kickboxing">Kickboxing</option>
+              <option value="mma">MMA</option>
+              <option value="bjj">BJJ</option>
+              <option value="muaythai">Muay Thai</option>
+              <option value="sanda">Sanda</option>
+              <option value="wrestling">Wrestling</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="fg" id="fg-wcity">
+          <label for="w-city">City</label>
+          <input type="text" id="w-city" name="city" placeholder="Your city" autocomplete="address-level2">
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn btn-neon btn-lg">Join Waitlist</button>
+        </div>
+        <p class="form-note">No spam. No fake promises. Just real updates when SPARR is ready.</p>
+
+      </form>
+
+      <div class="form-success" id="wform-success" role="status" aria-live="polite">
+        <div class="success-icon" aria-hidden="true">✓</div>
+        <h3>You're on the list.</h3>
+        <p><strong>Every round counts.</strong><br>We'll be in touch with early access, local challenges and community updates.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section id="faq" aria-labelledby="h-faq">
+  <div class="wrap">
+    <span class="sec-label fu" style="display:block;text-align:center">FAQ</span>
+    <h2 id="h-faq" class="fu d1" style="text-align:center;margin-bottom:0">QUESTIONS<br><span class="neon">ANSWERED.</span></h2>
+
+    <div class="faq-list fu d2" role="list">
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false">
+          Is SPARR already live?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">SPARR is currently in early concept and community-building phase. The first version is being shaped together with athletes, coaches and gyms. No fake launch dates, no empty promises.</div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false">
+          Is SPARR only for professional fighters?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">No. SPARR is for beginners, hobby athletes, competitors and comeback athletes. If you train combat sports seriously — or want to start — SPARR is for you.</div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false">
+          Which sports does SPARR support?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">Boxing, kickboxing, MMA, BJJ, Muay Thai, Sanda, wrestling and other combat sports — plus roadwork, strength and conditioning that support your training.</div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false">
+          Is SPARR replacing my gym?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">No. SPARR is designed to strengthen gyms and combat communities, not replace them. The gym is where the work happens — SPARR makes that work visible and connected.</div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false">
+          Can gyms join early?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">Yes. Gyms and coaches can register interest for early access, local challenges and community collaborations. Use the waitlist form and select "Gym Owner" as your role.</div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-q" aria-expanded="false">
+          Is SPARR just Strava for fighters?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">No. Strava tracks endurance. SPARR is focused on the combat athlete journey: rounds, intensity, sparring, gym connection, challenges and fight-camp progress. Instagram shows highlights. Strava shows runs. SPARR shows the fight journey.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINAL CTA ═══ -->
+<section id="finalcta" aria-labelledby="h-fcta">
+  <div class="wrap">
+    <div class="finalcta-inner">
+      <span class="sec-label fu" style="display:block">The Fight Logbook</span>
+      <h2 id="h-fcta" class="fu d1">
+        TRAIN HARD.<br>
+        STAY FOCUSED.<br>
+        <span class="neon">BE SPARR.</span>
+      </h2>
+      <p class="finalcta-sub fu d2">Join the first wave of combat athletes building the fight logbook community.</p>
+      <div class="finalcta-btns fu d3">
+        <a href="#waitlist" class="btn btn-neon btn-lg">Join Waitlist</a>
+        <a href="#solution" class="btn btn-ghost btn-lg">Explore Features</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 </main>
 
-<!-- ═══════════════════════════════════════════
-     FOOTER
-══════════════════════════════════════════════ -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
-    <div class="wrap">
-        <div class="foot-top">
-            <a href="#" class="foot-brand">KMU Klarheit</a>
-            <ul class="foot-nav" role="list">
-                <li><a href="#solution">Leistungen</a></li>
-                <li><a href="#process">Ablauf</a></li>
-                <li><a href="#contact">Kontakt</a></li>
-            </ul>
-            <ul class="foot-legal" role="list">
-                <li><a href="#">Datenschutz</a></li>
-                <li><a href="#">Impressum</a></li>
-            </ul>
+  <div class="wrap">
+    <div class="foot-top">
+
+      <div class="foot-brand-block">
+        <div class="foot-logo">
+          <div class="foot-logo-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 11L5.5 3h2.5L5.5 8h3L5.5 14" stroke="#A8FF00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="foot-wordmark"><span class="sp">SP</span><span class="arr">ARR</span></div>
         </div>
-        <div class="foot-bottom">
-            <p class="foot-copy">© 2025 KMU Klarheit</p>
-            <p class="foot-tagline"><em>„Klarheit ist der stärkste Wettbewerbsvorteil."</em></p>
-            <div class="foot-spacer" aria-hidden="true"></div>
+        <div class="foot-tagline">The fight logbook for combat athletes.</div>
+        <div class="foot-social" role="list" aria-label="Social media">
+          <a href="#" class="foot-soc-link" aria-label="SPARR on Instagram" role="listitem">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </a>
         </div>
+      </div>
+
+      <div class="foot-links">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#solution">Features</a></li>
+          <li><a href="#athletes">Athletes</a></li>
+          <li><a href="#gyms">Gyms</a></li>
+          <li><a href="#challenges">Challenges</a></li>
+          <li><a href="#waitlist">Waitlist</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-links">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
     </div>
+
+    <div class="foot-bottom">
+      <p class="foot-copy">© 2026 SPARR. All rights reserved.</p>
+      <p class="foot-built">Built for fighters, coaches and combat communities.</p>
+    </div>
+  </div>
 </footer>
 
 <script>
 (function () {
-    'use strict';
+  'use strict';
 
-    /* ─── NAV: sticky + mobile toggle ─── */
-    var nav      = document.getElementById('nav');
-    var toggle   = document.getElementById('nav-toggle');
-    var menu     = document.getElementById('nav-menu');
+  /* ─── NAV: sticky + mobile toggle ─── */
+  var nav    = document.getElementById('nav');
+  var toggle = document.getElementById('nav-toggle');
+  var menu   = document.getElementById('nav-menu');
 
-    window.addEventListener('scroll', function () {
-        nav.classList.toggle('stuck', window.scrollY > 36);
-    }, { passive: true });
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('stuck', window.scrollY > 50);
+  }, { passive: true });
 
-    toggle.addEventListener('click', function () {
-        var open = menu.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(open));
+  toggle.addEventListener('click', function () {
+    var open = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  menu.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
     });
+  });
 
-    menu.querySelectorAll('a').forEach(function (a) {
-        a.addEventListener('click', function () {
-            menu.classList.remove('open');
-            toggle.setAttribute('aria-expanded', 'false');
-        });
-    });
+  /* ─── FADE-UP on scroll ─── */
+  var fuEls = document.querySelectorAll('.fu');
 
-    /* ─── FADE-UP on scroll ─── */
-    var fuEls = document.querySelectorAll('.fu');
-
-    if ('IntersectionObserver' in window) {
-        var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (e) {
-                if (e.isIntersecting) {
-                    e.target.classList.add('in');
-                    io.unobserve(e.target);
-                }
-            });
-        }, { threshold: 0.10, rootMargin: '0px 0px -36px 0px' });
-
-        fuEls.forEach(function (el) {
-            // Hero elements fire immediately via timeout
-            if (el.closest('#hero')) {
-                setTimeout(function () { el.classList.add('in'); }, 80);
-            } else {
-                io.observe(el);
-            }
-        });
-    } else {
-        // Fallback: just show everything
-        fuEls.forEach(function (el) { el.classList.add('in'); });
-    }
-
-    /* ─── CONTACT FORM ─── */
-    var form   = document.getElementById('cform');
-    var formOk = document.getElementById('form-ok');
-
-    function emailOk(v) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
-    }
-
-    function validate(fieldId, groupId, errId, testFn) {
-        var f   = document.getElementById(fieldId);
-        var g   = document.getElementById(groupId);
-        var err = document.getElementById(errId);
-        var ok  = testFn(f.value.trim());
-        g.classList.toggle('err', !ok);
-        err.classList.toggle('show', !ok);
-        return ok;
-    }
-
-    // Blur-time inline validation
-    document.getElementById('f-name').addEventListener('blur', function () {
-        validate('f-name', 'fg-name', 'err-name', function (v) { return v.length > 0; });
-    });
-    document.getElementById('f-company').addEventListener('blur', function () {
-        validate('f-company', 'fg-company', 'err-company', function (v) { return v.length > 0; });
-    });
-    document.getElementById('f-email').addEventListener('blur', function () {
-        validate('f-email', 'fg-email', 'err-email', emailOk);
-    });
-    document.getElementById('f-msg').addEventListener('blur', function () {
-        validate('f-msg', 'fg-msg', 'err-msg', function (v) { return v.length >= 10; });
-    });
-
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var ok1 = validate('f-name',    'fg-name',    'err-name',    function (v) { return v.length > 0; });
-        var ok2 = validate('f-company', 'fg-company', 'err-company', function (v) { return v.length > 0; });
-        var ok3 = validate('f-email',   'fg-email',   'err-email',   emailOk);
-        var ok4 = validate('f-msg',     'fg-msg',     'err-msg',     function (v) { return v.length >= 10; });
-
-        if (ok1 && ok2 && ok3 && ok4) {
-            form.style.display = 'none';
-            formOk.classList.add('show');
-            formOk.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } else {
-            // Focus first error
-            var firstErr = form.querySelector('.fg.err input, .fg.err textarea');
-            if (firstErr) firstErr.focus();
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
         }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    fuEls.forEach(function (el) {
+      if (el.closest('#hero')) {
+        setTimeout(function () { el.classList.add('in'); }, 80);
+      } else {
+        io.observe(el);
+      }
     });
+  } else {
+    fuEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ─── FAQ accordion ─── */
+  document.querySelectorAll('.faq-q').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item  = btn.closest('.faq-item');
+      var open  = item.classList.contains('open');
+      // close all
+      document.querySelectorAll('.faq-item').forEach(function (i) {
+        i.classList.remove('open');
+        i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (!open) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* ─── WAITLIST FORM ─── */
+  var form    = document.getElementById('wform');
+  var success = document.getElementById('wform-success');
+
+  function emailValid(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  }
+
+  function validateField(fieldId, groupId, errId, testFn) {
+    var f   = document.getElementById(fieldId);
+    var g   = document.getElementById(groupId);
+    var err = document.getElementById(errId);
+    var ok  = testFn(f.value.trim());
+    g.classList.toggle('err', !ok);
+    if (err) err.classList.toggle('show', !ok);
+    return ok;
+  }
+
+  // Inline validation on blur
+  document.getElementById('w-name').addEventListener('blur', function () {
+    validateField('w-name', 'fg-wname', 'err-wname', function (v) { return v.length > 0; });
+  });
+  document.getElementById('w-email').addEventListener('blur', function () {
+    validateField('w-email', 'fg-wemail', 'err-wemail', emailValid);
+  });
+  document.getElementById('w-role').addEventListener('change', function () {
+    validateField('w-role', 'fg-wrole', 'err-wrole', function (v) { return v.length > 0; });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var ok1 = validateField('w-name',  'fg-wname',  'err-wname',  function (v) { return v.length > 0; });
+    var ok2 = validateField('w-email', 'fg-wemail', 'err-wemail', emailValid);
+    var ok3 = validateField('w-role',  'fg-wrole',  'err-wrole',  function (v) { return v.length > 0; });
+
+    if (ok1 && ok2 && ok3) {
+      // TODO: POST form data to /api/waitlist or your email/webhook service
+      // e.g.: fetch('/api/waitlist', { method:'POST', body: new FormData(form) })
+      form.style.display = 'none';
+      success.classList.add('show');
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      var firstErr = form.querySelector('.fg.err input, .fg.err select');
+      if (firstErr) firstErr.focus();
+    }
+  });
+
+  /* ─── Phone floating animation: pause on prefers-reduced-motion ─── */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var phone = document.querySelector('.phone');
+    if (phone) phone.style.animation = 'none';
+    var glow = document.querySelector('.phone-glow');
+    if (glow) glow.style.animation = 'none';
+  }
 
 })();
 </script>
