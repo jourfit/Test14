@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
 <style>
 /* ─── TOKENS ─── */
@@ -96,19 +96,31 @@ body::before{
 /* ─── BUTTONS ─── */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
-  font-family:var(--font);font-weight:800;font-size:.875rem;
-  letter-spacing:.1em;text-transform:uppercase;
-  padding:.85rem 2rem;min-height:50px;border:none;border-radius:999px;
-  cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;
+  font-family:'Barlow Condensed','Raleway',system-ui,sans-serif;
+  font-weight:800;font-style:italic;font-size:.95rem;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:.85rem 2rem;min-height:50px;border:none;border-radius:6px;
+  cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;
   white-space:nowrap;
 }
-.btn-neon{background:linear-gradient(135deg,var(--neon),var(--energy));color:var(--black)}
-.btn-neon:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(168,255,0,0.5)}
+.btn-neon{
+  background:linear-gradient(135deg,var(--neon) 0%,var(--energy) 100%);
+  color:var(--black);
+  box-shadow:0 2px 0 rgba(0,0,0,0.4), 0 0 20px rgba(168,255,0,0.25);
+}
+.btn-neon:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 0 rgba(0,0,0,0.4), 0 0 36px rgba(168,255,0,0.55);
+  background:linear-gradient(135deg,#c0ff20 0%,var(--neon) 100%);
+}
 .btn-neon:focus-visible{outline:2px solid var(--neon);outline-offset:3px}
-.btn-ghost{background:transparent;color:var(--white);border:1.5px solid rgba(168,255,0,0.45)}
-.btn-ghost:hover{border-color:var(--neon);color:var(--neon);box-shadow:0 0 20px rgba(168,255,0,0.2)}
+.btn-ghost{
+  background:transparent;color:var(--white);
+  border:1.5px solid rgba(168,255,0,0.5);
+}
+.btn-ghost:hover{border-color:var(--neon);color:var(--neon);box-shadow:0 0 24px rgba(168,255,0,0.2)}
 .btn-ghost:focus-visible{outline:2px solid var(--neon);outline-offset:3px}
-.btn-lg{font-size:1rem;padding:1rem 2.5rem;min-height:56px}
+.btn-lg{font-size:1.1rem;padding:1rem 2.5rem;min-height:56px}
 
 /* ─── SECTION LABELS ─── */
 .sec-label{
@@ -120,9 +132,32 @@ body::before{
 /* ─── HEADLINES ─── */
 h1,h2,h3,h4{font-family:var(--font);line-height:1.08;letter-spacing:-.01em}
 h1{font-size:clamp(2.6rem,6vw,5.5rem);font-weight:900}
-h2{font-size:clamp(1.8rem,4vw,3.2rem);font-weight:900;text-transform:uppercase}
+h2{
+  font-family:'Barlow Condensed','Raleway',system-ui,sans-serif;
+  font-size:clamp(1.9rem,4.5vw,3.6rem);font-weight:900;
+  font-style:italic;text-transform:uppercase;letter-spacing:.01em;
+}
 h3{font-size:clamp(1rem,1.6vw,1.2rem);font-weight:700}
 .neon{color:var(--neon)}
+
+/* ─── SPARR WORDMARK FONT ─── */
+.sparr-wordmark{
+  font-family:'Barlow Condensed', 'Raleway', system-ui, sans-serif;
+  font-style:italic;
+  font-weight:900;
+  letter-spacing:-.02em;
+  text-transform:uppercase;
+  line-height:1;
+}
+.sparr-wordmark .sp{
+  color:#ffffff;
+  /* subtle silver text-shadow for the SP highlight from brand images */
+  text-shadow:0 0 20px rgba(255,255,255,0.3);
+}
+.sparr-wordmark .arr{
+  color:var(--neon);
+  text-shadow:0 0 12px rgba(168,255,0,0.6);
+}
 
 /* ───────────────────────────────────────────────
    NAV
@@ -147,17 +182,16 @@ h3{font-size:clamp(1rem,1.6vw,1.2rem);font-weight:700}
 }
 .nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
 .nav-logo-icon{
-  width:36px;height:36px;
-  background:linear-gradient(135deg,#1a1a1a,#2a2a2a);
-  border:1.5px solid rgba(168,255,0,0.5);
-  border-radius:8px;
+  width:40px;height:40px;
+  background:radial-gradient(circle at 40% 35%, #2a2a2a, #111);
+  border:1.5px solid rgba(168,255,0,0.45);
+  border-radius:10px;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 12px rgba(168,255,0,0.2);
+  box-shadow:0 0 16px rgba(168,255,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
   flex-shrink:0;
+  overflow:hidden;
 }
-.nav-logo-wordmark{font-size:1.25rem;font-weight:900;letter-spacing:-.02em}
-.nav-logo-wordmark .sp{color:var(--white)}
-.nav-logo-wordmark .arr{color:var(--neon)}
+.nav-logo-wordmark{font-size:1.35rem}
 
 .nav-links{
   display:flex;align-items:center;gap:2rem;
@@ -248,11 +282,46 @@ h3{font-size:clamp(1rem,1.6vw,1.2rem);font-weight:700}
 .hero-eyebrow::before{content:'';width:24px;height:2px;background:var(--neon)}
 
 h1.hero-h1{
-  font-size:clamp(3rem,6.5vw,6rem);font-weight:900;
-  text-transform:uppercase;line-height:1;
-  margin-bottom:1.5rem;letter-spacing:-.03em;
+  font-family:'Barlow Condensed','Raleway',system-ui,sans-serif;
+  font-size:clamp(3.5rem,7.5vw,7rem);font-weight:900;font-style:italic;
+  text-transform:uppercase;line-height:.95;
+  margin-bottom:1.5rem;letter-spacing:-.01em;
 }
-h1.hero-h1 em{font-style:normal;color:var(--neon)}
+h1.hero-h1 em{
+  font-style:italic;color:var(--neon);
+  text-shadow:0 0 40px rgba(168,255,0,0.5), 0 0 80px rgba(168,255,0,0.2);
+  display:block;
+}
+
+/* ─── HERO SPEED LINES (proper diagonal) ─── */
+.hero-lines{
+  position:absolute;top:0;right:0;width:58%;height:100%;
+  pointer-events:none;overflow:hidden;z-index:1;
+}
+.hero-lines::before,
+.hero-lines::after{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+}
+.hero-lines::before{
+  background:
+    repeating-linear-gradient(
+      -55deg,
+      transparent 0px,
+      transparent 28px,
+      rgba(168,255,0,0.04) 28px,
+      rgba(168,255,0,0.04) 29px
+    );
+}
+.hero-lines::after{
+  background:
+    repeating-linear-gradient(
+      -55deg,
+      transparent 0px,
+      transparent 62px,
+      rgba(168,255,0,0.07) 62px,
+      rgba(168,255,0,0.07) 64px
+    );
+}
 
 .hero-sub{
   font-size:clamp(1rem,1.4vw,1.15rem);color:rgba(255,255,255,0.75);
@@ -403,21 +472,32 @@ h1.hero-h1 em{font-style:normal;color:var(--neon)}
 
 /* ───────────────────────────────────────────────
    POSITIONING STRIP
+   Brand-Guide style: dark base, neon-green accents, diagonal lines
 ─────────────────────────────────────────────── */
 .strip{
-  background:rgba(168,255,0,0.04);
-  border-top:1px solid rgba(168,255,0,0.12);
-  border-bottom:1px solid rgba(168,255,0,0.12);
-  padding:1.5rem 0;overflow:hidden;
+  background:linear-gradient(135deg,#0f1500,#0d0d0d,#0f1500);
+  border-top:2px solid rgba(168,255,0,0.35);
+  border-bottom:2px solid rgba(168,255,0,0.35);
+  padding:1.1rem 0;overflow:hidden;
+  position:relative;
+}
+.strip::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(
+    -55deg,transparent 0,transparent 40px,
+    rgba(168,255,0,0.04) 40px,rgba(168,255,0,0.04) 41px
+  );
 }
 .strip-inner{
-  display:flex;align-items:center;gap:2rem;white-space:nowrap;
-  font-size:clamp(.75rem,.9vw,.85rem);font-weight:800;
-  text-transform:uppercase;letter-spacing:.15em;
+  display:flex;align-items:center;gap:1.75rem;white-space:nowrap;
+  font-family:'Barlow Condensed','Raleway',system-ui,sans-serif;
+  font-size:clamp(.8rem,1vw,.95rem);font-weight:800;font-style:italic;
+  text-transform:uppercase;letter-spacing:.12em;
+  position:relative;z-index:1;
 }
-.strip-inner span{color:rgba(255,255,255,0.45)}
-.strip-inner strong{color:var(--neon)}
-.strip-sep{color:rgba(168,255,0,0.3);flex-shrink:0;font-size:1.2rem}
+.strip-inner span{color:rgba(168,255,0,0.65)}
+.strip-inner strong{color:var(--neon);text-shadow:0 0 10px rgba(168,255,0,0.4)}
+.strip-sep{color:rgba(168,255,0,0.35);flex-shrink:0;font-size:1rem;font-style:normal}
 
 /* ───────────────────────────────────────────────
    PROBLEM
@@ -834,13 +914,14 @@ footer{
 .foot-brand-block{}
 .foot-logo{display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem}
 .foot-logo-icon{
-  width:32px;height:32px;background:#1a1a1a;border:1.5px solid rgba(168,255,0,0.35);
-  border-radius:7px;display:flex;align-items:center;justify-content:center;
-  font-size:.75rem;font-weight:900;color:var(--neon);
-  box-shadow:0 0 8px rgba(168,255,0,0.15);
+  width:36px;height:36px;
+  background:radial-gradient(circle at 40% 35%, #2a2a2a, #111);
+  border:1.5px solid rgba(168,255,0,0.4);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 10px rgba(168,255,0,0.18), inset 0 1px 0 rgba(255,255,255,0.04);
+  overflow:hidden;
 }
-.foot-wordmark{font-size:1.1rem;font-weight:900;letter-spacing:-.02em}
-.foot-wordmark .sp{color:var(--white)}.foot-wordmark .arr{color:var(--neon)}
+.foot-wordmark{font-size:1.2rem}
 .foot-tagline{font-size:.78rem;color:rgba(255,255,255,0.35);letter-spacing:.04em}
 
 .foot-links{}
@@ -878,12 +959,21 @@ footer{
   <div class="nav-row">
     <a href="#" class="nav-logo" aria-label="SPARR — Home">
       <div class="nav-logo-icon" aria-hidden="true">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <path d="M3 14L7 4h3L7 10h4l-4 8H3z" fill="#A8FF00"/>
-          <path d="M9 10L13 4h2l-4 8" fill="rgba(168,255,0,0.5)"/>
+        <!-- Boxing glove icon — simplified brand mark -->
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- glove body -->
+          <path d="M7 20c-.8 0-2.5-.6-3-2.5-.4-1.6 0-3 0-3l1-4 1.5-5C7 3.5 8 3 9.5 3c1 0 1.8.5 2 1.5l.5 2.5 1.5-1.5c.7-.6 1.6-.5 2.2 0 .6.6.7 1.5.2 2.2l-.4.5 1-.3c.8-.2 1.6.2 1.9 1 .3.7.1 1.5-.5 1.9l-.5.3.7.1c.8.1 1.3.8 1.3 1.6s-.7 1.5-1.5 1.6l-2.4.4S16 17 14.5 18.5c-1 1-2 1.5-3 1.5H7z" fill="#1a1a1a" stroke="#A8FF00" stroke-width="1" stroke-linejoin="round"/>
+          <!-- thumb -->
+          <path d="M8.5 7.5c-.3-.8-.8-1.3-1.5-1.2-.6.1-1 .7-1 1.5" stroke="#A8FF00" stroke-width=".8" stroke-linecap="round"/>
+          <!-- glove cuff -->
+          <rect x="6" y="19" width="9" height="4" rx="2" fill="#111" stroke="#A8FF00" stroke-width=".8"/>
+          <!-- shine highlight -->
+          <ellipse cx="11" cy="7" rx="2" ry="1.2" fill="rgba(255,255,255,0.18)" transform="rotate(-20 11 7)"/>
+          <!-- neon glow line on glove edge -->
+          <path d="M7 20c-.8 0-2.5-.6-3-2.5" stroke="#A8FF00" stroke-width="1" stroke-linecap="round" opacity=".7"/>
         </svg>
       </div>
-      <div class="nav-logo-wordmark" aria-hidden="true"><span class="sp">SP</span><span class="arr">ARR</span></div>
+      <div class="nav-logo-wordmark sparr-wordmark" aria-hidden="true"><span class="sp">SP</span><span class="arr">ARR</span></div>
     </a>
 
     <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
@@ -910,6 +1000,7 @@ footer{
 <section id="hero" class="bg-glow" aria-labelledby="h-hero">
   <div class="hero-bg" aria-hidden="true"></div>
   <div class="hero-diag" aria-hidden="true"></div>
+  <div class="hero-lines" aria-hidden="true"></div>
 
   <div class="wrap">
     <div class="hero-grid">
@@ -918,8 +1009,8 @@ footer{
         <div class="hero-eyebrow fu">Combat Sports · Fight Logbook · Community</div>
         <h1 id="h-hero" class="hero-h1 fu d1">
           EVERY<br>
-          <em>ROUND</em><br>
-          COUNTS.
+          ROUND<br>
+          <em>COUNTS.</em>
         </h1>
         <p class="hero-sub fu d2">The fight logbook and community layer for combat athletes.</p>
         <p class="hero-support fu d3">Track your training, build your streak, connect with your gym and turn every session into visible progress.</p>
@@ -1657,11 +1748,14 @@ footer{
       <div class="foot-brand-block">
         <div class="foot-logo">
           <div class="foot-logo-icon" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 11L5.5 3h2.5L5.5 8h3L5.5 14" stroke="#A8FF00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Boxing glove icon — footer -->
+            <svg width="20" height="20" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 20c-.8 0-2.5-.6-3-2.5-.4-1.6 0-3 0-3l1-4 1.5-5C7 3.5 8 3 9.5 3c1 0 1.8.5 2 1.5l.5 2.5 1.5-1.5c.7-.6 1.6-.5 2.2 0 .6.6.7 1.5.2 2.2l-.4.5 1-.3c.8-.2 1.6.2 1.9 1 .3.7.1 1.5-.5 1.9l-.5.3.7.1c.8.1 1.3.8 1.3 1.6s-.7 1.5-1.5 1.6l-2.4.4S16 17 14.5 18.5c-1 1-2 1.5-3 1.5H7z" fill="#111" stroke="#A8FF00" stroke-width="1" stroke-linejoin="round"/>
+              <rect x="6" y="19" width="9" height="4" rx="2" fill="#0d0d0d" stroke="#A8FF00" stroke-width=".8"/>
+              <ellipse cx="11" cy="7" rx="2" ry="1.2" fill="rgba(255,255,255,0.15)" transform="rotate(-20 11 7)"/>
             </svg>
           </div>
-          <div class="foot-wordmark"><span class="sp">SP</span><span class="arr">ARR</span></div>
+          <div class="foot-wordmark sparr-wordmark"><span class="sp">SP</span><span class="arr">ARR</span></div>
         </div>
         <div class="foot-tagline">The fight logbook for combat athletes.</div>
         <div class="foot-social" role="list" aria-label="Social media">
