@@ -1,0 +1,252 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: #0D0D0D;
+    color: #ffffff;
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  #root {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  .glass {
+    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .glass-neon {
+    background: linear-gradient(135deg, rgba(168,255,0,0.08) 0%, rgba(168,255,0,0.02) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(168,255,0,0.2);
+  }
+
+  .btn-neon {
+    background: linear-gradient(135deg, #A8FF00 0%, #39D000 100%);
+    color: #0D0D0D;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-style: italic;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+    box-shadow: 0 0 20px rgba(168,255,0,0.2);
+  }
+
+  .btn-neon:hover {
+    box-shadow: 0 0 30px rgba(168,255,0,0.4);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: #A8FF00;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-style: italic;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(168,255,0,0.4);
+    border-radius: 4px;
+    transition: all 0.15s ease;
+  }
+
+  .btn-outline:hover {
+    border-color: rgba(168,255,0,0.8);
+    box-shadow: 0 0 15px rgba(168,255,0,0.15);
+  }
+
+  .card {
+    background: #1A1A1A;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+  }
+
+  .card-neon {
+    background: #1A1A1A;
+    border: 1px solid rgba(168,255,0,0.2);
+    border-radius: 8px;
+  }
+
+  .input-field {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    color: #ffffff;
+    font-family: 'Raleway', sans-serif;
+    transition: border-color 0.15s ease;
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    outline: none;
+  }
+
+  .input-field:focus {
+    border-color: rgba(168,255,0,0.5);
+    box-shadow: 0 0 0 2px rgba(168,255,0,0.08);
+  }
+
+  .input-field::placeholder {
+    color: rgba(255,255,255,0.3);
+  }
+
+  .label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .badge-neon {
+    background: rgba(168,255,0,0.12);
+    color: #A8FF00;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid rgba(168,255,0,0.25);
+    border-radius: 3px;
+    padding: 2px 6px;
+  }
+
+  .nav-tab {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-style: italic;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.5);
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+  }
+
+  .nav-tab:hover {
+    color: rgba(255,255,255,0.8);
+  }
+
+  .nav-tab.active {
+    color: #A8FF00;
+    border-bottom-color: #A8FF00;
+  }
+
+  .sparr-wordmark {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-style: italic;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .sparr-wordmark .sp { color: #A8FF00; }
+  .sparr-wordmark .arr { color: #ffffff; }
+
+  .stat-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-style: italic;
+    font-weight: 900;
+    font-size: 2rem;
+    color: #A8FF00;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 2px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-style: italic;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+    width: 100%;
+  }
+
+  .neon-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #A8FF00;
+    box-shadow: 0 0 8px rgba(168,255,0,0.6);
+    animation: pulseNeon 2s ease-in-out infinite;
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .text-neon { color: #A8FF00; }
+  .bg-neon { background-color: #A8FF00; }
+  .border-neon { border-color: rgba(168,255,0,0.3); }
+
+  .font-display {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-style: italic;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .safe-top { padding-top: env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+}
+
+@keyframes pulseNeon {
+  0%, 100% { box-shadow: 0 0 6px rgba(168,255,0,0.4); }
+  50% { box-shadow: 0 0 16px rgba(168,255,0,0.8); }
+}
