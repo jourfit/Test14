@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPARR — Combat Sports Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --neon: #A8FF00;
+  --lime: #7CFF00;
+  --energy: #39D000;
+  --black: #0D0D0D;
+  --dark: #1A1A1A;
+  --mid: #111111;
+  --white: #FFFFFF;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Raleway', sans-serif;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+body::-webkit-scrollbar { width: 6px; }
+body::-webkit-scrollbar-track { background: var(--dark); }
+body::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+.grid-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(168,255,0,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168,255,0,0.022) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.app-wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.app-header {
+  background: rgba(13,13,13,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(168,255,0,0.12);
+  padding: 10px 16px 0;
+  position: sticky; top: 0; z-index: 100;
+}
+.header-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 10px;
+}
+.logo {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-style: italic; font-weight: 900;
+  font-size: 1.5rem; text-decoration: none;
+}
+.logo .sp { color: var(--white); }
+.logo .arr { color: var(--neon); }
+.logo-icon { font-size: 1.2rem; }
+.back-link {
+  font-size: 0.7rem; color: rgba(255,255,255,0.4);
+  text-decoration: none; font-family: 'Raleway', sans-serif;
+  letter-spacing: 0.05em;
+  display: block; margin-top: 1px;
+}
+.back-link:hover { color: var(--neon); }
+.logo-block { display: flex; flex-direction: column; }
+.header-right {
+  display: flex; align-items: center; gap: 12px;
+}
+.notif-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 1.2rem; position: relative; color: var(--white);
+  padding: 4px;
+}
+.notif-dot {
+  position: absolute; top: 2px; right: 2px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--neon);
+}
+.avatar-circle {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--neon), var(--energy));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 0.85rem; color: var(--black);
+  cursor: pointer;
+}
+.role-tabs {
+  display: flex; gap: 0;
+}
+.role-tab {
+  flex: 1; background: none; border: none; cursor: pointer;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-style: italic; font-weight: 900;
+  font-size: 0.85rem; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.4);
+  padding: 8px 4px; text-align: center;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s; text-transform: uppercase;
+}
+.role-tab.active {
+  color: var(--neon);
+  border-bottom-color: var(--neon);
+}
+.role-tab:hover:not(.active) { color: rgba(255,255,255,0.7); }
+
+/* BOTTOM NAV */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px;
+  background: rgba(13,13,13,0.97);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(168,255,0,0.1);
+  display: flex; z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.nav-item {
+  flex: 1; background: none; border: none; cursor: pointer;
+  padding: 10px 4px 8px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 3px;
+  color: rgba(255,255,255,0.4);
+  transition: color 0.2s;
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.nav-item.active { color: var(--neon); }
+.nav-item:hover:not(.active) { color: rgba(255,255,255,0.7); }
+.nav-icon { font-size: 1.1rem; line-height: 1; }
+.nav-item.center-fab {
+  flex: 1;
+}
+.nav-item.center-fab .nav-icon {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--neon), var(--energy));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; color: var(--black);
+  margin-top: -14px;
+  box-shadow: 0 0 20px rgba(168,255,0,0.4);
+}
+.nav-item.center-fab.active .nav-icon,
+.nav-item.center-fab:hover .nav-icon {
+  box-shadow: 0 0 30px rgba(168,255,0,0.6);
+}
+
+/* MAIN CONTENT */
+.main-content {
+  flex: 1;
+  padding: 16px 16px 80px;
+  overflow-y: auto;
+}
+
+/* GLASS CARDS */
+.glass-card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(168,255,0,0.18);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.glass-card-sm {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(168,255,0,0.12);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+.card-neon-bar {
+  height: 3px;
+  background: linear-gradient(90deg, var(--neon), var(--energy));
+  border-radius: 2px 2px 0 0;
+  margin: -16px -16px 14px;
+  border-radius: 16px 16px 0 0;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: linear-gradient(135deg, #A8FF00, #39D000);
+  color: var(--black);
+  border: none; cursor: pointer;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-style: italic; font-weight: 900;
+  font-size: 0.9rem; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 20px; border-radius: 6px;
+  transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(168,255,0,0.35);
+}
+.btn-primary:active { transform: translateY(0); }
+.btn-ghost {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(168,255,0,0.5);
+  cursor: pointer;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-style: italic; font-weight: 900;
+  font-size: 0.85rem; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 16px; border-radius: 6px;
+  transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-ghost:hover {
+  border-color: var(--neon);
+  color: var(--neon);
+  background: rgba(168,255,0,0.05);
+}
+.btn-sm {
+  padding: 6px 12px; font-size: 0.75rem;
+}
+.btn-full { width: 100%; justify-content: center; }
+
+/* BADGES */
+.badge {
+  display: inline-block;
+  padding: 2px 8px; border-radius: 20px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 0.65rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.badge-neon { background: rgba(168,255,0,0.15); color: var(--neon); border: 1px solid rgba(168,255,0,0.3); }
+.badge-green { background: rgba(57,208,0,0.15); color: var(--energy); border: 1px solid rgba(57,208,0,0.3); }
+.badge-orange { background: rgba(255,140,0,0.15); color: #FF8C00; border: 1px solid rgba(255,140,0,0.3); }
+.badge-red { background: rgba(255,60,60,0.15); color: #FF3C3C; border: 1px solid rgba(255,60,60,0.3); }
+.badge-blue { background: rgba(60,140,255,0.15); color: #3C8CFF; border: 1px solid rgba(60,140,255,0.3); }
+.badge-purple { background: rgba(160,60,255,0.15); color: #A03CFF; border: 1px solid rgba(160,60,255,0.3); }
+.badge-gray { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.15); }
+
+/* STATS BAR */
+.stats-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 8px; margin-bottom: 20px;
+}
+.stat-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(168,255,0,0.1);
+  border-radius: 10px;
+  padding: 10px 8px; text-align: center;
+}
+.stat-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 1.5rem;
+  color: var(--neon); line-height: 1;
+}
+.stat-label {
+  font-size: 0.6rem; color: rgba(255,255,255,0.5);
+  font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase; margin-top: 3px;
+}
+
+/* SECTION HEADERS */
+.section-header {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px; margin-top: 20px;
+}
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-style: italic; font-weight: 900;
+  font-size: 1.1rem; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--white);
+}
+.section-title:first-child { margin-top: 0; }
+
+/* FORMS */
+.form-group { margin-bottom: 14px; }
+.form-label {
+  display: block; font-size: 0.75rem; font-weight: 600;
+  color: rgba(255,255,255,0.6); margin-bottom: 6px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(168,255,0,0.2);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.9rem;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--neon);
+  background: rgba(168,255,0,0.04);
+}
+.form-select { cursor: pointer; }
+.form-select option { background: var(--dark); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* RANGE SLIDER */
+.range-wrap { position: relative; }
+input[type=range] {
+  width: 100%; -webkit-appearance: none;
+  height: 4px; border-radius: 2px;
+  background: rgba(255,255,255,0.1);
+  outline: none; cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--neon), var(--energy));
+  cursor: pointer; box-shadow: 0 0 10px rgba(168,255,0,0.4);
+}
+.range-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 1.8rem;
+  color: var(--neon); text-align: center;
+  line-height: 1;
+}
+
+/* CHECKBOXES */
+.checkbox-wrap {
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer; padding: 6px 0;
+}
+.checkbox-wrap input[type=checkbox] {
+  width: 18px; height: 18px; cursor: pointer;
+  accent-color: var(--neon);
+}
+.checkbox-label { font-size: 0.9rem; color: rgba(255,255,255,0.8); }
+
+/* TOAST */
+.toast-container {
+  position: fixed; top: 80px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999; width: 90%; max-width: 400px;
+}
+.toast {
+  background: rgba(26,26,26,0.97);
+  border: 1px solid rgba(168,255,0,0.4);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  display: flex; align-items: center; gap: 10px;
+  animation: toastIn 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 20px rgba(168,255,0,0.1);
+}
+.toast.removing { animation: toastOut 0.3s ease forwards; }
+.toast-icon { font-size: 1.1rem; }
+.toast-text { flex: 1; font-weight: 600; }
+@keyframes toastIn { from { opacity: 0; transform: translateY(-10px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-10px); } }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: flex-end; justify-content: center;
+  padding: 0;
+}
+.modal-overlay.center { align-items: center; padding: 20px; }
+.modal-sheet {
+  background: var(--dark);
+  border: 1px solid rgba(168,255,0,0.2);
+  border-radius: 20px 20px 0 0;
+  width: 100%; max-width: 480px;
+  max-height: 90vh; overflow-y: auto;
+  padding: 20px;
+  animation: slideUp 0.3s ease;
+}
+.modal-overlay.center .modal-sheet {
+  border-radius: 20px; max-height: 80vh;
+}
+@keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-handle {
+  width: 40px; height: 4px; border-radius: 2px;
+  background: rgba(255,255,255,0.2);
+  margin: 0 auto 16px;
+}
+.modal-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-style: italic; font-weight: 900;
+  font-size: 1.3rem; text-transform: uppercase;
+  color: var(--neon); margin-bottom: 16px;
+}
+
+/* DISCIPLINE GRID */
+.disc-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; margin-bottom: 4px;
+}
+.disc-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(168,255,0,0.15);
+  border-radius: 8px; padding: 10px 6px;
+  text-align: center; cursor: pointer;
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.7rem; font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.15s;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+}
+.disc-btn .disc-icon { font-size: 1.3rem; }
+.disc-btn.selected {
+  background: rgba(168,255,0,0.12);
+  border-color: var(--neon);
+  color: var(--neon);
+}
+.disc-btn:hover:not(.selected) {
+  border-color: rgba(168,255,0,0.35);
+  color: rgba(255,255,255,0.85);
+}
+
+/* MOOD SELECTOR */
+.mood-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+.mood-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 8px 4px;
+  cursor: pointer; text-align: center;
+  font-size: 0.6rem; color: rgba(255,255,255,0.5);
+  transition: all 0.15s;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+}
+.mood-btn .mood-emoji { font-size: 1.4rem; }
+.mood-btn.selected {
+  background: rgba(168,255,0,0.1);
+  border-color: var(--neon); color: var(--neon);
+}
+
+/* STREAK CARD */
+.streak-card {
+  background: linear-gradient(135deg, rgba(168,255,0,0.1), rgba(57,208,0,0.05));
+  border: 1px solid rgba(168,255,0,0.35);
+  border-radius: 16px; padding: 16px;
+  margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.streak-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-style: italic;
+  font-size: 2.8rem; color: var(--neon); line-height: 1;
+}
+.streak-label { font-size: 0.7rem; color: rgba(255,255,255,0.5); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* PROGRESS BAR */
+.progress-bar-wrap {
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px; height: 6px;
+  overflow: hidden; margin: 8px 0;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--neon), var(--energy));
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* SCHEDULE GRID */
+.schedule-grid {
+  display: grid; grid-template-columns: 50px 1fr 1fr 1fr;
+  gap: 2px;
+}
+.schedule-time-label {
+  font-size: 0.65rem; color: rgba(255,255,255,0.35);
+  text-align: right; padding: 6px 6px 0 0;
+  font-weight: 600;
+}
+.schedule-mat-header {
+  background: rgba(168,255,0,0.08);
+  border: 1px solid rgba(168,255,0,0.2);
+  border-radius: 6px; padding: 6px;
+  text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-style: italic;
+  font-size: 0.8rem; color: var(--neon);
+}
+.schedule-slot {
+  border-radius: 6px; padding: 6px;
+  min-height: 52px; cursor: pointer;
+  transition: all 0.15s;
+  font-size: 0.7rem;
+  border: 1px solid transparent;
+}
+.schedule-slot.empty {
+  background: rgba(255,255,255,0.02);
+  border-color: rgba(255,255,255,0.05);
+}
+.schedule-slot.empty:hover {
+  background: rgba(168,255,0,0.04);
+  border-color: rgba(168,255,0,0.15);
+}
+.schedule-slot.fight {
+  background: rgba(168,255,0,0.08);
+  border-color: rgba(168,255,0,0.25);
+}
+.schedule-slot.warmup {
+  background: rgba(255,140,0,0.07);
+  border-color: rgba(255,140,0,0.2);
+}
+.schedule-slot.break {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.08);
+}
+.slot-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 0.75rem;
+  color: var(--neon); margin-bottom: 2px;
+}
+.slot-detail { color: rgba(255,255,255,0.5); font-size: 0.65rem; }
+
+/* BROADCAST LAYOUT */
+.broadcast-layout { display: flex; flex-direction: column; gap: 12px; }
+.broadcast-recipients {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(168,255,0,0.12);
+  border-radius: 12px; padding: 14px;
+}
+.broadcast-composer {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(168,255,0,0.12);
+  border-radius: 12px; padding: 14px;
+}
+.msg-type-tabs {
+  display: flex; gap: 6px; margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.msg-type-tab {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 5px 12px;
+  font-size: 0.72rem; font-weight: 600;
+  cursor: pointer; color: rgba(255,255,255,0.5);
+  transition: all 0.15s;
+}
+.msg-type-tab.active {
+  background: rgba(168,255,0,0.12);
+  border-color: var(--neon); color: var(--neon);
+}
+.template-btns { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.template-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 8px 10px;
+  text-align: left; cursor: pointer;
+  font-size: 0.75rem; color: rgba(255,255,255,0.55);
+  transition: all 0.15s;
+  font-family: 'Raleway', sans-serif;
+}
+.template-btn:hover {
+  border-color: rgba(168,255,0,0.3);
+  color: rgba(255,255,255,0.85);
+  background: rgba(168,255,0,0.05);
+}
+.msg-log { margin-top: 12px; }
+.msg-log-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px; padding: 10px;
+  margin-bottom: 6px;
+}
+.msg-log-meta {
+  display: flex; justify-content: space-between;
+  margin-bottom: 4px;
+}
+.msg-log-to { font-size: 0.65rem; color: var(--neon); font-weight: 700; text-transform: uppercase; }
+.msg-log-time { font-size: 0.65rem; color: rgba(255,255,255,0.35); }
+.msg-log-text { font-size: 0.78rem; color: rgba(255,255,255,0.7); }
+
+/* ATHLETE CARD */
+.athlete-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.athlete-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(168,255,0,0.12);
+  border-radius: 12px; padding: 14px;
+}
+.athlete-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(168,255,0,0.3), rgba(57,208,0,0.2));
+  border: 2px solid rgba(168,255,0,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 1rem; color: var(--neon);
+  margin-bottom: 8px;
+}
+.athlete-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+.athlete-meta { font-size: 0.68rem; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+/* EVENT CARD */
+.event-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(168,255,0,0.18);
+  border-radius: 16px;
+  padding: 16px; margin-bottom: 10px;
+  overflow: hidden; position: relative;
+}
+.event-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--neon), var(--energy));
+}
+.event-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.event-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 1.05rem;
+  line-height: 1.1;
+}
+.event-meta { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 4px 0; display: flex; gap: 12px; flex-wrap: wrap; }
+.event-meta span { display: flex; align-items: center; gap: 4px; }
+.event-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+
+/* FEED POST */
+.feed-post {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(168,255,0,0.1);
+  border-radius: 14px; padding: 14px;
+  margin-bottom: 10px;
+}
+.feed-post-header { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+.feed-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(168,255,0,0.25), rgba(57,208,0,0.15));
+  border: 1px solid rgba(168,255,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 0.85rem; color: var(--neon);
+  flex-shrink: 0;
+}
+.feed-author { font-weight: 700; font-size: 0.85rem; }
+.feed-time { font-size: 0.7rem; color: rgba(255,255,255,0.4); }
+.feed-text { font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.5; }
+.feed-actions { display: flex; gap: 16px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); }
+.feed-action-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 0.78rem; color: rgba(255,255,255,0.4);
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Raleway', sans-serif; font-weight: 600;
+  transition: color 0.15s;
+}
+.feed-action-btn:hover { color: var(--neon); }
+.feed-action-btn.liked { color: var(--neon); }
+
+/* SESSION LOG CARD */
+.session-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(168,255,0,0.12);
+  border-radius: 12px; padding: 12px;
+  margin-bottom: 8px;
+  display: flex; gap: 12px;
+}
+.session-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(168,255,0,0.1);
+  border: 1px solid rgba(168,255,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+}
+.session-body { flex: 1; }
+.session-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 0.95rem; margin-bottom: 2px;
+}
+.session-meta { font-size: 0.7rem; color: rgba(255,255,255,0.45); margin-bottom: 4px; }
+.session-notes { font-size: 0.78rem; color: rgba(255,255,255,0.6); font-style: italic; }
+
+/* NEXT EVENT CARD */
+.next-event-card {
+  background: linear-gradient(135deg, rgba(168,255,0,0.08), rgba(57,208,0,0.04));
+  border: 1px solid rgba(168,255,0,0.25);
+  border-radius: 14px; padding: 14px;
+  margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.next-event-info {}
+.next-event-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 1rem; color: var(--neon);
+}
+.next-event-sub { font-size: 0.72rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.countdown-badge {
+  background: rgba(168,255,0,0.15);
+  border: 1px solid rgba(168,255,0,0.35);
+  border-radius: 8px; padding: 6px 10px; text-align: center;
+  flex-shrink: 0;
+}
+.countdown-days {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 1.4rem; color: var(--neon); line-height: 1;
+}
+.countdown-label { font-size: 0.6rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* CHALLENGE CARD */
+.challenge-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(168,255,0,0.15);
+  border-radius: 14px; padding: 14px;
+  margin-bottom: 10px;
+}
+.challenge-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.challenge-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 1rem; color: var(--white);
+}
+.challenge-meta { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-bottom: 6px; }
+.challenge-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+
+/* PROFILE */
+.profile-header-card {
+  background: linear-gradient(135deg, rgba(168,255,0,0.07), rgba(57,208,0,0.03));
+  border: 1px solid rgba(168,255,0,0.2);
+  border-radius: 20px; padding: 20px; margin-bottom: 16px;
+  text-align: center;
+}
+.profile-big-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--neon), var(--energy));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 1.6rem; color: var(--black);
+  margin: 0 auto 12px;
+  border: 3px solid rgba(168,255,0,0.4);
+  box-shadow: 0 0 30px rgba(168,255,0,0.2);
+}
+.profile-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-style: italic; font-size: 1.4rem;
+  text-transform: uppercase;
+}
+.profile-subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
+.stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 8px; margin-bottom: 12px;
+}
+.fight-record {
+  display: flex; gap: 8px; justify-content: center;
+  margin-top: 12px;
+}
+.record-item { text-align: center; }
+.record-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 1.6rem; line-height: 1;
+}
+.record-value.win { color: var(--neon); }
+.record-value.loss { color: #FF4444; }
+.record-value.draw { color: #888; }
+.record-label { font-size: 0.6rem; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+
+/* WEIGHT TRACKER */
+.weight-dots {
+  display: flex; align-items: flex-end;
+  gap: 8px; height: 50px;
+  margin: 10px 0;
+}
+.weight-dot-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+.weight-bar {
+  width: 100%; background: linear-gradient(180deg, var(--neon), var(--energy));
+  border-radius: 3px 3px 0 0; min-height: 4px;
+}
+.weight-val { font-size: 0.6rem; color: rgba(255,255,255,0.5); }
+
+/* FILTER TABS */
+.filter-tabs {
+  display: flex; gap: 6px; margin-bottom: 16px;
+  overflow-x: auto; padding-bottom: 2px;
+}
+.filter-tab {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 5px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 0.75rem;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  cursor: pointer; color: rgba(255,255,255,0.5);
+  transition: all 0.15s; white-space: nowrap;
+}
+.filter-tab.active {
+  background: rgba(168,255,0,0.12);
+  border-color: var(--neon); color: var(--neon);
+}
+
+/* GYM HEADER */
+.gym-header-card {
+  background: linear-gradient(135deg, rgba(168,255,0,0.08), rgba(57,208,0,0.03));
+  border: 1px solid rgba(168,255,0,0.25);
+  border-radius: 18px; padding: 18px;
+  margin-bottom: 16px;
+}
+.gym-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-style: italic;
+  font-size: 1.5rem; color: var(--neon);
+  text-transform: uppercase;
+}
+.gym-sub { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+/* CTA BLOCK */
+.cta-block {
+  background: linear-gradient(135deg, rgba(168,255,0,0.1), rgba(57,208,0,0.05));
+  border: 1px solid rgba(168,255,0,0.3);
+  border-radius: 14px; padding: 16px;
+  text-align: center; margin-top: 20px; margin-bottom: 12px;
+}
+
+/* SEARCH BAR */
+.search-bar {
+  position: relative; margin-bottom: 16px;
+}
+.search-input {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(168,255,0,0.15);
+  border-radius: 10px;
+  color: var(--white); font-family: 'Raleway', sans-serif;
+  font-size: 0.9rem; padding: 10px 12px 10px 36px;
+  outline: none;
+}
+.search-input:focus { border-color: var(--neon); }
+.search-icon {
+  position: absolute; left: 10px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem; color: rgba(255,255,255,0.3);
+}
+
+/* ANNOUNCEMENT CARD */
+.announce-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(168,255,0,0.1);
+  border-radius: 12px; padding: 12px;
+  margin-bottom: 8px;
+}
+.announce-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+.announce-title { font-weight: 700; font-size: 0.9rem; }
+.announce-text { font-size: 0.8rem; color: rgba(255,255,255,0.6); line-height: 1.4; }
+
+/* TABLE */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: rgba(255,255,255,0.4);
+  padding: 8px 6px; text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.data-table td {
+  padding: 10px 6px; font-size: 0.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.8);
+}
+.data-table tr:last-child td { border-bottom: none; }
+
+/* QUICK ACTIONS */
+.quick-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+/* BEREAL SECTION */
+.bereal-section {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(168,255,0,0.15);
+  border-radius: 12px; padding: 14px;
+  margin-top: 4px;
+}
+.bereal-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-style: italic; font-weight: 900;
+  font-size: 0.9rem; color: var(--neon);
+  margin-bottom: 10px; text-transform: uppercase;
+}
+
+/* DIVIDER */
+.divider {
+  height: 1px; background: rgba(255,255,255,0.06);
+  margin: 16px 0;
+}
+
+/* GREETER */
+.greeter {
+  margin-bottom: 16px;
+}
+.greeter-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-style: italic;
+  font-size: 1.6rem; text-transform: uppercase;
+}
+.greeter-date { font-size: 0.8rem; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+/* RECIPIENT ITEM */
+.recipient-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.recipient-item:last-child { border-bottom: none; }
+.recipient-left { display: flex; align-items: center; gap: 10px; }
+.recipient-count { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--neon); }
+
+/* MISC */
+.text-neon { color: var(--neon); }
+.text-muted { color: rgba(255,255,255,0.45); }
+.text-sm { font-size: 0.8rem; }
+.mt-8 { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+.mt-16 { margin-top: 16px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-12 { margin-bottom: 12px; }
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-center { display: flex; align-items: center; }
+.gap-6 { gap: 6px; }
+.gap-8 { gap: 8px; }
+.gap-10 { gap: 10px; }
+.fw-700 { font-weight: 700; }
+.fade-in { animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (min-width: 480px) {
+  .app-wrap { border-left: 1px solid rgba(168,255,0,0.05); border-right: 1px solid rgba(168,255,0,0.05); }
+}
+</style>
+</head>
+<body>
+<div class="grid-overlay"></div>
+<div class="app-wrap" id="app">
+  <header class="app-header">
+    <div class="header-top">
+      <div class="logo-block">
+        <a href="#" class="logo">
+          <span class="logo-icon">🥊</span>
+          <span><span class="sp">SP</span><span class="arr">ARR</span></span>
+        </a>
+        <a href="index.html" class="back-link">← Back to SPARR.com</a>
+      </div>
+      <div class="header-right">
+        <button class="notif-btn" onclick="showToast('🔔 No new notifications','info')">
+          🔔<span class="notif-dot"></span>
+        </button>
+        <div class="avatar-circle" id="avatarCircle">AK</div>
+      </div>
+    </div>
+    <div class="role-tabs" id="roleTabs">
+      <button class="role-tab" data-role="organize" onclick="switchRole('organize')">Organize</button>
+      <button class="role-tab" data-role="coach" onclick="switchRole('coach')">Coach</button>
+      <button class="role-tab active" data-role="athlete" onclick="switchRole('athlete')">Athlete</button>
+    </div>
+  </header>
+
+  <div class="main-content" id="mainContent"></div>
+
+  <nav class="bottom-nav" id="bottomNav"></nav>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+<div id="modalContainer"></div>
+
+<script>
+// ===================== STATE =====================
+let currentRole = 'athlete';
+let currentView = 'home';
+let currentParams = {};
+let activeFilter = 'all';
+let activeMsgType = 'announcement';
+let selectedRecipients = ['all'];
+let broadcastMsgLog = [];
+let selectedDiscipline = '';
+let selectedMood = '';
+let intensityVal = 7;
+let beRealOpen = false;
+let likedPosts = new Set();
+
+// ===================== DATA =====================
+const STORAGE_KEYS = {
+  sessions: 'sparr_sessions',
+  events: 'sparr_events',
+  announcements: 'sparr_announcements',
+  challenges: 'sparr_challenges',
+  posts: 'sparr_posts'
+};
+
+function today(offset = 0) {
+  const d = new Date();
+  d.setDate(d.getDate() - offset);
+  return d.toISOString().split('T')[0];
+}
+
+function seedData() {
+  if (!localStorage.getItem(STORAGE_KEYS.sessions)) {
+    localStorage.setItem(STORAGE_KEYS.sessions, JSON.stringify([
+      { id:1, discipline:'Boxing', duration:45, rounds:8, intensity:7, type:'Training', notes:'Clean rounds. Better footwork.', date: today(1), weight:76.8 },
+      { id:2, discipline:'Roadwork', duration:28, rounds:0, intensity:5, type:'Roadwork', notes:'5.2km easy pace', date: today(2), weight:77.1 },
+      { id:3, discipline:'Boxing', duration:60, rounds:10, intensity:9, type:'Sparring', notes:'Tough sparring session. Head movement improving.', date: today(3), weight:77.1 },
+      { id:4, discipline:'Strength', duration:50, rounds:0, intensity:6, type:'Training', notes:'Core and conditioning. Planks, KB swings.', date: today(4), weight:77.9 }
+    ]));
+  }
+  if (!localStorage.getItem(STORAGE_KEYS.events)) {
+    localStorage.setItem(STORAGE_KEYS.events, JSON.stringify([
+      { id:1, name:'Zurich Open 2026', type:'Tournament', date:'2026-01-15', location:'Zurich', athletes:47, status:'upcoming', disciplines:['Boxing','Kickboxing','MMA'], maxParticipants:64, description:'Annual open tournament for all combat sports.' },
+      { id:2, name:'City Sparring Day', type:'Sparring', date:'2025-12-28', location:'Zurich', athletes:24, status:'upcoming', disciplines:['Boxing','Muay Thai'], maxParticipants:30, description:'Open sparring day for registered athletes.' },
+      { id:3, name:'BJJ Seminar Zürich', type:'Seminar', date:'2026-01-10', location:'Zurich', athletes:18, status:'upcoming', disciplines:['BJJ'], maxParticipants:24, description:'BJJ fundamentals seminar with guest instructor.' }
+    ]));
+  }
+  if (!localStorage.getItem(STORAGE_KEYS.announcements)) {
+    localStorage.setItem(STORAGE_KEYS.announcements, JSON.stringify([
+      { id:1, type:'Training Change', title:'Thursday session moved', message:'Thursday 7pm session moved to 8pm. New location: main hall.', date: today(1), target:'Whole Team' },
+      { id:2, type:'Camp Info', title:'Fight Camp starts Jan 3rd', message:'10-week fight camp for Zurich Open competitors starts Jan 3rd. Mandatory for all registered fighters.', date: today(3), target:'Competition Athletes' }
+    ]));
+  }
+  if (!localStorage.getItem(STORAGE_KEYS.challenges)) {
+    localStorage.setItem(STORAGE_KEYS.challenges, JSON.stringify([
+      { id:1, name:'5K Fighter Run', goal:5, progress:2, unit:'runs', daysLeft:3, active:true, icon:'🏃' },
+      { id:2, name:'100 Round Bag Challenge', goal:100, progress:34, unit:'rounds', daysLeft:12, active:true, icon:'🥊' },
+      { id:3, name:'30-Day Combat Base', goal:30, progress:12, unit:'days', daysLeft:18, active:true, icon:'🔥' },
+      { id:4, name:'Fight Camp Consistency Week', goal:7, progress:0, unit:'days', daysLeft:7, active:false, icon:'🏆' },
+      { id:5, name:'Mobility for Fighters 14-Day', goal:14, progress:0, unit:'days', daysLeft:14, active:false, icon:'🧘' }
+    ]));
+  }
+  if (!localStorage.getItem(STORAGE_KEYS.posts)) {
+    localStorage.setItem(STORAGE_KEYS.posts, JSON.stringify([
+      { id:1, author:'Kampfclub Zürich', initials:'KZ', type:'Training Highlight', text:'Incredible session this morning — all competition athletes dialed in and ready for the Zurich Open. The grind doesn\'t stop. 💪', timestamp: today(1), likes:14 },
+      { id:2, author:'Coach Meijer', initials:'CM', type:'Motivation', text:'"Champions aren\'t made in gyms. Champions are made from something deep inside them." — The work you put in now defines who you are on fight day.', timestamp: today(2), likes:22 }
+    ]));
+  }
+  broadcastMsgLog = [
+    { to:'All Athletes (47)', type:'Announcement', text:'Registration deadline for Zurich Open is December 20th. All athletes confirm weight class.', time:'14:32' },
+    { to:'Mat 1 Athletes (9)', type:'Timing', text:'Your fight starts in 15 minutes on Mat 1', time:'11:15' },
+    { to:'Coaches & Cornermen (12)', type:'Urgent', text:'Staff briefing in 10 minutes at the main desk. All coaches required.', time:'09:45' }
+  ];
+}
+
+function getData(key) { try { return JSON.parse(localStorage.getItem(STORAGE_KEYS[key])) || []; } catch(e) { return []; } }
+function saveData(key, data) { localStorage.setItem(STORAGE_KEYS[key], JSON.stringify(data)); }
+
+// ===================== NAVIGATION =====================
+const NAV_CONFIG = {
+  organize: [
+    { id:'home', icon:'🏠', label:'Home' },
+    { id:'events', icon:'📅', label:'Events' },
+    { id:'broadcast', icon:'📡', label:'Broadcast' },
+    { id:'schedule', icon:'🗓', label:'Schedule' },
+    { id:'me', icon:'👤', label:'Me' }
+  ],
+  coach: [
+    { id:'gym', icon:'🏋', label:'Gym' },
+    { id:'athletes', icon:'👥', label:'Athletes' },
+    { id:'announce', icon:'📣', label:'Announce' },
+    { id:'events', icon:'📅', label:'Events' },
+    { id:'feed', icon:'📰', label:'Feed' }
+  ],
+  athlete: [
+    { id:'home', icon:'🏠', label:'Home' },
+    { id:'log', icon:'📝', label:'Log' },
+    { id:'logcenter', icon:'+', label:'Log', center:true },
+    { id:'challenges', icon:'🏆', label:'Challenges' },
+    { id:'me', icon:'👤', label:'Me' }
+  ]
+};
+
+function switchRole(role) {
+  currentRole = role;
+  const defaultViews = { organize:'home', coach:'gym', athlete:'home' };
+  currentView = defaultViews[role];
+  currentParams = {};
+  document.querySelectorAll('.role-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.role === role);
+  });
+  const avatarInits = { organize:'ZO', coach:'CM', athlete:'AK' };
+  document.getElementById('avatarCircle').textContent = avatarInits[role];
+  renderCurrentView();
+  renderBottomNav();
+}
+
+function navigate(view, params = {}) {
+  currentView = view;
+  currentParams = params;
+  renderCurrentView();
+  renderBottomNav();
+}
+
+function renderBottomNav() {
+  const nav = document.getElementById('bottomNav');
+  const items = NAV_CONFIG[currentRole];
+  nav.innerHTML = items.map(item => {
+    if (item.center) {
+      return `<button class="nav-item center-fab ${currentView === 'log' ? 'active' : ''}" onclick="navigate('log')">
+        <span class="nav-icon">+</span>
+        <span>Log</span>
+      </button>`;
+    }
+    return `<button class="nav-item ${currentView === item.id ? 'active' : ''}" onclick="navigate('${item.id}')">
+      <span class="nav-icon">${item.icon}</span>
+      <span>${item.label}</span>
+    </button>`;
+  }).join('');
+}
+
+function renderCurrentView() {
+  const content = document.getElementById('mainContent');
+  content.innerHTML = '';
+  content.className = 'main-content fade-in';
+  const renderers = {
+    organize: { home: renderOrganizeHome, events: renderOrganizeEvents, broadcast: renderBroadcast, schedule: renderSchedule, me: renderOrganizeMe },
+    coach: { gym: renderCoachGym, athletes: renderCoachAthletes, announce: renderCoachAnnounce, events: renderCoachEvents, feed: renderCoachFeed },
+    athlete: { home: renderAthleteHome, log: renderAthleteLog, challenges: renderAthleteChallenges, me: renderAthleteMe }
+  };
+  const fn = renderers[currentRole]?.[currentView];
+  if (fn) fn(content);
+}
+
+// ===================== ORGANIZE VIEWS =====================
+function renderOrganizeHome(el) {
+  const events = getData('events');
+  el.innerHTML = `
+    <div class="stats-bar">
+      <div class="stat-item"><div class="stat-value">${events.length}</div><div class="stat-label">Events</div></div>
+      <div class="stat-item"><div class="stat-value">47</div><div class="stat-label">Athletes</div></div>
+      <div class="stat-item"><div class="stat-value">12</div><div class="stat-label">Staff</div></div>
+      <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">Today's Fights</div></div>
+    </div>
+    <div class="section-header">
+      <span class="section-title">Upcoming Events</span>
+      <button class="btn-ghost btn-sm" onclick="navigate('events')">View All</button>
+    </div>
+    ${events.slice(0,3).map(ev => renderEventCard(ev)).join('')}
+    <div class="cta-block">
+      <button class="btn-primary btn-full" onclick="openCreateEventModal()">+ Create New Event</button>
+    </div>
+  `;
+}
+
+function renderEventCard(ev) {
+  const typeColors = { Tournament:'neon', Sparring:'blue', Seminar:'purple', 'Fight Night':'orange', Camp:'green' };
+  const color = typeColors[ev.type] || 'gray';
+  return `<div class="event-card">
+    <div class="event-header">
+      <div>
+        <div class="event-name">${ev.name}</div>
+        <div class="event-meta">
+          <span>📅 ${formatDate(ev.date)}</span>
+          <span>📍 ${ev.location}</span>
+        </div>
+      </div>
+      <span class="badge badge-${color}">${ev.type}</span>
+    </div>
+    <div class="flex-between">
+      <div class="flex gap-6">
+        <span class="badge badge-gray">👥 ${ev.athletes} athletes</span>
+        <span class="badge badge-green">${ev.status}</span>
+      </div>
+      <button class="btn-ghost btn-sm" onclick="showToast('📅 Managing ${ev.name}','info')">Manage →</button>
+    </div>
+  </div>`;
+}
+
+function renderOrganizeEvents(el) {
+  const events = getData('events');
+  const tabs = ['All','Active','Upcoming','Past'];
+  el.innerHTML = `
+    <div class="filter-tabs">
+      ${tabs.map(t => `<button class="filter-tab ${activeFilter === t.toLowerCase() ? 'active' : ''}" onclick="setFilter('${t.toLowerCase()}'); navigate('events')">${t}</button>`).join('')}
+    </div>
+    ${events.filter(ev => activeFilter === 'all' || ev.status === activeFilter).map(ev => renderEventCard(ev)).join('')}
+    <div class="cta-block">
+      <button class="btn-primary btn-full" onclick="openCreateEventModal()">+ Create Event</button>
+    </div>
+  `;
+}
+
+function setFilter(f) { activeFilter = f; }
+
+function renderBroadcast(el) {
+  const recipientGroups = [
+    { id:'all', label:'All Athletes', count:47, checked:true },
+    { id:'coaches', label:'Coaches & Cornermen', count:12, checked:false },
+    { id:'staff', label:'Staff & Referees', count:8, checked:false },
+    { id:'fans', label:'Fans & Spectators', count:156, checked:false },
+    { id:'u75', label:'U75kg Athletes', count:11, checked:false },
+    { id:'teamSun', label:'Team Sun Wu', count:4, checked:false },
+    { id:'mat1', label:'Mat 1 Athletes', count:9, checked:false },
+    { id:'mat2', label:'Mat 2 Athletes', count:8, checked:false }
+  ];
+  const msgTypes = [
+    { id:'announcement', label:'📢 Announcement' },
+    { id:'urgent', label:'⚠️ Urgent' },
+    { id:'location', label:'📍 Location' },
+    { id:'timing', label:'⏰ Timing' }
+  ];
+  const templates = [
+    'Your fight starts in [X] minutes on Mat [Y]',
+    'All [CATEGORY] athletes: please move to warm-up zone',
+    'Staff needed at Mat [X] — [ROLE] required',
+    'Fans of [ATHLETE]: fight starting soon'
+  ];
+  el.innerHTML = `
+    <div class="broadcast-layout">
+      <div class="broadcast-recipients">
+        <div class="section-title mb-8">📍 Recipients</div>
+        ${recipientGroups.map(g => `
+          <div class="recipient-item">
+            <div class="recipient-left">
+              <input type="checkbox" id="rcpt_${g.id}" ${g.checked ? 'checked' : ''} onchange="updateRecipientCount()">
+              <label for="rcpt_${g.id}" style="font-size:0.85rem;cursor:pointer">${g.label}</label>
+            </div>
+            <span class="recipient-count">${g.count}</span>
+          </div>`).join('')}
+      </div>
+      <div class="broadcast-composer">
+        <div class="section-title mb-8">📨 Compose Message</div>
+        <div class="msg-type-tabs">
+          ${msgTypes.map(t => `<button class="msg-type-tab ${activeMsgType === t.id ? 'active':''}" onclick="setMsgType('${t.id}')">${t.label}</button>`).join('')}
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quick Templates</label>
+          <div class="template-btns">
+            ${templates.map(t => `<button class="template-btn" onclick="fillTemplate(this)">${t}</button>`).join('')}
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea class="form-textarea" id="broadcastMsg" placeholder="Type your message..." style="min-height:100px"></textarea>
+        </div>
+        <button class="btn-primary btn-full" onclick="sendBroadcast()">📡 Send Broadcast</button>
+      </div>
+      <div>
+        <div class="section-title mb-8">📋 Message Log</div>
+        ${broadcastMsgLog.map(m => `
+          <div class="msg-log-item">
+            <div class="msg-log-meta">
+              <span class="msg-log-to">→ ${m.to}</span>
+              <span class="msg-log-time">${m.time}</span>
+            </div>
+            <div class="msg-log-text">${m.text}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function setMsgType(t) {
+  activeMsgType = t;
+  navigate('broadcast');
+}
+
+function fillTemplate(btn) {
+  document.getElementById('broadcastMsg').value = btn.textContent;
+}
+
+function updateRecipientCount() {}
+
+function sendBroadcast() {
+  const msg = document.getElementById('broadcastMsg')?.value?.trim();
+  if (!msg) { showToast('⚠️ Please enter a message', 'warn'); return; }
+  const checked = document.querySelectorAll('[id^="rcpt_"]:checked');
+  let total = 0;
+  checked.forEach(cb => {
+    const counts = {all:47,coaches:12,staff:8,fans:156,u75:11,teamSun:4,mat1:9,mat2:8};
+    const key = cb.id.replace('rcpt_','');
+    total += counts[key] || 0;
+  });
+  const toLabel = checked.length === 1 ? checked[0].nextElementSibling?.textContent : `${checked.length} groups`;
+  const now = new Date();
+  const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+  broadcastMsgLog.unshift({ to: toLabel || 'Selected Groups', type: activeMsgType, text: msg, time: timeStr });
+  if (broadcastMsgLog.length > 5) broadcastMsgLog = broadcastMsgLog.slice(0,5);
+  showToast(`📡 Sent to ${total} recipients`, 'success');
+  navigate('broadcast');
+}
+
+function renderSchedule(el) {
+  const times = ['10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
+  const scheduleData = {
+    '10:00': { 0: {type:'warmup', label:'Warm-Up', detail:'All athletes'}, 1:{type:'empty'}, 2:{type:'empty'} },
+    '11:00': { 0: {type:'fight', label:'Bout #1', detail:'Krasniqi vs Petrov'}, 1:{type:'fight', label:'Bout #2', detail:'Meier vs Hassan'}, 2:{type:'empty'} },
+    '12:00': { 0: {type:'fight', label:'Bout #3', detail:'Brunner vs Costa'}, 1:{type:'empty'}, 2:{type:'fight', label:'Bout #4', detail:'Özdemir vs Kim'} },
+    '13:00': { 0: {type:'break', label:'Lunch Break', detail:'1 hour'}, 1:{type:'break', label:'Lunch Break', detail:'1 hour'}, 2:{type:'break', label:'Lunch Break', detail:'1 hour'} },
+    '14:00': { 0: {type:'fight', label:'Bout #5', detail:'Weber vs Rossi'}, 1:{type:'fight', label:'Bout #6', detail:'Ferretti vs Park'}, 2:{type:'empty'} },
+    '15:00': { 0: {type:'empty'}, 1:{type:'fight', label:'Bout #7', detail:'Semi-Final A'}, 2:{type:'fight', label:'Bout #8', detail:'Semi-Final B'} },
+    '16:00': { 0: {type:'empty'}, 1:{type:'empty'}, 2:{type:'fight', label:'Final', detail:'Championship Bout'} },
+    '17:00': { 0: {type:'empty'}, 1:{type:'empty'}, 2:{type:'empty'} },
+    '18:00': { 0: {type:'empty'}, 1:{type:'empty'}, 2:{type:'empty'} }
+  };
+  let html = `<div class="section-title mb-8">Schedule — Mat View</div>
+    <div style="overflow-x:auto;padding-bottom:8px">
+    <div class="schedule-grid" style="min-width:300px">
+      <div></div>
+      <div class="schedule-mat-header">Mat 1</div>
+      <div class="schedule-mat-header">Mat 2</div>
+      <div class="schedule-mat-header">Mat 3</div>
+  `;
+  times.forEach(time => {
+    html += `<div class="schedule-time-label">${time}</div>`;
+    for (let m = 0; m < 3; m++) {
+      const slot = scheduleData[time]?.[m] || {type:'empty'};
+      html += `<div class="schedule-slot ${slot.type}" onclick="showSlotDetail('${time}',${m+1},'${slot.label||''}','${slot.detail||''}')">
+        ${slot.label ? `<div class="slot-label">${slot.label}</div><div class="slot-detail">${slot.detail}</div>` : ''}
+      </div>`;
+    }
+  });
+  html += '</div></div>';
+  el.innerHTML = html;
+}
+
+function showSlotDetail(time, mat, label, detail) {
+  if (!label) { showToast(`📅 Mat ${mat} — ${time} is open`, 'info'); return; }
+  showToast(`🥊 Mat ${mat} · ${time} — ${label}: ${detail}`, 'info');
+}
+
+function renderOrganizeMe(el) {
+  el.innerHTML = `
+    <div class="profile-header-card">
+      <div class="profile-big-avatar">ZO</div>
+      <div class="profile-name">Zurich Organizer</div>
+      <div class="profile-subtitle">Event Promoter · Zurich Fight Series</div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Events Run</div></div>
+      <div class="stat-item"><div class="stat-value">89</div><div class="stat-label">Athletes</div></div>
+      <div class="stat-item"><div class="stat-value">12</div><div class="stat-label">Staff</div></div>
+      <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">Years</div></div>
+    </div>
+    <div class="glass-card mt-12">
+      <div class="section-title mb-8">Organisation</div>
+      <div class="flex-between mt-8"><span class="text-muted text-sm">Name</span><span class="text-sm fw-700">Zurich Fight Series</span></div>
+      <div class="flex-between mt-8"><span class="text-muted text-sm">Location</span><span class="text-sm fw-700">Zurich, Switzerland</span></div>
+      <div class="flex-between mt-8"><span class="text-muted text-sm">Founded</span><span class="text-sm fw-700">2021</span></div>
+      <div class="flex-between mt-8"><span class="text-muted text-sm">License</span><span class="text-sm fw-700">WAKO Switzerland</span></div>
+    </div>
+    <button class="btn-ghost btn-full mt-12" onclick="showToast('⚙️ Settings coming soon','info')">⚙️ Settings</button>
+  `;
+}
+
+// ===================== COACH VIEWS =====================
+const DEMO_ATHLETES = [
+  { id:1, name:'Ardian Krasniqi', initials:'AK', discipline:'Boxing', weight:'75kg', level:'Semi-Pro', lastSession: today(1) },
+  { id:2, name:'Sara Meier', initials:'SM', discipline:'Muay Thai', weight:'57kg', level:'Amateur', lastSession: today(2) },
+  { id:3, name:'Leo Brunner', initials:'LB', discipline:'MMA', weight:'84kg', level:'Amateur', lastSession: today(3) },
+  { id:4, name:'Yasmin Özdemir', initials:'YÖ', discipline:'Kickboxing', weight:'60kg', level:'Pro', lastSession: today(1) },
+  { id:5, name:'Marco Ferretti', initials:'MF', discipline:'BJJ', weight:'77kg', level:'Semi-Pro', lastSession: today(4) },
+  { id:6, name:'Jonas Weber', initials:'JW', discipline:'Boxing', weight:'69kg', level:'Amateur', lastSession: today(5) }
+];
+
+function renderCoachGym(el) {
+  const announcements = getData('announcements').slice(0,3);
+  el.innerHTML = `
+    <div class="gym-header-card">
+      <div class="gym-name">Kampfclub Zürich</div>
+      <div class="gym-sub">Boxing · Muay Thai · MMA · BJJ · Founded 2018</div>
+      <div class="flex gap-6 mt-8">
+        <span class="badge badge-neon">🥊 Boxing</span>
+        <span class="badge badge-orange">🦵 Muay Thai</span>
+        <span class="badge badge-blue">🥋 MMA</span>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-item"><div class="stat-value">23</div><div class="stat-label">Athletes</div></div>
+      <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Coaches</div></div>
+      <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">Events</div></div>
+      <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">Upcoming</div></div>
+    </div>
+    <div class="section-header">
+      <span class="section-title">Recent Announcements</span>
+      <button class="btn-ghost btn-sm" onclick="navigate('announce')">View All</button>
+    </div>
+    ${announcements.map(a => renderAnnounceCard(a)).join('')}
+    <div class="section-title mt-16 mb-8">Quick Actions</div>
+    <div class="quick-actions">
+      <button class="btn-primary" onclick="navigate('announce')">📣 New Announcement</button>
+      <button class="btn-ghost" onclick="navigate('athletes')">👥 View Athletes</button>
+      <button class="btn-ghost" onclick="navigate('events')">📅 Plan Event</button>
+    </div>
+  `;
+}
+
+function renderAnnounceCard(a) {
+  const typeColors = { 'Training Change':'orange', 'Camp Info':'blue', 'General':'gray', 'Sparring Invite':'neon', 'Urgent':'red' };
+  const color = typeColors[a.type] || 'gray';
+  return `<div class="announce-card">
+    <div class="announce-header">
+      <span class="announce-title">${a.title}</span>
+      <div class="flex gap-6">
+        <span class="badge badge-${color}">${a.type}</span>
+        <span class="text-muted" style="font-size:0.65rem">${formatDateShort(a.date)}</span>
+      </div>
+    </div>
+    <div class="announce-text">${a.message}</div>
+  </div>`;
+}
+
+function renderCoachAthletes(el) {
+  const q = currentParams.q || '';
+  const filtered = DEMO_ATHLETES.filter(a => !q || a.name.toLowerCase().includes(q.toLowerCase()) || a.discipline.toLowerCase().includes(q.toLowerCase()));
+  const discColors = { Boxing:'neon', 'Muay Thai':'orange', MMA:'blue', Kickboxing:'purple', BJJ:'green', Wrestling:'gray' };
+  const levelColors = { Pro:'neon', 'Semi-Pro':'orange', Amateur:'gray' };
+  el.innerHTML = `
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="athleteSearch" placeholder="Search athletes..." value="${q}" oninput="navigate('athletes',{q:this.value})">
+    </div>
+    <div class="athlete-grid">
+      ${filtered.map(a => `
+        <div class="athlete-card">
+          <div class="athlete-avatar">${a.initials}</div>
+          <div class="athlete-name">${a.name}</div>
+          <div class="flex gap-6 mb-8" style="flex-wrap:wrap">
+            <span class="badge badge-${discColors[a.discipline]||'gray'}">${a.discipline}</span>
+            <span class="badge badge-${levelColors[a.level]||'gray'}">${a.level}</span>
+          </div>
+          <div class="athlete-meta">⚖️ ${a.weight}</div>
+          <div class="athlete-meta">🗓 Last: ${formatDateShort(a.lastSession)}</div>
+          <button class="btn-ghost btn-sm btn-full mt-8" onclick="showToast('👤 Viewing ${a.name}','info')">View</button>
+        </div>`).join('')}
+    </div>
+  `;
+}
+
+function renderCoachAnnounce(el) {
+  const announcements = getData('announcements');
+  el.innerHTML = `
+    <div class="glass-card">
+      <div class="card-neon-bar"></div>
+      <div class="section-title mb-8">New Announcement</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select class="form-select" id="announceType">
+            <option>General</option>
+            <option>Training Change</option>
+            <option>Camp Info</option>
+            <option>Sparring Invite</option>
+            <option>Urgent</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Target</label>
+          <select class="form-select" id="announceTarget">
+            <option>Whole Team</option>
+            <option>Boxing Group</option>
+            <option>MMA Group</option>
+            <option>Competition Athletes</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Title</label>
+        <input class="form-input" id="announceTitle" placeholder="Announcement title...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" id="announceMsg" placeholder="Write your announcement..."></textarea>
+      </div>
+      <button class="btn-primary btn-full" onclick="postAnnouncement()">📣 Send Announcement</button>
+    </div>
+    <div class="section-title mt-16 mb-8">Announcement History</div>
+    ${announcements.map(a => renderAnnounceCard(a)).join('')}
+  `;
+}
+
+function postAnnouncement() {
+  const title = document.getElementById('announceTitle')?.value?.trim();
+  const msg = document.getElementById('announceMsg')?.value?.trim();
+  const type = document.getElementById('announceType')?.value;
+  const target = document.getElementById('announceTarget')?.value;
+  if (!title || !msg) { showToast('⚠️ Fill in title and message', 'warn'); return; }
+  const announcements = getData('announcements');
+  announcements.unshift({ id: Date.now(), type, title, message: msg, date: today(0), target });
+  saveData('announcements', announcements);
+  showToast('📣 Announcement sent!', 'success');
+  navigate('announce');
+}
+
+function renderCoachEvents(el) {
+  const events = getData('events');
+  const gymAthletes = {
+    1: [
+      { name:'Ardian Krasniqi', weight:'75kg', discipline:'Boxing', status:'confirmed' },
+      { name:'Yasmin Özdemir', weight:'60kg', discipline:'Kickboxing', status:'confirmed' }
+    ],
+    2: [
+      { name:'Sara Meier', weight:'57kg', discipline:'Muay Thai', status:'pending' },
+      { name:'Leo Brunner', weight:'84kg', discipline:'MMA', status:'confirmed' }
+    ]
+  };
+  el.innerHTML = `
+    <div class="section-title mb-8">Registered Athletes by Event</div>
+    ${events.slice(0,2).map(ev => `
+      <div class="glass-card">
+        <div class="flex-between mb-8">
+          <div class="event-name">${ev.name}</div>
+          <span class="badge badge-neon">${ev.type}</span>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Athlete</th><th>Weight</th><th>Discipline</th><th>Status</th></tr></thead>
+          <tbody>
+            ${(gymAthletes[ev.id]||[]).map(a => `
+              <tr>
+                <td><strong>${a.name}</strong></td>
+                <td>${a.weight}</td>
+                <td>${a.discipline}</td>
+                <td><span class="badge badge-${a.status==='confirmed'?'green':'orange'}">${a.status}</span></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+        <button class="btn-ghost btn-sm mt-8" onclick="showToast('👥 Register athlete modal','info')">+ Register Athlete</button>
+      </div>`).join('')}
+  `;
+}
+
+function renderCoachFeed(el) {
+  const posts = getData('posts');
+  el.innerHTML = `
+    <div class="glass-card">
+      <div class="card-neon-bar"></div>
+      <div class="section-title mb-8">Create Post</div>
+      <div class="form-group">
+        <select class="form-select" id="postType">
+          <option>Training Highlight</option>
+          <option>Announcement</option>
+          <option>Result</option>
+          <option>Motivation</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <textarea class="form-textarea" id="postText" placeholder="Share something with your athletes and followers..."></textarea>
+      </div>
+      <button class="btn-primary btn-full" onclick="createPost()">Post</button>
+    </div>
+    <div class="section-title mt-16 mb-8">Gym Feed</div>
+    ${posts.map(p => renderFeedPost(p)).join('')}
+  `;
+}
+
+function renderFeedPost(p) {
+  const typeColors = { 'Training Highlight':'neon', 'Announcement':'blue', 'Result':'orange', 'Motivation':'purple', 'Sparring Invite':'green' };
+  const color = typeColors[p.type] || 'gray';
+  const liked = likedPosts.has(p.id);
+  return `<div class="feed-post" id="post_${p.id}">
+    <div class="feed-post-header">
+      <div class="feed-avatar">${p.initials}</div>
+      <div>
+        <div class="feed-author">${p.author}</div>
+        <div class="feed-time">${formatDateShort(p.timestamp)}</div>
+      </div>
+      <span class="badge badge-${color}" style="margin-left:auto">${p.type}</span>
+    </div>
+    <div class="feed-text">${p.text}</div>
+    <div class="feed-actions">
+      <button class="feed-action-btn ${liked?'liked':''}" onclick="toggleLike(${p.id})">
+        ${liked?'🤍':'🤍'} <span id="likes_${p.id}">${p.likes + (liked?1:0)}</span>
+      </button>
+      <button class="feed-action-btn" onclick="showToast('💬 Comments coming soon','info')">💬 Comment</button>
+      <button class="feed-action-btn" onclick="showToast('📤 Shared!','success')">📤 Share</button>
+    </div>
+  </div>`;
+}
+
+function toggleLike(id) {
+  const posts = getData('posts');
+  if (likedPosts.has(id)) { likedPosts.delete(id); } else { likedPosts.add(id); }
+  navigate(currentView);
+}
+
+function createPost() {
+  const text = document.getElementById('postText')?.value?.trim();
+  const type = document.getElementById('postType')?.value;
+  if (!text) { showToast('⚠️ Write something first', 'warn'); return; }
+  const posts = getData('posts');
+  posts.unshift({ id: Date.now(), author:'Kampfclub Zürich', initials:'KZ', type, text, timestamp: today(0), likes:0 });
+  saveData('posts', posts);
+  showToast('📰 Post published!', 'success');
+  navigate('feed');
+}
+
+// ===================== ATHLETE VIEWS =====================
+function calcStreak() {
+  const sessions = getData('sessions');
+  if (!sessions.length) return { current: 0, best: 0 };
+  const dates = [...new Set(sessions.map(s => s.date))].sort().reverse();
+  let streak = 0, best = 0, cur = new Date(today(0));
+  for (let i = 0; i < 30; i++) {
+    const d = new Date(cur);
+    d.setDate(d.getDate() - i);
+    const ds = d.toISOString().split('T')[0];
+    if (dates.includes(ds)) { streak++; best = Math.max(best, streak); }
+    else if (i === 0) { continue; }
+    else { break; }
+  }
+  return { current: streak, best: Math.max(best, 4) };
+}
+
+function renderAthleteHome(el) {
+  const sessions = getData('sessions').slice(0,3);
+  const posts = getData('posts');
+  const streak = calcStreak();
+  const now = new Date();
+  const hour = now.getHours();
+  const greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const dateStr = `${dayNames[now.getDay()]}, ${monthNames[now.getMonth()]} ${now.getDate()}`;
+  const discIcons = { Boxing:'🥊', 'Muay Thai':'🦵', MMA:'🥋', BJJ:'🤼', Kickboxing:'🥋', Wrestling:'🤼', Roadwork:'🏃', Strength:'💪', Mobility:'🧘', Other:'⚡' };
+  el.innerHTML = `
+    <div class="greeter">
+      <div class="greeter-name">${greet}, Ardian 👊</div>
+      <div class="greeter-date">${dateStr}</div>
+    </div>
+    <div class="streak-card">
+      <div>
+        <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:4px">Current Streak</div>
+        <div class="streak-value">${streak.current} Days</div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:4px">Best: ${streak.best} days</div>
+      </div>
+      <div style="font-size:3rem;filter:drop-shadow(0 0 12px rgba(168,255,0,0.4))">🔥</div>
+    </div>
+    <div class="next-event-card">
+      <div class="next-event-info">
+        <div class="next-event-title">Zurich Open 2026</div>
+        <div class="next-event-sub">📍 Zurich · Mat 2</div>
+        <div class="next-event-sub">🥊 Boxing · 75kg</div>
+      </div>
+      <div class="countdown-badge">
+        <div class="countdown-days">18</div>
+        <div class="countdown-label">Days Away</div>
+      </div>
+    </div>
+    <div class="section-header">
+      <span class="section-title">Recent Sessions</span>
+      <button class="btn-ghost btn-sm" onclick="navigate('log')">Log Session</button>
+    </div>
+    ${sessions.map(s => `
+      <div class="session-card">
+        <div class="session-icon">${discIcons[s.discipline]||'⚡'}</div>
+        <div class="session-body">
+          <div class="session-title">${s.discipline} ${s.rounds > 0 ? '— ' + s.rounds + ' Rounds' : ''}</div>
+          <div class="session-meta">${s.duration} min · Intensity ${s.intensity}/10 · ${s.type}</div>
+          ${s.notes ? `<div class="session-notes">"${s.notes}"</div>` : ''}
+          <div class="session-meta" style="margin-top:4px">${formatDateShort(s.date)}</div>
+        </div>
+      </div>`).join('')}
+    <div class="section-header mt-16">
+      <span class="section-title">Gym Feed</span>
+    </div>
+    ${posts.map(p => renderFeedPost(p)).join('')}
+  `;
+}
+
+function renderAthleteLog(el) {
+  const disciplines = [
+    { name:'Boxing', icon:'🥊' }, { name:'Kickboxing', icon:'🥋' }, { name:'MMA', icon:'🤼' },
+    { name:'BJJ', icon:'🤸' }, { name:'Muay Thai', icon:'🦵' }, { name:'Wrestling', icon:'💪' },
+    { name:'Roadwork', icon:'🏃' }, { name:'Strength', icon:'🏋' }, { name:'Mobility', icon:'🧘' }, { name:'Other', icon:'⚡' }
+  ];
+  const moods = [
+    { emoji:'😤', label:'Focused', id:'focused' }, { emoji:'😅', label:'Tired', id:'tired' },
+    { emoji:'🔥', label:'On Fire', id:'onfire' }, { emoji:'💪', label:'Strong', id:'strong' }, { emoji:'😬', label:'Struggling', id:'struggling' }
+  ];
+  el.innerHTML = `
+    <div class="section-title mb-8">Log Training Session</div>
+    <div class="glass-card">
+      <div class="card-neon-bar"></div>
+      <div class="form-group">
+        <label class="form-label">Discipline</label>
+        <div class="disc-grid">
+          ${disciplines.map(d => `
+            <button class="disc-btn ${selectedDiscipline === d.name ? 'selected' : ''}" onclick="selectDiscipline('${d.name}')">
+              <span class="disc-icon">${d.icon}</span>${d.name}
+            </button>`).join('')}
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Duration (min)</label>
+          <input class="form-input" type="number" id="logDuration" placeholder="45" min="1" max="480">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Rounds</label>
+          <input class="form-input" type="number" id="logRounds" placeholder="0" min="0" max="50">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Intensity — <span class="text-neon" id="intensityDisplay">${intensityVal}</span>/10</label>
+        <input type="range" min="1" max="10" value="${intensityVal}" id="intensitySlider" oninput="updateIntensity(this.value)">
+        <div style="display:flex;justify-content:space-between;margin-top:4px">
+          <span style="font-size:0.65rem;color:rgba(255,255,255,0.3)">Recovery</span>
+          <span style="font-size:0.65rem;color:rgba(255,255,255,0.3)">Max Effort</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Session Type</label>
+          <select class="form-select" id="logType">
+            <option>Training</option><option>Sparring</option><option>Competition</option>
+            <option>Roadwork</option><option>Recovery</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Weight (kg)</label>
+          <input class="form-input" type="number" id="logWeight" placeholder="76.8" step="0.1">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="logNotes" placeholder="How did it go? What worked?"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="checkbox-wrap">
+          <input type="checkbox" id="beRealToggle" onchange="toggleBeReal(this.checked)">
+          <span class="checkbox-label">📸 Add honest check-in moment</span>
+        </label>
+      </div>
+      <div id="beRealSection" style="display:${beRealOpen?'block':'none'}">
+        <div class="bereal-section">
+          <div class="bereal-title">BeReal Check-In</div>
+          <div class="form-group">
+            <label class="form-label">How are you feeling?</label>
+            <div class="mood-grid">
+              ${moods.map(m => `
+                <button class="mood-btn ${selectedMood === m.id ? 'selected' : ''}" onclick="selectMood('${m.id}')">
+                  <span class="mood-emoji">${m.emoji}</span>${m.label}
+                </button>`).join('')}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">One honest sentence</label>
+            <input class="form-input" id="logHonest" placeholder="e.g. Legs were heavy but I showed up.">
+          </div>
+        </div>
+      </div>
+      <button class="btn-primary btn-full" style="margin-top:16px;font-size:1rem;padding:14px" onclick="logSession()">LOG SESSION</button>
+    </div>
+  `;
+}
+
+function selectDiscipline(name) { selectedDiscipline = name; navigate('log'); }
+function selectMood(id) { selectedMood = id; navigate('log'); }
+function updateIntensity(v) {
+  intensityVal = parseInt(v);
+  const el = document.getElementById('intensityDisplay');
+  if (el) { el.textContent = v; el.style.color = intensityVal >= 8 ? '#FF4444' : intensityVal >= 6 ? '#A8FF00' : '#39D000'; }
+}
+function toggleBeReal(checked) { beRealOpen = checked; navigate('log'); }
+
+function logSession() {
+  if (!selectedDiscipline) { showToast('⚠️ Select a discipline', 'warn'); return; }
+  const duration = parseInt(document.getElementById('logDuration')?.value) || 0;
+  if (!duration) { showToast('⚠️ Enter session duration', 'warn'); return; }
+  const rounds = parseInt(document.getElementById('logRounds')?.value) || 0;
+  const type = document.getElementById('logType')?.value || 'Training';
+  const weight = parseFloat(document.getElementById('logWeight')?.value) || null;
+  const notes = document.getElementById('logNotes')?.value?.trim() || '';
+  const honest = document.getElementById('logHonest')?.value?.trim() || '';
+  const sessions = getData('sessions');
+  sessions.unshift({
+    id: Date.now(), discipline: selectedDiscipline,
+    duration, rounds, intensity: intensityVal, type,
+    notes: honest ? `${notes}${notes?' — ':''}(BeReal: ${honest})` : notes,
+    date: today(0), weight
+  });
+  saveData('sessions', sessions);
+  selectedDiscipline = '';
+  selectedMood = '';
+  intensityVal = 7;
+  beRealOpen = false;
+  showToast('✅ Session logged!', 'success');
+  navigate('home');
+}
+
+function renderAthleteChallenges(el) {
+  const challenges = getData('challenges');
+  const active = challenges.filter(c => c.active);
+  const available = challenges.filter(c => !c.active);
+  el.innerHTML = `
+    <div class="section-title mb-8">Active Challenges</div>
+    ${active.map(c => {
+      const pct = Math.min(100, Math.round((c.progress / c.goal) * 100));
+      return `<div class="challenge-card">
+        <div class="challenge-header">
+          <div>
+            <div style="font-size:1.5rem;margin-bottom:4px">${c.icon}</div>
+            <div class="challenge-name">${c.name}</div>
+          </div>
+          <span class="badge badge-neon">${pct}%</span>
+        </div>
+        <div class="challenge-meta">${c.progress}/${c.goal} ${c.unit} · ${c.daysLeft} days left</div>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+        <div class="challenge-footer">
+          <span class="text-muted text-sm">${c.goal - c.progress} ${c.unit} remaining</span>
+          <button class="btn-primary btn-sm" onclick="openChallengeLog(${c.id})">Log Progress</button>
+        </div>
+      </div>`;
+    }).join('')}
+    <div class="section-title mt-16 mb-8">Available Challenges</div>
+    ${available.map(c => `
+      <div class="challenge-card" style="opacity:0.7">
+        <div class="challenge-header">
+          <div>
+            <div style="font-size:1.5rem;margin-bottom:4px">${c.icon}</div>
+            <div class="challenge-name">${c.name}</div>
+          </div>
+          <span class="badge badge-gray">Locked</span>
+        </div>
+        <div class="challenge-meta">${c.goal} ${c.unit} · ${c.daysLeft} days</div>
+        <button class="btn-ghost btn-sm mt-8" onclick="joinChallenge(${c.id})">Join Challenge</button>
+      </div>`).join('')}
+  `;
+}
+
+function joinChallenge(id) {
+  const challenges = getData('challenges');
+  const c = challenges.find(c => c.id === id);
+  if (c) { c.active = true; saveData('challenges', challenges); showToast(`🏆 Joined: ${c.name}!`, 'success'); navigate('challenges'); }
+}
+
+function openChallengeLog(id) {
+  const challenges = getData('challenges');
+  const c = challenges.find(c => c.id === id);
+  if (!c) return;
+  const container = document.getElementById('modalContainer');
+  container.innerHTML = `
+    <div class="modal-overlay center" onclick="if(event.target===this)closeModal()">
+      <div class="modal-sheet">
+        <div class="modal-title">${c.icon} ${c.name}</div>
+        <div class="text-muted text-sm mb-12">${c.progress}/${c.goal} ${c.unit} completed</div>
+        <div class="form-group">
+          <label class="form-label">Add Progress</label>
+          <input class="form-input" type="number" id="challengeProgress" placeholder="1" min="1" max="${c.goal - c.progress}" value="1">
+        </div>
+        <div class="flex gap-8 mt-12">
+          <button class="btn-ghost btn-sm" onclick="closeModal()">Cancel</button>
+          <button class="btn-primary" style="flex:1" onclick="logChallengeProgress(${id})">Log It</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function logChallengeProgress(id) {
+  const val = parseInt(document.getElementById('challengeProgress')?.value) || 1;
+  const challenges = getData('challenges');
+  const c = challenges.find(c => c.id === id);
+  if (c) {
+    c.progress = Math.min(c.goal, c.progress + val);
+    if (c.progress >= c.goal) { showToast(`🏆 Challenge complete: ${c.name}!`, 'success'); }
+    else { showToast(`💪 +${val} logged! ${c.goal - c.progress} to go.`, 'success'); }
+    saveData('challenges', challenges);
+  }
+  closeModal();
+  navigate('challenges');
+}
+
+function renderAthleteMe(el) {
+  const sessions = getData('sessions');
+  const streak = calcStreak();
+  const weights = sessions.filter(s => s.weight).slice(0,4).map(s => s.weight);
+  const maxW = weights.length ? Math.max(...weights) : 80;
+  const minW = weights.length ? Math.min(...weights) : 70;
+  const range = maxW - minW || 1;
+  el.innerHTML = `
+    <div class="profile-header-card">
+      <div class="profile-big-avatar">AK</div>
+      <div class="profile-name">Ardian Krasniqi</div>
+      <div class="profile-subtitle">Boxing · 75kg · Semi-Pro</div>
+      <div class="mt-8"><span class="badge badge-neon">🏋 Kampfclub Zürich</span></div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-value">${sessions.length}</div><div class="stat-label">Sessions</div></div>
+      <div class="stat-item"><div class="stat-value">${streak.current}</div><div class="stat-label">Streak</div></div>
+      <div class="stat-item"><div class="stat-value">${streak.best}</div><div class="stat-label">Best</div></div>
+      <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">Fights</div></div>
+    </div>
+    <div class="glass-card">
+      <div class="section-title mb-8">Fight Record</div>
+      <div class="fight-record">
+        <div class="record-item"><div class="record-value win">3</div><div class="record-label">Wins</div></div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;color:rgba(255,255,255,0.2);align-self:flex-end;padding-bottom:2px">–</div>
+        <div class="record-item"><div class="record-value loss">1</div><div class="record-label">Losses</div></div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;color:rgba(255,255,255,0.2);align-self:flex-end;padding-bottom:2px">–</div>
+        <div class="record-item"><div class="record-value draw">0</div><div class="record-label">Draws</div></div>
+      </div>
+    </div>
+    ${weights.length ? `
+    <div class="glass-card">
+      <div class="section-title mb-8">Weight Tracker</div>
+      <div class="weight-dots">
+        ${weights.map(w => {
+          const h = Math.max(8, Math.round(((w - minW) / range) * 40) + 8);
+          return `<div class="weight-dot-wrap">
+            <div class="weight-bar" style="height:${h}px"></div>
+            <div class="weight-val">${w}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="text-muted text-sm" style="text-align:center">Recent weights (kg)</div>
+    </div>` : ''}
+    <div class="glass-card">
+      <div class="section-title mb-8">Fight Journal</div>
+      <div class="flex-between" style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+        <div>
+          <div style="font-weight:700;font-size:0.9rem">vs. Marco Rossi</div>
+          <div class="text-muted text-sm">City Fight Night · Nov 2025</div>
+        </div>
+        <span class="badge badge-neon">W</span>
+      </div>
+      <div class="flex-between" style="padding:8px 0">
+        <div>
+          <div style="font-weight:700;font-size:0.9rem">vs. Emil Kovač</div>
+          <div class="text-muted text-sm">Zurich Amateur Cup · Sep 2025</div>
+        </div>
+        <span class="badge badge-red">L</span>
+      </div>
+    </div>
+    <div class="glass-card">
+      <div class="section-title mb-8">Upcoming Fights</div>
+      <div class="next-event-card" style="margin-bottom:0">
+        <div><div class="next-event-title">Zurich Open 2026</div><div class="next-event-sub">📅 Jan 15, 2026 · Mat 2 · 75kg Boxing</div></div>
+        <span class="badge badge-neon">Confirmed</span>
+      </div>
+    </div>
+    <button class="btn-ghost btn-full mt-12" onclick="showToast('⚙️ Settings coming soon','info')">⚙️ Settings</button>
+  `;
+}
+
+// ===================== MODALS =====================
+function openCreateEventModal() {
+  const container = document.getElementById('modalContainer');
+  container.innerHTML = `
+    <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div class="modal-title">Create New Event</div>
+        <div class="form-group">
+          <label class="form-label">Event Name</label>
+          <input class="form-input" id="evName" placeholder="e.g. Winter Open 2026">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Type</label>
+            <select class="form-select" id="evType">
+              <option>Tournament</option><option>Fight Night</option>
+              <option>Sparring</option><option>Seminar</option><option>Camp</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <input class="form-input" type="date" id="evDate">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location</label>
+          <input class="form-input" id="evLocation" placeholder="City or venue">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Max Participants</label>
+            <input class="form-input" type="number" id="evMax" placeholder="64">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-select" id="evStatus">
+              <option value="upcoming">Upcoming</option>
+              <option value="active">Active</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Disciplines</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+            ${['Boxing','Kickboxing','MMA','BJJ','Muay Thai','Wrestling','Other'].map(d =>
+              `<label class="checkbox-wrap"><input type="checkbox" name="evDisc" value="${d}"><span class="checkbox-label">${d}</span></label>`
+            ).join('')}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="evDesc" placeholder="Brief description..."></textarea>
+        </div>
+        <div class="flex gap-8 mt-12">
+          <button class="btn-ghost btn-sm" onclick="closeModal()">Cancel</button>
+          <button class="btn-primary" style="flex:1" onclick="saveNewEvent()">Create Event</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function saveNewEvent() {
+  const name = document.getElementById('evName')?.value?.trim();
+  const date = document.getElementById('evDate')?.value;
+  const location = document.getElementById('evLocation')?.value?.trim();
+  if (!name || !date) { showToast('⚠️ Fill in name and date', 'warn'); return; }
+  const type = document.getElementById('evType')?.value;
+  const max = parseInt(document.getElementById('evMax')?.value) || 64;
+  const status = document.getElementById('evStatus')?.value;
+  const desc = document.getElementById('evDesc')?.value?.trim();
+  const discs = [...document.querySelectorAll('[name="evDisc"]:checked')].map(cb => cb.value);
+  const events = getData('events');
+  events.push({ id: Date.now(), name, type, date, location: location||'TBD', athletes:0, status, maxParticipants:max, description:desc, disciplines:discs });
+  saveData('events', events);
+  closeModal();
+  showToast('📅 Event created!', 'success');
+  navigate(currentView);
+}
+
+function closeModal() {
+  document.getElementById('modalContainer').innerHTML = '';
+}
+
+// ===================== TOAST =====================
+function showToast(msg, type = 'info') {
+  const icons = { success:'✅', warn:'⚠️', info:'ℹ️', error:'❌' };
+  const colors = { success:'rgba(168,255,0,0.3)', warn:'rgba(255,140,0,0.3)', info:'rgba(60,140,255,0.3)', error:'rgba(255,60,60,0.3)' };
+  const container = document.getElementById('toastContainer');
+  const id = Date.now();
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.id = `toast_${id}`;
+  toast.style.borderColor = colors[type];
+  toast.innerHTML = `<span class="toast-icon">${icons[type]}</span><span class="toast-text">${msg}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    const el = document.getElementById(`toast_${id}`);
+    if (el) { el.classList.add('removing'); setTimeout(() => el.remove(), 300); }
+  }, 3000);
+}
+
+// ===================== UTILITIES =====================
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+function formatDateShort(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  const now = new Date();
+  const diff = Math.floor((now - d) / 86400000);
+  if (diff === 0) return 'Today';
+  if (diff === 1) return 'Yesterday';
+  if (diff < 7) return `${diff} days ago`;
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${d.getDate()} ${months[d.getMonth()]}`;
+}
+
+// ===================== INIT =====================
+seedData();
+switchRole('athlete');
+</script>
+</body>
+</html>
