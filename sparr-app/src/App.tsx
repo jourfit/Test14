@@ -21,6 +21,9 @@ import GymDashboard from './features/gym/GymDashboard'
 import OrganizerDashboard from './features/organizer/OrganizerDashboard'
 import AdminDashboard from './features/admin/AdminDashboard'
 import FanDashboard from './features/fan/FanDashboard'
+import GPSTrackingPage from './features/training/GPSTrackingPage'
+import FightCampPage from './features/training/FightCampPage'
+import BracketPage from './features/organizer/BracketPage'
 
 import type { UserRole } from './types'
 
@@ -71,10 +74,14 @@ function AppRoutes() {
       <Route path="/notifications" element={<Shell><NotificationsPage /></Shell>} />
       <Route path="/profile" element={<Shell><ProfilePage /></Shell>} />
 
+      <Route path="/training/gps" element={<Shell><GPSTrackingPage /></Shell>} />
+      <Route path="/training/camp" element={<Shell><FightCampPage /></Shell>} />
+
       <Route path="/coach" element={<Shell><CoachDashboard /></Shell>} />
       <Route path="/broadcast" element={<Shell><CoachDashboard /></Shell>} />
       <Route path="/gym" element={<Shell><GymDashboard /></Shell>} />
       <Route path="/organizer" element={<Shell><OrganizerDashboard /></Shell>} />
+      <Route path="/organizer/brackets" element={<Shell><BracketPage /></Shell>} />
       <Route path="/admin" element={<Shell><AdminDashboard /></Shell>} />
       <Route path="/fan" element={<Shell><FanDashboard /></Shell>} />
 

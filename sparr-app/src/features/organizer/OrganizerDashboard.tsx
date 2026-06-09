@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Calendar, Users, Plus, Edit3 } from 'lucide-react'
+import { Calendar, Users, Plus, Edit3, Trophy, Megaphone } from 'lucide-react'
 import Card from '../../components/ui/Card'
 import Button from '../../components/ui/Button'
 import Badge from '../../components/ui/Badge'
@@ -111,6 +111,18 @@ export default function OrganizerDashboard() {
           Registrierungen erscheinen hier wenn Athleten sich für deine Events anmelden
         </div>
       )}
+
+      {/* Quick tools */}
+      <div className="grid grid-cols-2 gap-2 mt-4">
+        <Button variant="outline" fullWidth onClick={() => navigate('/organizer/brackets')}>
+          <Trophy size={14} />
+          Brackets
+        </Button>
+        <Button variant="outline" fullWidth onClick={() => navigate('/broadcast')}>
+          <Megaphone size={14} />
+          Broadcast
+        </Button>
+      </div>
     </div>
   )
 }

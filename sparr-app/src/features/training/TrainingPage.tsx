@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Plus, Flame, Clock, Dumbbell } from 'lucide-react'
+import { Plus, Flame, Clock, Dumbbell, Navigation, Target } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import { useAppStore } from '../../store/appStore'
 import { useAuthStore } from '../../store/authStore'
 import Card, { CardHeader, CardTitle } from '../../components/ui/Card'
@@ -47,6 +48,7 @@ export default function TrainingPage() {
   const { sessions, addSession, streak } = useAppStore()
   const { user } = useAuthStore()
   const { push } = useToast()
+  const navigate = useNavigate()
   const [logOpen, setLogOpen] = useState(false)
 
   const [form, setForm] = useState({
@@ -109,11 +111,21 @@ export default function TrainingPage() {
         </Card>
       </div>
 
-      {/* Log button */}
-      <Button variant="neon" fullWidth size="lg" onClick={() => setLogOpen(true)} className="mb-4">
-        <Plus size={18} />
-        Training loggen
-      </Button>
+      {/* Quick actions */}
+      <div className="grid grid-cols-3 gap-2 mb-4">
+        <Button variant="neon" fullWidth onClick={() => setLogOpen(true)} className="flex-col h-14 text-xs">
+          <Plus size={16} />
+          Loggen
+        </Button>
+        <Button variant="outline" fullWidth onClick={() => navigate('/training/gps')} className="flex-col h-14 text-xs">
+          <Navigation size={16} />
+          GPS
+        </Button>
+        <Button variant="outline" fullWidth onClick={() => navigate('/training/camp')} className="flex-col h-14 text-xs">
+          <Target size={16} />
+          Camp
+        </Button>
+      </div>
 
       {/* Sessions list */}
       <Card padding="none" className="overflow-hidden">
